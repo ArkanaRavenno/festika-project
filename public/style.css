@@ -28,6 +28,7 @@
     --font-weight-semibold: 600;
     --radius-sm: 0.25rem;
     --radius-lg: 0.5rem;
+    --radius-xl: 0.75rem;
     --radius-4xl: 2rem;
     --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
     --default-transition-duration: 150ms;
@@ -376,10 +377,45 @@
     --tw-ease: var(--ease-in-out);
     transition-timing-function: var(--ease-in-out);
   }
+  .hover\:rounded-\[10px\] {
+    &:hover {
+      @media (hover: hover) {
+        border-radius: 10px;
+      }
+    }
+  }
+  .hover\:rounded-\[12px\] {
+    &:hover {
+      @media (hover: hover) {
+        border-radius: 12px;
+      }
+    }
+  }
+  .hover\:rounded-\[15px\] {
+    &:hover {
+      @media (hover: hover) {
+        border-radius: 15px;
+      }
+    }
+  }
+  .hover\:rounded-\[20px\] {
+    &:hover {
+      @media (hover: hover) {
+        border-radius: 20px;
+      }
+    }
+  }
   .hover\:rounded-full {
     &:hover {
       @media (hover: hover) {
         border-radius: calc(infinity * 1px);
+      }
+    }
+  }
+  .hover\:rounded-xl {
+    &:hover {
+      @media (hover: hover) {
+        border-radius: var(--radius-xl);
       }
     }
   }
