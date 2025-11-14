@@ -4,6 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <title>Document</title>
   <style>
@@ -86,13 +89,135 @@
     </nav>
   </div>
   <!--Navbar end-->
+  
+  <!--Hero Section-->
+  <section class="relative text-white overflow-hidden bg-green-800" id="beranda" style="background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg id='hexagons' fill='%2316a34a' fill-opacity='0.1' fill-rule='nonzero'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.99-7.5L26 15v19l-13 7.5L0 34V15z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E&quot;);">
+    <!-- Overlay Hijau -->
+    <div class="absolute inset-0 bg-green-900/70"></div>
 
-  <script>
+    <!-- Ikon bergerak (dekoratif) -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <img src="img/icon-yoga.svg" class="absolute w-9 h-9 animate-float" style="top: 12%; left: 8%; animation-delay: 0.3s;" />
+      <!-- Ikon disebar kembali dan ukurannya disesuaikan -->
+      <img src="img/icon-dumbbell.svg" class="absolute w-10 h-10 animate-float" style="top: 15%; left: 55%; animation-delay: 0.5s;" />
+      <img src="img/icon-heart.svg" class="absolute w-10 h-10 animate-float" style="top: 65%; left: 70%;" />
+      <img src="img/icon-apple.svg" class="absolute w-10 h-10 animate-float" style="top: 35%; left: 80%; animation-delay: 1s;" />
+      <img src="img/icon-runner.svg" class="absolute w-10 h-10 animate-float" style="top: 20%; left: 90%;" />
+      <img src="img/icon-leaf.svg" class="absolute w-9 h-9 animate-float" style="top: 80%; left: 10%; animation-delay: 0.8s;" />
+      <img src="img/icon-water.svg" class="absolute w-9 h-9 animate-float" style="top: 70%; left: 20%;" />
+    </div>
+  
+    <!-- Konten Utama -->
+    <div class="container mx-auto px-6 py-20 md:py-28 relative z-10">
+      <div class="flex flex-col md:flex-row items-center justify-between">
+        
+        <!-- Kolom Teks (Kiri) -->
+        <div class="w-full md:w-7/12 mb-12 md:mb-0 pl-4 md:pl-10">
+          <h1 class="font-spartan text-6xl md:text-7xl font-extrabold leading-none mb-0 tracking-tight">
+            <span class="block text-white">Sehat.In</span>
+          </h1>
+
+          <h2 id="changingText" class="font-spartan text-6xl md:text-7xl font-extrabold leading-none mb-6 tracking-tight text-lime-300">
+          </h2>
+
+          <p class="text-lg md:text-xl text-gray-200 mb-8">
+            Platform untuk memandu <span class="text-lime-300 font-semibold">transformasi fisikmu</span>, menyediakan kalkulator, roadmap, dan tips untuk mencapai tubuh ideal. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione, accusamus impedit. Est numquam nulla eum quia obcaecati incidunt laboriosam repellendus, doloribus, reiciendis, doloremque dolorum veniam! Error nihil ab repellat perspiciatis!
+          </p>
+          <a href="#kalkulator" class="group relative inline-flex items-center px-8 py-3 text-lg font-medium rounded-lg overflow-hidden bg-linear-to-r from-lime-400/80 to-green-500/80">
+            <span class="absolute inset-0 bg-linear-to-r from-lime-400 to-green-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></span>
+            <span class="relative text-white">Mulai Hitung</span>
+            <svg class="w-6 h-6 ml-2 relative text-white group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </a>
+        </div>
+  
+        <!-- Kolom Gambar (Kanan) -->
+        <div class="w-full md:w-5/12 flex justify-center md:justify-end -mt-6">
+          <div class="relative group">
+            <!-- Ganti src dengan path gambar utama Anda dan menambahkan glow kuning -->
+            <img src="img/fitness-person.png" alt="Orang berolahraga" class="w-[340px] h-auto object-contain transform transition duration-500 group-hover:scale-110 group-hover:drop-shadow-[0_0_25px_rgba(234,179,8,0.7)]">
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  
+    <!-- Wave Bawah -->
+    <div class="absolute bottom-0 left-0 right-0">
+      <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="#f0fdf4" />
+      </svg>
+    </div>
+  </section>
+  <!--Hero Section End-->
+  <!--Footer-->
+  <footer class="bg-green-500 text-white mt-10 shadow-inner">
+    <div class="w-11/12 mx-auto py-6">
+      <div class="flex justify-between items-center">
+        <!-- Bagian Kiri: Copyright -->
+        <div>
+          <p class="text-sm font-medium">
+            &copy; 2025 Sehat.In. All Rights Reserved.
+          </p>
+        </div>
+
+        <!-- Bagian Tengah: Slogan (disembunyikan di layar kecil) -->
+        <div class="hidden md:block">
+          <p class="text-base font-semibold">
+            Pahami Tubuhmu, Mulai Transformasi Idealmu.
+          </p>
+        </div>
+
+        <!-- Bagian Kanan: Ikon Media Sosial -->
+        <div class="flex items-center space-x-4">
+          <!-- Ganti href dengan link asli dan src dengan path gambar yang benar -->
+          <a href="#" target="_blank" rel="noopener noreferrer" class="transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_5px_rgba(255,255,255,0.7)]">
+            <img src="img/github.svg" alt="GitHub" class="h-6 w-6">
+          </a>
+          <a href="#" target="_blank" rel="noopener noreferrer" class="transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_5px_rgba(255,255,255,0.7)]">
+            <img src="img/gitlab.svg" alt="GitLab" class="h-6 w-6">
+          </a>
+          <a href="#" target="_blank" rel="noopener noreferrer" class="transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_5px_rgba(255,255,255,0.7)]">
+            <img src="img/linkedin.svg" alt="LinkedIn" class="h-6 w-6">
+          </a>
+          <a href="#" target="_blank" rel="noopener noreferrer" class="transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_5px_rgba(255,255,255,0.7)]">
+            <img src="img/instagram.svg" alt="Instagram" class="h-6 w-6">
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!--Footer end-->
+  
+</body>
+<script>
     const menuToggleButton = document.getElementById('menu-toggle-button');
     const navbarDropdown = document.getElementById('navbar-dropdown');
     const dropdownToggleButton = document.getElementById('dropdown-toggle-button');
     const dropdownMenu = document.getElementById('dropdown-menu');
     const dropdownIcon = document.getElementById('dropdown-icon');
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const texts = ["Kesehatan.", "Kebugaran.", "Nutrisi."];
+    const changingTextElement = document.getElementById("changingText");
+    let index = 0;
+
+    function changeText() {
+      // Fade out
+      changingTextElement.style.opacity = 0;
+
+      setTimeout(() => {
+        index = (index + 1) % texts.length;
+        changingTextElement.textContent = texts[index];
+        // Fade in
+        changingTextElement.style.opacity = 1;
+      }, 500); // Waktu ini harus cocok dengan durasi transisi
+    }
+
+    changingTextElement.textContent = texts[0]; // Tampilkan teks pertama saat load
+    setInterval(changeText, 3000); // Ganti teks setiap 3 detik
+  });
 
     function toggleMenu() {
       navbarDropdown.classList.toggle('hidden');
@@ -136,8 +261,7 @@
         navbarDropdown.classList.add('hidden');
       }
     });
+</script>
 
-  </script>
-</body>
 
 </html>
