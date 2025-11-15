@@ -9,75 +9,84 @@
   <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <title>Document</title>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f7fbfd;
+    }
+  
+    .dropdown-visible {
+      display: block !important;
+    }
+  
+    .menu-visible {
+      display: block !important;
+    }
+  </style>
 </head>
 
 <body>
   <!--Navbar-->
-  <div class="flex justify-center my-2">
-  <nav class="bg-green-500 border-gray-200 dark:bg-green-500 rounded-[10px] w-4/5 shadow-emerald-600/50 shadow-lg">
-    <div class="flex flex-wrap items-center justify-between mx-4 p-4">
-      <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
-        <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Logo Sehat.In" />
-        <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Sehat.In</span>
-      </a>
-      <button data-collapse-toggle="navbar-dropdown" type="button"
-        class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-        aria-controls="navbar-dropdown" aria-expanded="false">
-        <span class="sr-only">Open main menu</span>
-        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M1 1h15M1 7h15M1 13h15" />
-        </svg>
-      </button>
-      <div class="hidden w-full md:block md:w-auto" id="navbar-dropdown">
-        <ul
-          class="font-medium flex flex-col p-3 md:p-0 mt-4 border border-gray-100 rounded-lg bg-green-500 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-green-500 dark:bg-green-500 md:dark:bg-green-500 dark:border-gray-700">
-          <li>
-            <a href="index.html"
-              class="text-white rounded-lg p-2 block hover:bg-white/20 transition-all duration-300 ease-in-out"
-              aria-current="page">Home</a>
-          </li>
-          <li>
-            <button id="dropdownNvbarButton" data-dropdown-toggle="dropdownNavbar"
-              class="flex items-center justify-between w-full p-2 rounded-lg font-medium text-white md:w-auto hover:bg-white/20 md:border-0 transition-all duration-300 ease-in-out">
-              Kalkulator
-              <svg class="w-4 h-4 ms-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7" />
-              </svg>
-            </button>
-            <!-- Dropdown menu -->
-            <div id="dropdownNavbar"
-              class="z-10 hidden bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44">
-              <ul class="p-2 text-sm text-body font-medium" aria-labelledby="dropdownNvbarButton">
-                <li>
-                  <a href="#"
-                    class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">Dashboard</a>
-                </li>
-                <li>
-                  <a href="#"
-                    class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">Settings</a>
-                </li>
-                <li>
-                  <a href="#"
-                    class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">Earnings</a>
-                </li>
-                <li>
-                  <a href="#"
-                    class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">Sign
-                    out</a>
-                </li>
-              </ul>
-            </div>
-          </li>
-          <li>
-            <a href="roadmap.html"
-              class="text-white rounded-lg p-2 block hover:bg-white/20 transition-all duration-300 ease-in-out">Roadmap</a>
-          </li>
-        </ul>
+  <div class="flex justify-center p-4 sticky top-0 z-50 bg-transparent dark:bg-transparent ">
+    <nav class="bg-green-500 dark:bg-green-500 border-gray-200 rounded-2xl w-full md:w-4/5 shadow-xl shadow-emerald-600/50">
+      <div class="flex flex-wrap items-center justify-between mx-4 p-4">
+        <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+          <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Logo Sehat.In" />
+          <span class="self-center text-2xl font-bold whitespace-nowrap text-white">Sehat.In</span>
+        </a>
+        <button id="menu-toggle-button" type="button"
+          class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-white rounded-lg md:hidden hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-300 transition"
+          aria-controls="navbar-dropdown" aria-expanded="false">
+          <span class="sr-only">Open main menu</span>
+          <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M1 1h15M1 7h15M1 13h15" />
+          </svg>
+        </button>
+        <div class="hidden w-full md:block md:w-auto" id="navbar-dropdown">
+          <ul
+            class="font-medium flex flex-col p-3 md:p-0 mt-4 border border-green-400 rounded-xl bg-green-500 md:flex-row md:space-x-4 md:mt-0 md:border-0 md:bg-green-500">
+            <li>
+              <a href="index.html"
+                class="text-white rounded-lg px-4 py-2 block md:inline-block hover:bg-lime-400 transition duration-300 font-semibold"
+                aria-current="page">Home</a>
+            </li>
+            <li class="relative">
+              <button id="dropdown-toggle-button" type="button"
+                class="flex items-center justify-between w-full rounded-lg px-4 py-2 font-semibold text-white hover:bg-lime-400 transition duration-300 md:w-auto">
+                Kalkulator
+                <svg id="dropdown-icon" class="w-4 h-4 ms-1.5 transition-transform duration-300" aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="m19 9-7 7-7-7" />
+                </svg>
+              </button>
+              <div id="dropdown-menu"
+                class="absolute hidden md:mt-2 w-48 bg-emerald-500 border-gray-200 rounded-xl shadow-xl z-20 md:left-1/2 md:-translate-x-1/2">
+                <ul class="p-2.5 text-sm text-white font-medium">
+                  <li>
+                    <a href="kalkulator/kalkukalorim.html" class="block p-1.5 hover:bg-green-500 rounded transition duration-200">Kalkulator
+                      Kalori Makanan</a>
+                  </li>
+                  <li>
+                    <a href="kalkulator/kalkukaloh.html" class="block p-1.5 hover:bg-green-500 rounded transition duration-200">Kalkulator Kalori
+                      Harian</a>
+                  </li>
+                  <li>
+                    <a href="kalkulator/kalkubbideal.html" class="block p-1.5 hover:bg-green-500 rounded transition duration-200">Kalkulator
+                      BB Ideal</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li>
+              <a href="roadmap.html"
+                class="text-white rounded-lg px-4 py-2 block md:inline-block hover:bg-lime-400 transition duration-300 font-semibold">Roadmap</a>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav>
   </div>
   <!--Navbar end-->
   
@@ -114,8 +123,8 @@
           <p class="text-lg md:text-xl text-gray-200 mb-8">
             Platform untuk memandu <span class="text-lime-300 font-semibold">transformasi fisikmu</span>, menyediakan kalkulator, roadmap, dan tips untuk mencapai tubuh ideal. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione, accusamus impedit. Est numquam nulla eum quia obcaecati incidunt laboriosam repellendus, doloribus, reiciendis, doloremque dolorum veniam! Error nihil ab repellat perspiciatis!
           </p>
-          <a href="#kalkulator" class="group relative inline-flex items-center px-8 py-3 text-lg font-medium rounded-lg overflow-hidden bg-gradient-to-r from-lime-400/80 to-green-500/80">
-            <span class="absolute inset-0 bg-gradient-to-r from-lime-400 to-green-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></span>
+          <a href="#kalkulator" class="group relative inline-flex items-center px-8 py-3 text-lg font-medium rounded-lg overflow-hidden bg-linear-to-r from-lime-400/80 to-green-500/80">
+            <span class="absolute inset-0 bg-linear-to-r from-lime-400 to-green-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></span>
             <span class="relative text-white">Mulai Hitung</span>
             <svg class="w-6 h-6 ml-2 relative text-white group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
@@ -183,6 +192,12 @@
   
 </body>
 <script>
+    const menuToggleButton = document.getElementById('menu-toggle-button');
+    const navbarDropdown = document.getElementById('navbar-dropdown');
+    const dropdownToggleButton = document.getElementById('dropdown-toggle-button');
+    const dropdownMenu = document.getElementById('dropdown-menu');
+    const dropdownIcon = document.getElementById('dropdown-icon');
+
   document.addEventListener('DOMContentLoaded', function () {
     const texts = ["Kesehatan.", "Kebugaran.", "Nutrisi."];
     const changingTextElement = document.getElementById("changingText");
@@ -203,6 +218,49 @@
     changingTextElement.textContent = texts[0]; // Tampilkan teks pertama saat load
     setInterval(changeText, 3000); // Ganti teks setiap 3 detik
   });
+
+    function toggleMenu() {
+      navbarDropdown.classList.toggle('hidden');
+      navbarDropdown.classList.toggle('menu-visible');
+    }
+
+    function toggleDropdown() {
+      dropdownMenu.classList.toggle('hidden');
+      dropdownMenu.classList.toggle('dropdown-visible');
+
+      if (dropdownMenu.classList.contains('dropdown-visible')) {
+        dropdownIcon.classList.add('rotate-180');
+      } else {
+        dropdownIcon.classList.remove('rotate-180');
+      }
+    }
+
+    menuToggleButton.addEventListener('click', toggleMenu);
+
+    dropdownToggleButton.addEventListener('click', function (event) {
+      event.stopPropagation();
+      toggleDropdown();
+    });
+
+    document.addEventListener('click', function (event) {
+      const isClickInsideDropdown = dropdownMenu.contains(event.target);
+      const isClickOnButton = dropdownToggleButton.contains(event.target);
+
+      if (dropdownMenu.classList.contains('dropdown-visible') && !isClickInsideDropdown && !isClickOnButton) {
+        toggleDropdown();
+      }
+    });
+
+    window.addEventListener('resize', function () {
+      if (window.innerWidth >= 768) {
+        navbarDropdown.classList.remove('hidden');
+        navbarDropdown.classList.remove('menu-visible');
+        dropdownMenu.classList.add('hidden');
+        dropdownIcon.classList.remove('rotate-180');
+      } else if (!navbarDropdown.classList.contains('menu-visible')) {
+        navbarDropdown.classList.add('hidden');
+      }
+    });
 </script>
 
 
