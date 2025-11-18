@@ -79,6 +79,30 @@
                 </ul>
               </div>
             </li>
+            <li class="relative">
+              <button id="program-dropdown-toggle" type="button"
+                class="flex items-center justify-between w-full rounded-lg px-4 py-2 font-semibold text-white hover:bg-lime-400 transition duration-300 md:w-auto">
+                Program
+                <svg id="program-dropdown-icon" class="w-4 h-4 ms-1.5 transition-transform duration-300" aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7" />
+                </svg>
+              </button>
+              <div id="program-dropdown-menu"
+                class="absolute hidden md:mt-2 w-48 bg-emerald-500 border-gray-200 rounded-xl shadow-xl z-20 md:left-1/2 md:-translate-x-1/2">
+                <ul class="p-2.5 text-sm text-white font-medium">
+                  <li>
+                    <a href="program/ppolamakan.html"
+                      class="block p-1.5 hover:bg-green-500 rounded transition duration-200">Program
+                      Pola Makan Sehat</a>
+                  </li>
+                  <li>
+                    <a href="program/plativitas.html"
+                      class="block p-1.5 hover:bg-green-500 rounded transition duration-200">Program Latihan berbasis Aktivitas Harian</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
             <li>
               <a href="roadmap.html"
                 class="text-white rounded-lg px-4 py-2 block md:inline-block hover:bg-lime-400 transition duration-300 font-semibold">Roadmap</a>
@@ -197,6 +221,9 @@
     const dropdownToggleButton = document.getElementById('dropdown-toggle-button');
     const dropdownMenu = document.getElementById('dropdown-menu');
     const dropdownIcon = document.getElementById('dropdown-icon');
+    const programDropdownToggleButton = document.getElementById('program-dropdown-toggle');
+    const programDropdownMenu = document.getElementById('program-dropdown-menu');
+    const programDropdownIcon = document.getElementById('program-dropdown-icon');
 
   document.addEventListener('DOMContentLoaded', function () {
     const texts = ["Kesehatan.", "Kebugaran.", "Nutrisi."];
@@ -224,14 +251,14 @@
       navbarDropdown.classList.toggle('menu-visible');
     }
 
-    function toggleDropdown() {
-      dropdownMenu.classList.toggle('hidden');
-      dropdownMenu.classList.toggle('dropdown-visible');
+    function toggleDropdown(button, menu, icon) {
+      menu.classList.toggle('hidden');
+      menu.classList.toggle('dropdown-visible');
 
-      if (dropdownMenu.classList.contains('dropdown-visible')) {
-        dropdownIcon.classList.add('rotate-180');
+      if (menu.classList.contains('dropdown-visible')) {
+        icon.classList.add('rotate-180');
       } else {
-        dropdownIcon.classList.remove('rotate-180');
+        icon.classList.remove('rotate-180');
       }
     }
 
@@ -239,15 +266,26 @@
 
     dropdownToggleButton.addEventListener('click', function (event) {
       event.stopPropagation();
-      toggleDropdown();
+      toggleDropdown(dropdownToggleButton, dropdownMenu, dropdownIcon);
+    });
+
+    programDropdownToggleButton.addEventListener('click', function (event) {
+      event.stopPropagation();
+      toggleDropdown(programDropdownToggleButton, programDropdownMenu, programDropdownIcon);
     });
 
     document.addEventListener('click', function (event) {
       const isClickInsideDropdown = dropdownMenu.contains(event.target);
       const isClickOnButton = dropdownToggleButton.contains(event.target);
+      const isClickInsideProgram = programDropdownMenu.contains(event.target);
+      const isClickOnProgramButton = programDropdownToggleButton.contains(event.target);
 
       if (dropdownMenu.classList.contains('dropdown-visible') && !isClickInsideDropdown && !isClickOnButton) {
         toggleDropdown();
+      }
+
+      if (programDropdownMenu.classList.contains('dropdown-visible') && !isClickInsideProgram && !isClickOnProgramButton) {
+        toggleDropdown(programDropdownToggleButton, programDropdownMenu, programDropdownIcon);
       }
     });
 
