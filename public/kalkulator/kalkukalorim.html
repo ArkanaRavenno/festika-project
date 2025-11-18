@@ -252,13 +252,61 @@
 
     // Data makanan (kalori per 100g)
     const foods = [
-      { name: "Nasi Putih", calories: 130 },
-      { name: "Ayam Goreng", calories: 250 },
-      { name: "Sayur Bayam", calories: 23 },
-      { name: "Pisang", calories: 89 },
-      { name: "Telur Rebus", calories: 155 },
-      { name: "Ikan Salmon", calories: 206 }
-    ];
+        // Makanan Berat/Pokok
+        { name: "Nasi Putih", calories: 130 }, // Nasi Putih (matang)
+        { name: "Nasi Merah", calories: 110 }, // Nasi Merah (matang)
+        { name: "Mie Instan (Kering)", calories: 480 }, // Mie Instan (belum dimasak/kering)
+        { name: "Roti Tawar Putih", calories: 265 },
+        { name: "Ubi Jalar Rebus", calories: 76 },
+        { name: "Kentang Rebus", calories: 87 },
+        { name: "Jagung Rebus", calories: 96 },
+        { name: "Lontong", calories: 100 },
+        { name: "Ketupat", calories: 100 },
+
+        // Lauk Pauk (Protein)
+        { name: "Ayam Goreng (Dada, dengan kulit)", calories: 250 },
+        { name: "Ayam Goreng (Paha, dengan kulit)", calories: 280 },
+        { name: "Telur Rebus", calories: 155 },
+        { name: "Telur Ceplok (Minyak sedang)", calories: 196 },
+        { name: "Tempe Goreng", calories: 200 },
+        { name: "Tahu Goreng", calories: 150 },
+        { name: "Daging Sapi (Rebus/Non-lemak)", calories: 131 },
+        { name: "Ikan Lele Goreng", calories: 220 },
+        { name: "Ikan Bandeng Goreng", calories: 230 },
+        { name: "Udang Rebus", calories: 99 },
+        { name: "Gulai Ayam", calories: 190 }, // Estimasi dengan kuah santan sedang
+
+        // Sayuran (Rebus/Tumis sederhana)
+        { name: "Sayur Bayam (Rebus)", calories: 23 },
+        { name: "Kangkung (Tumis, sedikit minyak)", calories: 40 },
+        { name: "Buncis (Rebus)", calories: 31 },
+        { name: "Wortel (Rebus)", calories: 41 },
+        { name: "Tumis Tauge", calories: 50 },
+
+        // Buah-buahan
+        { name: "Pisang Kepok", calories: 128 },
+        { name: "Mangga Arumanis", calories: 60 },
+        { name: "Apel", calories: 52 },
+        { name: "Jeruk Manis", calories: 47 },
+        { name: "Pepaya", calories: 43 },
+        { name: "Semangka", calories: 30 },
+        { name: "Alpukat", calories: 160 },
+
+        // Jajanan Pasar/Makanan Siap Saji Populer
+        { name: "Nasi Goreng", calories: 250 }, // Estimasi porsi kecil-sedang
+        { name: "Gado-Gado", calories: 150 }, // Estimasi tanpa kerupuk, porsi kecil
+        { name: "Sate Ayam (dengan bumbu kacang)", calories: 200 }, // Estimasi 3-4 tusuk
+        { name: "Bakso Sapi (Kuah, tanpa mie)", calories: 110 }, // Estimasi 3-4 butir bakso
+        { name: "Soto Ayam", calories: 60 }, // Estimasi kuah bening, tanpa nasi
+        { name: "Kerupuk Udang", calories: 480 },
+        { name: "Kue Cubit", calories: 350 },
+        { name: "Martabak Manis (Terang Bulan)", calories: 300 }, // Estimasi per 100g potongan
+        { name: "Gorengan (Bakwan/Tahu Isi)", calories: 250 }, // Estimasi 100g atau 2-3 buah
+
+        // Minuman
+        { name: "Teh Manis (Gula Normal, Sekitar 200ml)", calories: 40 }, // Estimasi 200ml
+        { name: "Kopi Hitam (Tanpa gula, Sekitar 200ml)", calories: 2 } // Estimasi 200ml
+      ];
 
     let selectedFoods = [];
 
