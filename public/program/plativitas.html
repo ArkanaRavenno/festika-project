@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../style.css">
-  <title>Kalkulator Kalori Makanan 🥗</title>
+  <title>Document</title>
   <style>
     body {
       font-family: 'Inter', sans-serif;
@@ -19,40 +19,14 @@
     .menu-visible {
       display: block !important;
     }
-
-    #food-list::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    #food-list::-webkit-scrollbar-thumb {
-      background-color: #6ee7b7;
-      border-radius: 3px;
-    }
-
-    #food-list::-webkit-scrollbar-track {
-      background-color: #f0fdf4;
-    }
-
-    select {
-      background-image: linear-gradient(to right, #ffffff, #f0fdf4);
-      cursor: pointer;
-    }
-
-    select:hover {
-      background-color: #f0fdf4;
-    }
-
-    select:focus {
-      outline: none;
-      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.3);
-    }
   </style>
 </head>
 
-<body class="bg-linear-to-br from-green-50 to-green-100 min-h-screen font-sans">
+<body>
   <!--Navbar-->
   <div class="flex justify-center p-4 sticky top-0 z-50 bg-transparent dark:bg-transparent ">
-    <nav class="bg-green-500 dark:bg-green-500 border-gray-200 rounded-2xl w-full md:w-4/5 shadow-xl shadow-emerald-600/50">
+    <nav
+      class="bg-green-500 dark:bg-green-500 border-gray-200 rounded-2xl w-full md:w-4/5 shadow-xl shadow-emerald-600/50">
       <div class="flex flex-wrap items-center justify-between mx-4 p-4">
         <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
           <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Logo Sehat.In" />
@@ -89,17 +63,17 @@
                 class="absolute hidden md:mt-2 w-48 bg-emerald-500 border-gray-200 rounded-xl shadow-xl z-20 md:left-1/2 md:-translate-x-1/2">
                 <ul class="p-2.5 text-sm text-white font-medium">
                   <li>
-                    <a href="kalkukalorim.html"
+                    <a href="../kalkulator/kalkukalorim.html"
                       class="block p-1.5 hover:bg-green-500 rounded transition duration-200">Kalkulator
                       Kalori Makanan</a>
                   </li>
                   <li>
-                    <a href="kalkukaloh.html"
+                    <a href="../kalkulator/kalkukaloh.html"
                       class="block p-1.5 hover:bg-green-500 rounded transition duration-200">Kalkulator Kalori
                       Harian</a>
                   </li>
                   <li>
-                    <a href="kalkubbideal.html"
+                    <a href="../kalkulator/kalkubbideal.html"
                       class="block p-1.5 hover:bg-green-500 rounded transition duration-200">Kalkulator
                       BB Ideal</a>
                   </li>
@@ -121,12 +95,12 @@
                 class="absolute hidden md:mt-2 w-48 bg-emerald-500 border-gray-200 rounded-xl shadow-xl z-20 md:left-1/2 md:-translate-x-1/2">
                 <ul class="p-2.5 text-sm text-white font-medium">
                   <li>
-                    <a href="../program/ppolamakan.html"
+                    <a href="ppolamakan.html"
                       class="block p-1.5 hover:bg-green-500 rounded transition duration-200">Program
                       Pola Makan Sehat</a>
                   </li>
                   <li>
-                    <a href="../program/plativitas.html"
+                    <a href="plativitas.html"
                       class="block p-1.5 hover:bg-green-500 rounded transition duration-200">Program Latihan berbasis
                       Aktivitas Harian</a>
                   </li>
@@ -143,59 +117,6 @@
     </nav>
   </div>
   <!--Navbar end-->
-
-  <!--Content-->
-  <div class="max-w-4xl mx-auto">
-    <h1 class="text-4xl font-extrabold text-center mb-8 text-green-900 drop-shadow-md">
-      Kalkulator Kalori Makanan
-    </h1>
-
-    <div class="bg-linear-to-br from-white to-green-50 shadow-2xl rounded-2xl p-8 mb-8 border-t-4 border-green-400 transform hover:scale-[1.005] transition duration-300">
-      <h2 class="text-2xl font-bold mb-5 text-green-700 border-b pb-2 border-green-100">Tambah Makanan Baru</h2>
-
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6 items-end">
-        <div class="md:col-span-2">
-          <label for="food-select" class="block text-sm font-medium text-gray-700">Pilih Makanan</label>
-          <select id="food-select"
-            class="mt-1 block w-full border-green-300 rounded-lg shadow-sm p-2 focus:ring-green-500 focus:border-green-500 bg-white hover:border-green-400 transition duration-150">
-          </select>
-        </div>
-        <div>
-          <label for="quantity" class="block text-sm font-medium text-gray-700">Jumlah (gram)</label>
-          <input type="number" id="quantity" min="1"
-            class="mt-1 block w-full border-green-300 rounded-lg shadow-sm p-2 focus:ring-green-500 focus:border-green-500 bg-white"
-            placeholder="Cth: 150">
-        </div>
-        <div>
-          <button id="add-btn"
-            class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-lg shadow-lg transition duration-200 transform hover:scale-105 active:scale-95">
-            <span class="mr-1">+</span> Tambah
-          </button>
-        </div>
-      </div>
-
-      <h3 class="text-xl font-bold mb-3 text-green-700">Daftar Makanan Anda</h3>
-      <div id="food-list"
-        class="border border-green-300 rounded-lg p-4 bg-green-50 max-h-64 overflow-y-auto shadow-inner">
-        <p class="text-gray-500 text-center py-4">Belum ada makanan yang ditambahkan.</p>
-      </div>
-
-      <div class="mt-6 text-center">
-        <button id="calculate-btn"
-          class="bg-green-500 hover:bg-green-600 text-white font-bold text-lg py-3 px-8 rounded-full shadow-lg transition duration-200 transform hover:scale-105 active:scale-95">
-          Hitung Total Kalori
-        </button>
-      </div>
-    </div>
-
-    <div id="result-card"
-      class="bg-linear-to-r from-green-200 to-green-100 shadow-2xl rounded-2xl p-8 border-l-8 border-green-600 hidden text-center transform hover:bg-green-100 transition duration-300">
-      <h2 class="text-2xl font-bold mb-4 text-green-800">Total Kalori Makanan</h2>
-      <p id="total-calories" class="text-5xl font-extrabold text-green-900 animate-pulse">0.00 kalori</p>
-      <p class="text-gray-600 mt-2">Pastikan semua data makanan yang anda masukkan sudah benar!</p>
-    </div>
-  </div>
-  <!--Content End-->
 
   <script>
     const menuToggleButton = document.getElementById('menu-toggle-button');
@@ -250,102 +171,16 @@
       }
     });
 
-    // Data makanan (kalori per 100g)
-    const foods = [
-      { name: "Nasi Putih", calories: 130 },
-      { name: "Ayam Goreng", calories: 250 },
-      { name: "Sayur Bayam", calories: 23 },
-      { name: "Pisang", calories: 89 },
-      { name: "Telur Rebus", calories: 155 },
-      { name: "Ikan Salmon", calories: 206 }
-    ];
-
-    let selectedFoods = [];
-
-    const foodSelect = document.getElementById('food-select');
-    const quantityInput = document.getElementById('quantity');
-    const addBtn = document.getElementById('add-btn');
-    const foodList = document.getElementById('food-list');
-    const calculateBtn = document.getElementById('calculate-btn');
-    const resultCard = document.getElementById('result-card');
-    const totalCalories = document.getElementById('total-calories');
-
-    foods.forEach(food => {
-      const option = document.createElement('option');
-      option.value = food.name;
-      option.textContent = `${food.name} (${food.calories} kal/100g)`;
-      foodSelect.appendChild(option);
-    });
-
-    addBtn.addEventListener('click', () => {
-      const selectedFoodName = foodSelect.value;
-      const quantity = parseInt(quantityInput.value);
-
-      if (!selectedFoodName || !quantity || quantity <= 0) {
-        alert('Pilih makanan dan masukkan jumlah yang valid (lebih dari 0 gram)!');
-        return;
+    window.addEventListener('resize', function () {
+      if (window.innerWidth >= 768) {
+        navbarDropdown.classList.remove('hidden');
+        navbarDropdown.classList.remove('menu-visible');
+        dropdownMenu.classList.add('hidden');
+        dropdownIcon.classList.remove('rotate-180');
+      } else if (!navbarDropdown.classList.contains('menu-visible')) {
+        navbarDropdown.classList.add('hidden');
       }
-
-      const food = foods.find(f => f.name === selectedFoodName);
-      const calories = (food.calories / 100) * quantity;
-
-      selectedFoods.push({
-        name: selectedFoodName,
-        quantity: quantity,
-        calories: calories
-      });
-
-      updateFoodList();
-      quantityInput.value = '';
-      resultCard.classList.add('hidden');
     });
-
-    function updateFoodList() {
-      foodList.innerHTML = '';
-      if (selectedFoods.length === 0) {
-        foodList.innerHTML = '<p class="text-gray-500 text-center py-4">Belum ada makanan yang ditambahkan.</p>';
-        return;
-      }
-
-      const ul = document.createElement('ul');
-      ul.className = 'space-y-3';
-      selectedFoods.forEach((item, index) => {
-        const li = document.createElement('li');
-        li.className = 'flex justify-between items-center bg-white p-4 rounded-lg shadow-md border border-green-100 transform hover:shadow-lg hover:border-green-300 transition duration-150';
-        li.innerHTML = `
-                    <div class="flex-grow">
-                        <span class="font-semibold text-green-800">${item.name}</span> 
-                        <span class="text-sm text-gray-500 ml-2">(${item.quantity}g)</span>
-                    </div>
-                    <span class="font-bold text-green-600 mr-4">${item.calories.toFixed(2)} kal</span>
-                    <button class="text-red-500 hover:text-red-700 font-medium p-1 rounded-full hover:bg-red-50 transition duration-150" onclick="removeFood(${index})">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 6h6v10H7V6z" clip-rule="evenodd" />
-                        </svg>
-                    </button>
-                `;
-        ul.appendChild(li);
-      });
-      foodList.appendChild(ul);
-    }
-
-    window.removeFood = function (index) {
-      selectedFoods.splice(index, 1);
-      updateFoodList();
-      resultCard.classList.add('hidden');
-    }
-
-    calculateBtn.addEventListener('click', () => {
-      if (selectedFoods.length === 0) {
-        alert('Silakan tambahkan makanan terlebih dahulu!');
-        return;
-      }
-      const total = selectedFoods.reduce((sum, item) => sum + item.calories, 0);
-      totalCalories.textContent = `${total.toFixed(2)} kalori`;
-      resultCard.classList.remove('hidden');
-    });
-
-    updateFoodList();
   </script>
 </body>
 
