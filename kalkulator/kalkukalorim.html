@@ -58,6 +58,20 @@
         position: relative;
         overflow-x: hidden;
       }
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f0fdf4;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #22c55e; /* green-500 */
+        border-radius: 10px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #15803d; /* green-700 */
+      }
       /* Background elements (sama persis) */
       .background-element {
         position: absolute;
@@ -244,7 +258,6 @@
         --c1: #f0fdf4;
         --c2: #10b981;
         --size-letter: 20px;
-        padding: 0.8em 1.5em;
         font-size: var(--size-letter);
         background-color: transparent;
         border: calc(var(--size-letter) / 6) solid var(--c2);

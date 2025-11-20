@@ -9,8 +9,13 @@
   <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <title>Sehat.In</title>
   <style>
+    body{
+      font-family: "Poppins", sans-serif;
+    }
     .dropdown-visible {
       display: block !important;
     }
@@ -93,7 +98,7 @@
 
 <body class="bg-green-800 relative"  style="font-family: 'Inter', sans-serif; background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg id='hexagons' fill='%2316a34a' fill-opacity='0.1' fill-rule='nonzero'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.99-7.5L26 15v19l-13 7.5L0 34V15z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E&quot;);">
   <div class="absolute inset-0 bg-green-900/70 z-0"></div>
-  <div class="relative z-10">
+  <div class="">
     <!--Bagian Navbar-->
     <div class="flex justify-center p-4 sticky top-0 z-50 bg-transparent">
       <nav class="bg-green-500 dark:bg-green-500 border-gray-200 rounded-2xl w-full md:w-4/5 shadow-xl shadow-emerald-600/50" data-svelte-h="svelte-1x7j2rs">
@@ -116,12 +121,12 @@
               class="font-medium flex flex-col p-3 md:p-0 mt-4 border border-green-400 rounded-xl bg-green-500 md:flex-row md:space-x-4 md:mt-0 md:border-0 md:bg-green-500">
               <li>
                 <a href="index.html"
-                  class="text-white rounded-lg px-4 py-2 block md:inline-block hover:bg-lime-400 transition duration-300 font-semibold"
+                  class="text-white rounded-lg px-5 py-2 block md:inline-block hover:bg-lime-400 transition duration-300 font-semibold"
                   aria-current="page">Home</a>
               </li>
               <li class="relative">
                 <button id="dropdown-toggle-button" type="button"
-                  class="flex items-center justify-between w-full rounded-lg px-4 py-2 font-semibold text-white hover:bg-lime-400 transition duration-300 md:w-auto">
+                  class="flex items-center justify-between w-full rounded-lg px-5 py-2 font-semibold text-white hover:bg-lime-400 transition duration-300 md:w-auto">
                   Kalkulator
                   <svg id="dropdown-icon" class="w-4 h-4 ms-1.5 transition-transform duration-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -145,7 +150,7 @@
               </li>
               <li class="relative">
                 <button id="program-dropdown-toggle" type="button"
-                  class="flex items-center justify-between w-full rounded-lg px-4 py-2 font-semibold text-white hover:bg-lime-400 transition duration-300 md:w-auto">
+                  class="flex items-center justify-between w-full rounded-lg px-5 py-2 font-semibold text-white hover:bg-lime-400 transition duration-300 md:w-auto">
                   Program
                   <svg id="program-dropdown-icon" class="w-4 h-4 ms-1.5 transition-transform duration-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7" />
@@ -201,7 +206,7 @@
             <p class="text-lg md:text-xl text-gray-200 mb-8">
               <span class="text-lime-300 font-semibold"></span>Sehat.In</span> hadir buat membantu kamu membangun kebiasaan yang lebih sehat tanpa harus ribet. Mulai dari belajar mengatur porsi makan lebih bijak, mengkalkulasi kalori sampai merekomendasikan berbagai program dan cara memulai rutinitas yang bikin badan lebih sehat. Nggak harus langsung sempurna yang penting kamu mulai dulu, nikmati prosesnya, dan rasakan pelan-pelan tubuhmu jadi lebih bertenaga, lebih tenang, dan lebih hidup.
             </p>
-          <a href="#kalkulator" class="group relative inline-flex items-center px-8 py-3 text-lg font-medium rounded-lg overflow-hidden bg-green-500/80">
+          <a href="#layanan" class="group relative inline-flex items-center px-8 py-3 text-lg font-medium rounded-lg overflow-hidden bg-green-500/80 scroll-link">
               <span class="absolute inset-0 bg-linear-to-r from-lime-400 to-green-500 opacity-0 group-hover:opacity-100 transition-opacity duration-800"></span>
               <span class="relative text-white">Mulai Hitung</span>
               <svg class="w-6 h-6 ml-2 relative text-white group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -255,7 +260,7 @@
     <!-- Bagian Tentang Kami Selesai -->
 
    <!-- Section: Fitur Kesehatan Fisik – v2 -->
-<section class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-lime-50 to-white">
+<section class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-lime-50 to-white" id="layanan">
   <div class="max-w-7xl mx-auto">
 <!-- Judul Section -->
         <div class="text-center mb-8">
@@ -735,6 +740,26 @@
         });
       }
     });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const scrollLinks = document.querySelectorAll('.scroll-link');
+
+        scrollLinks.forEach(link => {
+          link.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const targetId = this.getAttribute('href').substring(1);
+            const targetElement = document.getElementById(targetId);
+
+            if (targetElement) {
+              window.scrollTo({
+                top: targetElement.offsetTop,
+                behavior: 'smooth'
+              });
+            }
+          });
+        });
+      });
 
 </script>
 
