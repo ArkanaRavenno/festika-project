@@ -4,12 +4,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../style.css">
-  <title>Document</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  
+  <title>Program Latihan - Sehat.In</title>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            // Menggunakan palet default Tailwind, tapi kita pastikan logicnya:
+            // Green = Brand Utama (Navbar/Footer/Active State)
+            // Lime = Aksen (Hover/Glow/Roadmap Line)
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          animation: {
+            'bounce-slow': 'bounce 3s infinite',
+            'fade-in-up': 'fadeInUp 0.5s ease-out forwards',
+          },
+          keyframes: {
+            fadeInUp: {
+              '0%': { opacity: '0', transform: 'translateY(20px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
   <style>
-    body {
+   body {
       font-family: 'Inter', sans-serif;
-      background-color: #f7fbfd;
+      /* Background dengan pola halus dan warna dasar hijau sangat muda */
+      background-color: #ecfccb; /* green-50 */
+      background-image: radial-gradient(#86efac 1px, transparent 1px); /* Pola titik lime-300 */
+      background-size: 20px 20px;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -19,6 +53,7 @@
       flex: 1;
     }
 
+    /* Utility Classes untuk JS Toggle Navbar Asli */
     .dropdown-visible {
       display: block !important;
     }
@@ -27,103 +62,47 @@
       display: block !important;
     }
 
-    #roadmap {
-      margin-top: 1.5rem;
-      position: relative;
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f0fdf4;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #22c55e; /* green-500 */
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #15803d; /* green-700 */
     }
 
-    #roadmap-title {
-      margin-bottom: 1.5rem;
-      color: #16a34a;
-      text-align: center;
-      font-weight: 600;
-    }
-
-    .roadmap-steps-container {
-      position: relative;
-      margin-top: 0;
-    }
-
-    .roadmap-steps-container::before {
+    /* Garis Roadmap */
+    .roadmap-container::before {
       content: '';
       position: absolute;
       left: 50%;
       top: 0;
       bottom: 0;
-      width: 2px;
-      background-color: #16a34a;
+      width: 4px;
+      background: #bef264; /* lime-300 (Aksen) */
       transform: translateX(-50%);
-      z-index: 1;
+      z-index: 0;
+      border-radius: 99px;
     }
-
-    .roadmap-step {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 2rem;
-      position: relative;
-      z-index: 2;
-    }
-
-    .roadmap-step.left {
-      justify-content: flex-end;
-      padding-right: calc(50% + 1rem);
-    }
-
-    .roadmap-step.right {
-      justify-content: flex-start;
-      padding-left: calc(50% + 1rem);
-    }
-
-    .roadmap-step-card {
-      padding: 1rem;
-      width: 100%;
-      max-width: 400px;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .roadmap-step-card:hover {
-      transform: translateY(-2px);
-      border-radius: 0.5rem;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
-    }
-
-    .roadmap-step-number {
-      font-weight: bold;
-      color: #16a34a;
-      margin-bottom: 0.25rem;
-    }
-
-    .roadmap-step-title {
-      font-weight: 600;
-      color: #1f2937;
-      margin-bottom: 0.5rem;
-    }
-
-    .roadmap-step-description {
-      color: #4b5563;
-      font-size: 0.9rem;
-      line-height: 1.5;
-    }
-
-    .roadmap-step::after {
-      content: '';
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      background-color: white;
-      border: 2px solid #16a34a;
-      transform: translate(-50%, -50%);
-      z-index: 3;
+    
+    /* Responsive Line Fix */
+    @media (max-width: 768px) {
+      .roadmap-container::before {
+        left: 20px;
+      }
     }
   </style>
 </head>
 
 <body>
   <div class="main-content">
-    <!--Navbar-->
+    
     <div class="flex justify-center p-4 sticky top-0 z-50 bg-transparent dark:bg-transparent ">
       <nav
         class="bg-green-500 dark:bg-green-500 border-gray-200 rounded-2xl w-full md:w-4/5 shadow-xl shadow-emerald-600/50">
@@ -136,7 +115,7 @@
             class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-white rounded-lg md:hidden hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-300 transition"
             aria-controls="navbar-dropdown" aria-expanded="false">
             <span class="sr-only">Open main menu</span>
-            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg " fill="none" viewBox="0 0 17 14">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M1 1h15M1 7h15M1 13h15" />
             </svg>
@@ -154,7 +133,7 @@
                   class="flex items-center justify-between w-full rounded-lg px-4 py-2 font-semibold text-white hover:bg-lime-400 transition duration-300 md:w-auto">
                   Kalkulator
                   <svg id="dropdown-icon" class="w-4 h-4 ms-1.5 transition-transform duration-300" aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    xmlns="http://www.w3.org/2000/svg " width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                       d="m19 9-7 7-7-7" />
                   </svg>
@@ -185,7 +164,7 @@
                   class="flex items-center justify-between w-full rounded-lg px-4 py-2 font-semibold text-white hover:bg-lime-400 transition duration-300 md:w-auto">
                   Program
                   <svg id="program-dropdown-icon" class="w-4 h-4 ms-1.5 transition-transform duration-300"
-                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg " width="24" height="24" fill="none"
                     viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                       d="m19 9-7 7-7-7" />
@@ -212,63 +191,66 @@
         </div>
       </nav>
     </div>
-    <!--Navbar end-->
-
-    <!--Content-->
-    <div class="max-w-4xl w-full mx-auto p-6">
-      <h1 class="text-3xl font-bold text-center text-blue-600 mb-6">Program Latihan Berbasis Aktivitas Harian</h1>
-      <p class="text-gray-600 text-center mb-4">Pilih kategori aktivitas harian Anda untuk melihat program latihan yang
-        disesuaikan.</p>
-
-      <!-- Input Select -->
-      <div class="mb-6">
-        <label for="activity-group" class="block text-sm font-medium text-gray-700 mb-2">Kategori Aktivitas
-          Harian:</label>
-        <select id="activity-group"
-          class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-          <option value="pelajar">Pelajar (Sekolah/Olahraga)</option>
-          <option value="kantoran">Pekerja Kantoran (Sedentary)</option>
-          <option value="rumah_tangga">Ibu Rumah Tangga (Campuran)</option>
-          <option value="pensiunan">Pensiunan (Lansia)</option>
-          <option value="atlet">Atlet/Warga Aktif (Olahraga Intensif)</option>
-        </select>
+    <div class="max-w-6xl w-full mx-auto px-6 py-10">
+      
+      <div class="text-center mb-12 animate-fade-in-up" >
+        <h1 class="text-3xl md:text-4xl font-bold text-green-600 mb-4">
+          Program Latihan <span class="text-lime-600">Aktivitas Harian</span>
+        </h1>
+        <p class="text-gray-600 max-w-2xl mx-auto">
+          Pilih kategori aktivitas Anda di bawah ini untuk mendapatkan rekomendasi latihan yang dipersonalisasi dan disesuaikan dengan gaya hidup Anda.
+        </p>
       </div>
 
-      <!-- Roadmap Display -->
-      <div id="roadmap" class="hidden">
-        <h2 class="text-2xl font-semibold text-blue-600 mb-6" id="roadmap-title"></h2>
-        <!-- Judul berada di sini, di atas roadmap-steps-container -->
-        <div class="roadmap-steps-container"> <!-- Garis hanya berada di dalam wadah ini -->
-          <div id="roadmap-steps">
-            <!-- Langkah-langkah roadmap akan dimasukkan di sini oleh JavaScript -->
-          </div>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-10" id="activity-cards" >
+        </div>
+
+      <div id="empty-state" class="flex flex-col items-center justify-center py-12 bg-white/80 backdrop-blur-sm border-2 border-dashed border-green-300 rounded-2xl animate-fade-in-up">
+        <div class="bg-lime-100 p-4 rounded-full mb-4 animate-bounce-slow">
+          <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-green-700 mb-2">Belum ada aktivitas dipilih</h3>
+        <p class="text-gray-500 text-center px-4">Silakan klik salah satu kartu aktivitas di atas untuk melihat roadmap latihan Anda.</p>
+      </div>
+
+      <div id="roadmap" class="hidden mt-8 transition-all duration-500">
+        
+        <div class="text-center mb-10">
+          <h2 class="text-2xl font-bold text-green-700" id="roadmap-title"></h2>
+          <span class="inline-block w-24 h-1 bg-lime-400 rounded mt-2"></span>
+        </div>
+
+        <div class="roadmap-container relative py-4">
+          <div id="roadmap-steps" class="space-y-8 relative z-10">
+            </div>
+        </div>
+
+        <div class="mt-12 p-4 bg-green-50 border-l-4 border-lime-500 rounded-r-lg text-sm text-gray-600">
+          <strong>Sumber Referensi:</strong> <span id="source-citation">WHO & CDC Guidelines</span>
         </div>
       </div>
-    </div>
-    <!--Content End-->
-  </div>
 
-  <!--Footer-->
+    </div>
+    </div>
+
   <footer class="bg-green-500 text-white mt-10 shadow-inner">
     <div class="w-11/12 mx-auto py-6">
       <div class="flex justify-between items-center">
-        <!-- Bagian Kiri: Copyright -->
         <div>
           <p class="text-sm font-medium">
             &copy; 2025 Sehat.In. All Rights Reserved.
           </p>
         </div>
   
-        <!-- Bagian Tengah: Slogan (disembunyikan di layar kecil) -->
         <div class="hidden md:block">
           <p class="text-base font-semibold">
             Pahami Tubuhmu, Mulai Transformasi Idealmu.
           </p>
         </div>
   
-        <!-- Bagian Kanan: Ikon Media Sosial -->
         <div class="flex items-center space-x-4">
-          <!-- Ganti href dengan link asli dan src dengan path gambar yang benar -->
           <a href="#" target="_blank" rel="noopener noreferrer"
             class="transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_5px_rgba(255,255,255,0.7)]">
             <img src="../img/footer-navbar/github.png" alt="GitHub" class="h-6 w-6">
@@ -289,9 +271,9 @@
       </div>
     </div>
   </footer>
-  <!--Footer Selesai-->
 
   <script>
+    // --- 1. NAVBAR LOGIC (ASLI DARI KODE ANDA) ---
     const menuToggleButton = document.getElementById('menu-toggle-button');
     const navbarDropdown = document.getElementById('navbar-dropdown');
     const dropdownToggleButton = document.getElementById('dropdown-toggle-button');
@@ -336,7 +318,7 @@
       const isClickOnProgramButton = programDropdownToggleButton.contains(event.target);
 
       if (dropdownMenu.classList.contains('dropdown-visible') && !isClickInsideDropdown && !isClickOnButton) {
-        toggleDropdown();
+        toggleDropdown(dropdownToggleButton, dropdownMenu, dropdownIcon);
       }
 
       if (programDropdownMenu.classList.contains('dropdown-visible') && !isClickInsideProgram && !isClickOnProgramButton) {
@@ -355,87 +337,159 @@
       }
     });
 
+    // --- 2. DATA ROADMAP (DIPERBARUI DENGAN SUMBER TERPERCAYA) ---
     const roadmaps = {
       pelajar: {
-        title: "Program Latihan untuk Pelajar (Sekolah/Olahraga)",
+        title: "Roadmap: Pelajar & Mahasiswa",
+        source: "WHO Guidelines on Physical Activity & CDC Healthy Schools",
         steps: [
-          { title: "Aktivitas Fisik Harian", description: "Lakukan 60 menit aktivitas moderat per hari, seperti berjalan cepat atau bermain olahraga. Tips: Gabungkan dengan pelajaran fisik di sekolah, misalnya sepak bola atau renang selama 30-45 menit. Ini mendukung pertumbuhan otot dan kesehatan mental; hindari overtraining dengan memantau denyut jantung (target 120-150 bpm). Jika cuaca buruk, lakukan latihan dalam ruangan seperti skipping rope. Pastikan minum air sebelum dan sesudah untuk hidrasi." },
-          { title: "Latihan Kekuatan Mingguan", description: "2-3 sesi latihan kekuatan per minggu, fokus pada bodyweight exercises. Tips: Mulai dengan push-up (3 set x 10 reps), squat (3 set x 15 reps), atau plank (3 set x 20 detik). Lakukan di rumah atau taman selama 10-15 menit per sesi. Ini meningkatkan kekuatan tulang dan mencegah obesitas; gunakan matras untuk kenyamanan. Jika merasa sakit, kurangi reps dan konsultasikan guru olahraga." },
-          { title: "Istirahat dan Pemulihan", description: "Sertakan hari istirahat dan tidur 8-10 jam per malam. Tips: Lakukan stretching ringan seperti toe touches atau arm circles selama 5 menit setelah latihan. Hindari layar gadget 1 jam sebelum tidur untuk kualitas istirahat. Pemulihan penting untuk fokus belajar dan pertumbuhan; catat tidur Anda di jurnal harian. Jika stres, tambahkan meditasi 5 menit." },
-          { title: "Aktivitas Luar Ruangan", description: "Tambahkan 30 menit aktivitas luar seperti bersepeda atau hiking. Tips: Lakukan di akhir pekan dengan teman, misalnya hiking di taman selama 20-30 menit. Ini meningkatkan vitamin D dan mengurangi stres sekolah; gunakan sunscreen untuk melindungi kulit. Jika tidak ada akses luar, ganti dengan jogging di sekitar rumah. Pantau cuaca dan hindari polusi tinggi." },
-          { title: "Pantau Kemajuan", description: "Catat aktivitas harian dan sesuaikan intensitas. Tips: Gunakan app sederhana seperti pedometer atau jurnal tulis untuk mencatat durasi dan jenis latihan. Jika merasa lelah, kurangi durasi menjadi 45 menit. Konsultasikan dokter jika ada masalah kesehatan seperti asma. Evaluasi bulanan untuk melihat peningkatan kekuatan atau stamina." }
+          { title: "Aktivitas Aerobik (60 Menit/Hari)", description: "WHO menyarankan 60 menit aktivitas moderat-vigorous. Gabungkan jalan kaki ke sekolah, jam olahraga, atau ekskul basket/futsal." },
+          { title: "Penguatan Tulang & Otot", description: "Lakukan 3x seminggu. Contoh: Lompat tali, push-up, atau lari cepat. Penting untuk masa pertumbuhan puncak." },
+          { title: "Istirahat Digital (Mata & Postur)", description: "Setiap 25 menit belajar, lakukan peregangan 5 menit. Cegah 'Tech Neck' dengan menjaga gadget sejajar mata." },
+          { title: "Tidur Berkualitas", description: "Target 8-10 jam. Hindari gadget 1 jam sebelum tidur untuk memaksimalkan hormon pertumbuhan." }
         ]
       },
       kantoran: {
-        title: "Program Latihan untuk Pekerja Kantoran (Sedentary)",
+        title: "Roadmap: Pekerja Kantoran (Sedentary)",
+        source: "Mayo Clinic: Sitting Risks & Harvard Health",
         steps: [
-          { title: "Aktivitas Moderat Mingguan", description: "Capai 150 menit aktivitas moderat per minggu, seperti jalan kaki atau naik tangga. Tips: Jalan cepat 30 menit saat istirahat makan siang, target denyut jantung 100-120 bpm. Ini melawan efek sedentary dan meningkatkan energi kerja; bagi menjadi 3 sesi x 50 menit. Gunakan tangga kantor untuk cardio cepat. Jika hujan, lakukan treadmill di gym." },
-          { title: "Latihan Kekuatan 2x Seminggu", description: "Latihan kekuatan 2 sesi per minggu, 20-30 menit per sesi. Tips: Gunakan dumbbell ringan (2-5 kg) untuk squats (3 set x 12 reps) atau lunges (3 set x 10 reps per kaki). Lakukan di rumah atau gym kantor. Ini membangun massa otot dan mencegah penyakit jantung; fokus pada form yang benar untuk hindari cedera. Mulai dengan bodyweight jika belum punya alat." },
-          { title: "Peregangan Harian", description: "Lakukan peregangan 10 menit setiap hari untuk mengurangi ketegangan. Tips: Fokus pada leher (putar kepala 10x), punggung (cat-cow pose), dan bahu (arm circles). Lakukan di meja kerja selama 5-10 menit. Ini mencegah nyeri punggung dari duduk lama; gunakan kursi ergonomis. Tambahkan deep breathing untuk relaksasi." },
-          { title: "Aktivitas Kardio", description: "Tambahkan 75 menit aktivitas intensif per minggu, seperti lari ringan. Tips: Lakukan lari interval (1 menit cepat, 2 menit santai) di pagi hari sebelum kerja, total 25-30 menit per sesi. Ini meningkatkan stamina dan mengurangi risiko diabetes; gunakan musik untuk motivasi. Jika lutut sakit, ganti dengan cycling." },
-          { title: "Pantau dan Sesuaikan", description: "Evaluasi mingguan; tingkatkan jika terasa mudah. Tips: Gunakan pedometer untuk hitung langkah (target 10.000/hari). Jika ada kondisi medis seperti hipertensi, konsultasikan ahli. Jaga hidrasi selama latihan dengan minum 500ml air per jam. Sesuaikan berdasarkan feedback tubuh." }
+          { title: "Micro-Breaks (Tiap 1 Jam)", description: "Duduk lama = risiko jantung. Berdiri dan jalan ke pantry setiap jam. Gunakan tangga, bukan lift." },
+          { title: "Latihan Posterior (Punggung)", description: "2x Seminggu. Fokus pada otot punggung dan glutes yang lemah karena duduk. Lakukan Plank dan Glute Bridges." },
+          { title: "Target 7.000 Langkah", description: "Tidak perlu lari maraton. Parkir lebih jauh atau jalan kaki saat menerima telepon." },
+          { title: "Ergonomi Kerja", description: "Pastikan monitor sejajar mata. Lakukan 'Cat-Cow Stretch' duduk untuk melemaskan tulang belakang." }
         ]
       },
       rumah_tangga: {
-        title: "Program Latihan untuk Ibu Rumah Tangga (Campuran)",
+        title: "Roadmap: Ibu Rumah Tangga",
+        source: "American Heart Association",
         steps: [
-          { title: "Aktivitas Harian Terintegrasi", description: "Manfaatkan tugas rumah sebagai latihan, tambah 150 menit moderat per minggu. Tips: Jalan cepat saat belanja (20-30 menit) atau bersih-bersih cepat dengan musik. Ini menjaga kebugaran tanpa waktu ekstra; hitung sebagai cardio. Jika ada anak, ajak jalan bersama. Pastikan postur baik untuk hindari nyeri punggung." },
-          { title: "Latihan Kekuatan Rumahan", description: "3 sesi kekuatan per minggu dengan alat sederhana. Tips: Gunakan botol air (1-2 liter) sebagai dumbbell untuk bicep curls (3 set x 12 reps) atau overhead press. Lakukan sambil memasak selama 15-20 menit. Ini memperkuat otot untuk tugas harian; mulai pelan jika belum terbiasa. Tambahkan wall push-ups untuk variasi." },
-          { title: "Yoga atau Pilates", description: "Sesi yoga 20-30 menit, 2-3x seminggu. Tips: Ikuti video online gratis seperti Yoga with Adriene, fokus pada pose seperti downward dog atau child's pose. Fokus pada relaksasi dan pernapasan. Ini meningkatkan fleksibilitas dan mengurangi stres rumah tangga; lakukan di ruang tenang. Jika punya matras yoga, gunakan." },
-          { title: "Aktivitas Keluarga", description: "Libatkan keluarga dalam latihan, seperti berjalan bersama. Tips: Jadwalkan jalan keluarga 30 menit di akhir pekan, target denyut jantung moderat. Ini membangun ikatan dan memotivasi konsistensi; tambahkan permainan seperti tag. Jika cuaca buruk, lakukan di dalam rumah dengan dance party." },
-          { title: "Pemulihan dan Nutrisi", description: "Istirahat cukup dan makan seimbang. Tips: Minum air 2 liter per hari saat latihan, tambahkan elektrolit jika berkeringat. Jika lelah, kurangi intensitas dan tidur siang. Konsultasikan dokter untuk kondisi khusus seperti kehamilan. Catat asupan kalori untuk dukung energi." }
+          { title: "Aktivitas Terintegrasi", description: "Jadikan menyapu/mengepel sebagai latihan cardio dengan tempo cepat. Kencangkan perut saat mengangkat barang." },
+          { title: "Latihan Kekuatan Fungsional", description: "Gunakan botol air 1L sebagai dumbbell untuk latihan tangan saat menonton TV atau menunggu masakan." },
+          { title: "Yoga / Pilates (20 Menit)", description: "Luangkan waktu 'Me Time'. Yoga membantu meredakan stres fisik dan mental akibat rutinitas harian." },
+          { title: "Jalan Pagi Keluarga", description: "Ajak anak/suami jalan pagi 30 menit di akhir pekan. Membangun bonding dan kebugaran bersama." }
         ]
       },
       pensiunan: {
-        title: "Program Latihan untuk Pensiunan (Lansia)",
+        title: "Roadmap: Lansia & Pensiunan",
+        source: "National Institute on Aging (NIA)",
         steps: [
-          { title: "Aktivitas Moderat Aman", description: "150 menit aktivitas moderat per minggu, disesuaikan kemampuan. Tips: Jalan santai 20-30 menit sehari, gunakan tongkat jika perlu, target denyut jantung 80-100 bpm. Ini mencegah penurunan massa otot; bagi menjadi 5 sesi x 30 menit. Lakukan di taman pagi untuk vitamin D. Jika ada nyeri sendi, konsultasikan fisioterapis." },
-          { title: "Latihan Kekuatan Rendah Dampak", description: "2 sesi kekuatan per minggu, fokus pada stabilitas. Tips: Wall sits (3 set x 20 detik) atau leg lifts (3 set x 10 reps per kaki) tanpa beban. Lakukan perlahan di kursi untuk dukungan. Ini mendukung keseimbangan dan mencegah jatuh; gunakan dinding untuk pegangan. Mulai dengan 5 reps jika lemah." },
-          { title: "Peregangan dan Fleksibilitas", description: "10-15 menit peregangan harian. Tips: Tai Chi atau stretching sederhana seperti neck rolls dan ankle circles. Lakukan sambil duduk. Ini meningkatkan mobilitas sendi dan mengurangi nyeri; ikuti video online untuk lansia. Tambahkan deep breathing untuk relaksasi." },
-          { title: "Aktivitas Sosial", description: "Gabung kelas senam lansia atau jalan kelompok. Tips: Lakukan 2-3x seminggu di komunitas, misalnya senam pagi selama 30 menit. Ini menjaga kesehatan mental dan motivasi; ajak teman untuk dukungan. Jika tidak ada kelas, buat grup jalan sendiri." },
-          { title: "Pantau Kesehatan", description: "Periksa denyut jantung dan konsultasi rutin. Tips: Mulai pelan, tingkatkan bertahap (misalnya tambah 5 menit per minggu). Jika ada penyakit seperti arthritis, sesuaikan dengan dokter. Gunakan smartwatch untuk monitor denyut jantung. Jaga hidrasi dan nutrisi tinggi protein." }
+          { title: "Latihan Keseimbangan", description: "Prioritas utama mencegah jatuh. Lakukan berdiri satu kaki (pegangan kursi) setiap pagi." },
+          { title: "Jalan Santai Rutin", description: "30 menit/hari, 5 hari seminggu. Menjaga kesehatan jantung tanpa membebani sendi berlebih." },
+          { title: "Kekuatan Otot (Low Impact)", description: "Gunakan karet resistensi (resistance band) untuk menjaga massa otot agar tidak menyusut (Sarcopenia)." },
+          { title: "Aktivitas Sosial", description: "Ikuti senam lansia di lingkungan. Interaksi sosial penting untuk kesehatan otak dan mental." }
         ]
       },
       atlet: {
-        title: "Program Latihan untuk Atlet/Warga Aktif (Olahraga Intensif)",
+        title: "Roadmap: Atlet & Warga Aktif",
+        source: "ACSM (American College of Sports Medicine)",
         steps: [
-          { title: "Latihan Intensif Harian", description: "300+ menit aktivitas intensif per minggu, plus istirahat. Tips: Kombinasikan cardio seperti lari interval (4x400m sprint) dan kekuatan. Contoh: Cycling 45 menit, target denyut jantung 140-160 bpm. Ini meningkatkan performa dan daya tahan; bagi menjadi 5-6 sesi. Gunakan GPS untuk track jarak." },
-          { title: "Latihan Kekuatan Spesifik", description: "4-5 sesi kekuatan per minggu, fokus olahraga utama. Tips: Gunakan beban berat untuk squats (4 set x 8 reps) atau deadlifts (4 set x 6 reps). Lakukan dengan teknik benar, gunakan spotter. Ini membangun kekuatan maksimal; warm-up 10 menit dulu. Jika spesialisasi renang, tambahkan pull-ups." },
-          { title: "Pemulihan Aktif", description: "Sertakan yoga atau foam rolling 2x seminggu. Tips: Yoga 20 menit untuk relaksasi otot, atau foam rolling 10 menit pada area kaku. Istirahat 1-2 hari penuh. Ini mencegah overtraining dan cedera; tambahkan sauna jika tersedia. Monitor fatigue dengan skala 1-10." },
-          { title: "Cross-Training", description: "Tambahkan variasi seperti renang atau hiking. Tips: Renang 30 menit atau hiking 1 jam, 1-2x seminggu. Ini meningkatkan keseimbangan dan mengurangi risiko cedera spesifik; pilih aktivitas berbeda dari olahraga utama. Gunakan teknik rotasi untuk hindari burnout." },
-          { title: "Nutrisi dan Monitoring", description: "Pantau asupan kalori dan hidrasi. Tips: Gunakan app tracking untuk kalori (misalnya 3.000-4.000/hari tergantung intensitas) dan minum 3-4 liter air. Konsultasikan pelatih untuk program kustom. Jika cedera, istirahat total dan gunakan ice therapy. Evaluasi performa bulanan." }
+          { title: "Latihan Interval (HIIT)", description: "Tingkatkan VO2 Max dengan lari sprint interval. 1 menit cepat, 2 menit lambat, ulangi 5 set." },
+          { title: "Latihan Kekuatan Berat", description: "4x Seminggu. Fokus pada Compound Movement (Squat, Deadlift) untuk kekuatan maksimal." },
+          { title: "Pemulihan Aktif (Rest Day)", description: "Jangan diam total saat libur. Lakukan stretching dinamis atau renang santai untuk membuang asam laktat." },
+          { title: "Nutrisi Presisi", description: "Hitung protein (1.6-2g/kg BB) dan hidrasi elektrolit. Tidur minimal 9 jam untuk perbaikan otot." }
         ]
       }
     };
 
-    document.getElementById('activity-group').addEventListener('change', function () {
-      const selected = this.value;
-      const roadmapDiv = document.getElementById('roadmap');
-      const titleDiv = document.getElementById('roadmap-title');
-      const stepsDiv = document.getElementById('roadmap-steps');
+    // --- 3. UI LOGIC (GRID CARDS & ROADMAP) ---
+    const categories = [
+        { id: 'pelajar', name: 'Pelajar', icon: 'fa-user-graduate' },
+        { id: 'kantoran', name: 'Kantoran', icon: 'fa-briefcase' },
+        { id: 'rumah_tangga', name: 'Ibu Rumah Tangga', icon: 'fa-home' },
+        { id: 'pensiunan', name: 'Pensiunan', icon: 'fa-user-clock' },
+        { id: 'atlet', name: 'Atlet', icon: 'fa-running' }
+    ];
 
-      if (selected && roadmaps[selected]) {
-        titleDiv.textContent = roadmaps[selected].title;
-        stepsDiv.innerHTML = roadmaps[selected].steps.map((step, index) => {
-          const sideClass = (index % 2 === 0) ? 'left' : 'right';
-          return `<div class="roadmap-step ${sideClass}">
-            <div class="roadmap-step-card">
-              <div class="roadmap-step-number">Langkah ${index + 1}</div>
-              <h3 class="roadmap-step-title">${step.title}</h3>
-              <p class="roadmap-step-description">${step.description}</p>
+    const cardContainer = document.getElementById('activity-cards');
+    const emptyState = document.getElementById('empty-state');
+    const roadmapSection = document.getElementById('roadmap');
+    const roadmapTitle = document.getElementById('roadmap-title');
+    const roadmapSteps = document.getElementById('roadmap-steps');
+    const sourceCitation = document.getElementById('source-citation');
+
+    // Render Kartu
+    categories.forEach(cat => {
+        const btn = document.createElement('button');
+        // Style Card: Default White, Border Green. Hover: Border Lime. Active: Green BG.
+        btn.className = `
+            group flex flex-col items-center justify-center p-6 rounded-xl transition-all duration-300
+            bg-white border border-green-200 hover:border-lime-400 hover:shadow-lg hover:shadow-lime-100 hover:-translate-y-1
+            focus:outline-none
+        `;
+        btn.dataset.id = cat.id;
+        btn.innerHTML = `
+            <div class="w-14 h-14 rounded-full bg-green-50 text-green-600 flex items-center justify-center text-2xl mb-3 group-hover:bg-lime-400 group-hover:text-white transition-colors">
+                <i class="fas ${cat.icon}"></i>
             </div>
-           </div>`;
-        }).join('');
-        roadmapDiv.classList.remove('hidden');
-      } else {
-        roadmapDiv.classList.add('hidden');
-      }
+            <span class="font-semibold text-gray-700 group-hover:text-green-700">${cat.name}</span>
+        `;
+        
+        btn.addEventListener('click', () => selectActivity(cat.id, btn));
+        cardContainer.appendChild(btn);
     });
-    window.addEventListener('load', function () {
-      const selectElement = document.getElementById('activity-group');
-      selectElement.value = 'pelajar';
-      selectElement.dispatchEvent(new Event('change'));
-    });
+
+    function selectActivity(id, clickedBtn) {
+        // 1. Reset semua tombol kartu
+        const allBtns = cardContainer.querySelectorAll('button');
+        allBtns.forEach(b => {
+            b.className = `
+                group flex flex-col items-center justify-center p-6 rounded-xl transition-all duration-300
+                bg-white border border-green-200 hover:border-lime-400 hover:shadow-lg hover:shadow-lime-100 hover:-translate-y-1
+                focus:outline-none
+            `;
+            // Reset icon colors inside
+            b.querySelector('div').className = "w-14 h-14 rounded-full bg-green-50 text-green-600 flex items-center justify-center text-2xl mb-3 group-hover:bg-lime-400 group-hover:text-white transition-colors";
+            b.querySelector('span').className = "font-semibold text-gray-700 group-hover:text-green-700";
+        });
+
+        // 2. Set tombol aktif (Green Background, Lime Border)
+        clickedBtn.className = `
+            flex flex-col items-center justify-center p-6 rounded-xl transition-all duration-300
+            bg-green-600 border-2 border-lime-400 shadow-xl transform scale-105
+            focus:outline-none
+        `;
+        clickedBtn.querySelector('div').className = "w-14 h-14 rounded-full bg-white text-green-600 flex items-center justify-center text-2xl mb-3";
+        clickedBtn.querySelector('span').className = "font-bold text-white";
+
+        // 3. Sembunyikan Warning, Tampilkan Roadmap
+        emptyState.classList.add('hidden');
+        roadmapSection.classList.remove('hidden');
+        
+        // 4. Isi Konten Roadmap
+        const data = roadmaps[id];
+        roadmapTitle.innerText = data.title;
+        sourceCitation.innerText = data.source;
+        
+        roadmapSteps.innerHTML = ''; // Clear steps
+        
+        data.steps.forEach((step, index) => {
+            const isLeft = index % 2 === 0;
+            const stepHtml =  `
+                <div class="flex items-center w-full ${isLeft ? '' : 'flex-row-reverse'} group">
+                  
+                  <div class="hidden md:block w-6/12"></div>
+                  
+                  <div class="absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0 z-20 flex items-center justify-center w-8 h-8 bg-green-600 border-4 border-lime-300 rounded-full shadow">
+                     <span class="text-xs font-bold text-white md:hidden">${index+1}</span>
+                  </div>
+                  
+                  <div class="w-full md:w-6/12 pl-12 md:pl-0 ${isLeft ? 'md:pr-10 md:text-right' : 'md:pl-10 md:text-left'}">
+                    <div class="bg-white p-5 rounded-lg border-l-4 ${isLeft ? 'border-green-500' : 'border-lime-500'} shadow-md hover:shadow-xl transition-shadow duration-300">
+                        <h4 class="font-bold text-lg text-green-700 mb-2">${step.title}</h4>
+                        <p class="text-gray-600 text-sm leading-relaxed">${step.description}</p>
+                    </div>
+                  </div>
+
+                </div>
+            `;
+            roadmapSteps.insertAdjacentHTML('beforeend', stepHtml);
+        });
+
+        // Scroll sedikit ke roadmap agar user sadar konten berubah
+        roadmapSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+
   </script>
 </body>
 

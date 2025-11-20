@@ -1,261 +1,235 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
   <link rel="stylesheet" href="../style.css">
-  <title>Document</title>
+  <title>Program Pola Makan Sehat - Sehat.In</title>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          animation: {
+            'bounce-slow': 'bounce 3s infinite',
+            'fade-in-up': 'fadeInUp 0.5s ease-out forwards',
+          },
+          keyframes: {
+            fadeInUp: {
+              '0%': { opacity: '0', transform: 'translateY(20px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
   <style>
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #f7fbfd;
+      /* Background Pattern Konsisten */
+      background-color: #ecfccb; /* green-50 */
+      background-image: radial-gradient(#86efac 1px, transparent 1px); /* lime-300 dots */
+      background-size: 20px 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
-    .dropdown-visible {
-      display: block !important;
+    .main-content {
+      flex: 1;
     }
 
-    .menu-visible {
-      display: block !important;
-    }
+    /* Utility untuk Navbar Asli */
+    .dropdown-visible { display: block !important; }
+    .menu-visible { display: block !important; }
 
-    .roadmap-timeline {
-      position: relative;
-      padding: 2rem 0;
-    }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #f0fdf4; }
+    ::-webkit-scrollbar-thumb { background: #22c55e; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #15803d; }
 
-    .roadmap-timeline::before {
+    /* Garis Roadmap Timeline */
+    .roadmap-container::before {
       content: '';
       position: absolute;
+      left: 50%;
       top: 0;
       bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
       width: 4px;
-      background-color: #10b981;
-      border-radius: 2px;
+      background: #bef264; /* lime-300 */
+      transform: translateX(-50%);
+      z-index: 0;
+      border-radius: 99px;
     }
-
-    .roadmap-step {
-      position: relative;
-      margin-bottom: 2rem;
-      width: calc(50% - 2rem);
-    }
-
-    .roadmap-step:nth-child(odd) {
-      left: 0;
-    }
-
-    .roadmap-step:nth-child(even) {
-      left: calc(50% + 2rem);
-    }
-
-    .roadmap-step::before {
-      content: '';
-      position: absolute;
-      top: 1.5rem;
-      width: 1.5rem;
-      height: 1.5rem;
-      border: 4px solid #10b981;
-      background-color: white;
-      border-radius: 50%;
-      z-index: 1;
-    }
-
-    .roadmap-step:nth-child(odd)::before {
-      right: -2.5rem;
-    }
-
-    .roadmap-step:nth-child(even)::before {
-      left: -2.5rem;
-    }
-
-    .roadmap-card {
-      padding: 1.5rem;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .roadmap-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-      cursor: pointer;
-      border-radius: 0.5rem;
-    }
-
-    .roadmap-card h3 {
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: #059669;
-      margin-bottom: 0.5rem;
-    }
-
-    .roadmap-card p {
-      color: #6b7280;
-      font-size: 0.875rem;
-    }
-
+    
+    /* Responsive Fix */
     @media (max-width: 768px) {
-      .roadmap-timeline::before {
-        left: 1rem;
-      }
-
-      .roadmap-step {
-        width: calc(100% - 4rem);
-        left: 0 !important;
-      }
-
-      .roadmap-step:nth-child(odd)::before,
-      .roadmap-step:nth-child(even)::before {
-        left: -2.5rem;
-        right: auto;
-      }
+      .roadmap-container::before { left: 20px; }
     }
   </style>
 </head>
 
-<body class="bg-linear-to-br from-green-50 to-green-100 min-h-screen font-sans">
-  <!--Navbar-->
-  <div class="flex justify-center p-4 sticky top-0 z-50 bg-transparent dark:bg-transparent ">
-    <nav
-      class="bg-green-500 dark:bg-green-500 border-gray-200 rounded-2xl w-full md:w-4/5 shadow-xl shadow-emerald-600/50">
-      <div class="flex flex-wrap items-center justify-between mx-4 p-4">
-        <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
-          <img src="../img/footer-navbar/Logo-SehatIn.png" class="h-10" alt="Logo Sehat.In" />
-          <span class="self-center text-2xl font-bold whitespace-nowrap text-white">Sehat.In</span>
-        </a>
-        <button id="menu-toggle-button" type="button"
-          class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-white rounded-lg md:hidden hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-300 transition"
-          aria-controls="navbar-dropdown" aria-expanded="false">
-          <span class="sr-only">Open main menu</span>
-          <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M1 1h15M1 7h15M1 13h15" />
-          </svg>
-        </button>
-        <div class="hidden w-full md:block md:w-auto" id="navbar-dropdown">
-          <ul
-            class="font-medium flex flex-col p-3 md:p-0 mt-4 border border-green-400 rounded-xl bg-green-500 md:flex-row md:space-x-4 md:mt-0 md:border-0 md:bg-green-500">
-            <li>
-              <a href="../index.html"
-                class="text-white rounded-lg px-4 py-2 block md:inline-block hover:bg-lime-400 transition duration-300 font-semibold"
-                aria-current="page">Home</a>
-            </li>
-            <li class="relative">
-              <button id="dropdown-toggle-button" type="button"
-                class="flex items-center justify-between w-full rounded-lg px-4 py-2 font-semibold text-white hover:bg-lime-400 transition duration-300 md:w-auto">
-                Kalkulator
-                <svg id="dropdown-icon" class="w-4 h-4 ms-1.5 transition-transform duration-300" aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="m19 9-7 7-7-7" />
-                </svg>
-              </button>
-              <div id="dropdown-menu"
-                class="absolute hidden md:mt-2 w-48 bg-emerald-500 border-gray-200 rounded-xl shadow-xl z-20 md:left-1/2 md:-translate-x-1/2">
-                <ul class="p-2.5 text-sm text-white font-medium">
-                  <li>
-                    <a href="../kalkulator/kalkukalorim.html"
-                      class="block p-1.5 hover:bg-green-500 rounded transition duration-200">Kalkulator
-                      Kalori Makanan</a>
-                  </li>
-                  <li>
-                    <a href="../kalkulator/kalkukaloh.html"
-                      class="block p-1.5 hover:bg-green-500 rounded transition duration-200">Kalkulator Kalori
-                      Harian</a>
-                  </li>
-                  <li>
-                    <a href="../kalkulator/kalkubbideal.html"
-                      class="block p-1.5 hover:bg-green-500 rounded transition duration-200">Kalkulator
-                      BB Ideal</a>
-                  </li>
-                </ul>
-              </div>
-            </li>
-            <li class="relative">
-              <button id="program-dropdown-toggle" type="button"
-                class="flex items-center justify-between w-full rounded-lg px-4 py-2 font-semibold text-white hover:bg-lime-400 transition duration-300 md:w-auto">
-                Program
-                <svg id="program-dropdown-icon" class="w-4 h-4 ms-1.5 transition-transform duration-300"
-                  aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                  viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="m19 9-7 7-7-7" />
-                </svg>
-              </button>
-              <div id="program-dropdown-menu"
-                class="absolute hidden md:mt-2 w-48 bg-emerald-500 border-gray-200 rounded-xl shadow-xl z-20 md:left-1/2 md:-translate-x-1/2">
-                <ul class="p-2.5 text-sm text-white font-medium">
-                  <li>
-                    <a href="ppolamakan.html"
-                      class="block p-1.5 hover:bg-green-500 rounded transition duration-200">Program
-                      Pola Makan Sehat</a>
-                  </li>
-                  <li>
-                    <a href="plativitas.html"
-                      class="block p-1.5 hover:bg-green-500 rounded transition duration-200">Program Latihan berbasis
-                      Aktivitas Harian</a>
-                  </li>
-                </ul>
-              </div>
-            </li>
-          </ul>
+<body>
+  <div class="main-content">
+    
+    <div class="flex justify-center p-4 sticky top-0 z-50 bg-transparent dark:bg-transparent ">
+      <nav
+        class="bg-green-500 dark:bg-green-500 border-gray-200 rounded-2xl w-full md:w-4/5 shadow-xl shadow-emerald-600/50">
+        <div class="flex flex-wrap items-center justify-between mx-4 p-4">
+          <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+            <img src="../img/footer-navbar/Logo-SehatIn.png" class="h-10" alt="Logo Sehat.In" />
+            <span class="self-center text-2xl font-bold whitespace-nowrap text-white">Sehat.In</span>
+          </a>
+          <button id="menu-toggle-button" type="button"
+            class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-white rounded-lg md:hidden hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-300 transition"
+            aria-controls="navbar-dropdown" aria-expanded="false">
+            <span class="sr-only">Open main menu</span>
+            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M1 1h15M1 7h15M1 13h15" />
+            </svg>
+          </button>
+          <div class="hidden w-full md:block md:w-auto" id="navbar-dropdown">
+            <ul
+              class="font-medium flex flex-col p-3 md:p-0 mt-4 border border-green-400 rounded-xl bg-green-500 md:flex-row md:space-x-4 md:mt-0 md:border-0 md:bg-green-500">
+              <li>
+                <a href="../index.html"
+                  class="text-white rounded-lg px-4 py-2 block md:inline-block hover:bg-lime-400 transition duration-300 font-semibold"
+                  aria-current="page">Home</a>
+              </li>
+              <li class="relative">
+                <button id="dropdown-toggle-button" type="button"
+                  class="flex items-center justify-between w-full rounded-lg px-4 py-2 font-semibold text-white hover:bg-lime-400 transition duration-300 md:w-auto">
+                  Kalkulator
+                  <svg id="dropdown-icon" class="w-4 h-4 ms-1.5 transition-transform duration-300" aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="m19 9-7 7-7-7" />
+                  </svg>
+                </button>
+                <div id="dropdown-menu"
+                  class="absolute hidden md:mt-2 w-48 bg-emerald-500 border-gray-200 rounded-xl shadow-xl z-20 md:left-1/2 md:-translate-x-1/2">
+                  <ul class="p-2.5 text-sm text-white font-medium">
+                    <li>
+                      <a href="../kalkulator/kalkukalorim.html"
+                        class="block p-1.5 hover:bg-green-500 rounded transition duration-200">Kalkulator
+                        Kalori Makanan</a>
+                    </li>
+                    <li>
+                      <a href="../kalkulator/kalkukaloh.html"
+                        class="block p-1.5 hover:bg-green-500 rounded transition duration-200">Kalkulator Kalori
+                        Harian</a>
+                    </li>
+                    <li>
+                      <a href="../kalkulator/kalkubbideal.html"
+                        class="block p-1.5 hover:bg-green-500 rounded transition duration-200">Kalkulator
+                        BB Ideal</a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="relative">
+                <button id="program-dropdown-toggle" type="button"
+                  class="flex items-center justify-between w-full rounded-lg px-4 py-2 font-semibold text-white hover:bg-lime-400 transition duration-300 md:w-auto">
+                  Program
+                  <svg id="program-dropdown-icon" class="w-4 h-4 ms-1.5 transition-transform duration-300"
+                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                    viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="m19 9-7 7-7-7" />
+                  </svg>
+                </button>
+                <div id="program-dropdown-menu"
+                  class="absolute hidden md:mt-2 w-48 bg-emerald-500 border-gray-200 rounded-xl shadow-xl z-20 md:left-1/2 md:-translate-x-1/2">
+                  <ul class="p-2.5 text-sm text-white font-medium">
+                    <li>
+                      <a href="ppolamakan.html"
+                        class="block p-1.5 hover:bg-green-500 rounded transition duration-200">Program
+                        Pola Makan Sehat</a>
+                    </li>
+                    <li>
+                      <a href="plativitas.html"
+                        class="block p-1.5 hover:bg-green-500 rounded transition duration-200">Program Latihan berbasis
+                        Aktivitas Harian</a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
+      </nav>
+    </div>
+    <div class="max-w-6xl w-full mx-auto px-6 py-10">
+      
+      <div class="text-center mb-12 animate-fade-in-up">
+        <h1 class="text-3xl md:text-4xl font-bold text-green-600 mb-4">
+          Program <span class="text-lime-600">Pola Makan Sehat</span>
+        </h1>
+        <p class="text-gray-600 max-w-2xl mx-auto">
+          Nutrisi adalah kunci kesehatan jangka panjang. Pilih kelompok usia Anda untuk melihat rekomendasi gizi yang dipersonalisasi.
+        </p>
       </div>
-    </nav>
-  </div>
-  <!--Navbar end-->
 
-  <!--Content-->
-  <div class="max-w-4xl w-full p-6 mx-auto mt-8">
-    <h1 class="text-3xl font-bold text-center text-green-600 mb-6">Program Pola Makan Sehat</h1>
-    <p class="text-gray-600 text-center mb-4">Pilih kelompok usia Anda untuk melihat roadmap pola makan yang
-      disesuaikan.
-    </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10" id="age-cards">
+        </div>
 
-    <!-- Input Select -->
-    <div class="mb-6">
-      <label for="age-group" class="block text-sm font-medium text-gray-700 mb-2">Kelompok Usia:</label>
-      <select id="age-group"
-        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
-        <option value="anak">Anak-anak (0-12 tahun)</option>
-        <option value="remaja">Remaja (13-19 tahun)</option>
-        <option value="dewasa">Dewasa (20-64 tahun)</option>
-        <option value="tua">Tua (65+ tahun)</option>
-      </select>
+      <div id="empty-state" class="flex flex-col items-center justify-center py-12 bg-white/80 backdrop-blur-sm border-2 border-dashed border-green-300 rounded-2xl animate-fade-in-up">
+        <div class="bg-lime-100 p-4 rounded-full mb-4 animate-bounce-slow">
+          <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-green-700 mb-2">Pilih Kelompok Usia</h3>
+        <p class="text-gray-500 text-center px-4">Klik salah satu kartu usia di atas untuk melihat panduan gizi.</p>
+      </div>
+
+      <div id="roadmap" class="hidden mt-8 transition-all duration-500">
+        
+        <div class="text-center mb-10">
+          <h2 class="text-2xl font-bold text-green-700" id="roadmap-title"></h2>
+          <span class="inline-block w-24 h-1 bg-lime-400 rounded mt-2"></span>
+        </div>
+
+        <div class="roadmap-container relative py-4">
+          <div id="roadmap-steps" class="space-y-8 relative z-10">
+            </div>
+        </div>
+
+        <div class="mt-12 p-4 bg-green-50 border-l-4 border-lime-500 rounded-r-lg text-sm text-gray-600">
+          <strong>Sumber Referensi:</strong> <span id="source-citation">WHO Guidelines & Kemenkes RI</span>
+        </div>
+
+      </div>
+    </div>
     </div>
 
-    <!-- Roadmap Display -->
-    <div id="roadmap" class="hidden">
-      <h2 class="text-2xl font-semibold text-green-600 mb-6" id="roadmap-title"></h2>
-      <div id="roadmap-steps" class="roadmap-timeline relative">
-        <!-- Langkah-langkah roadmap akan diisi oleh JavaScript -->
-      </div>
-    </div>
-  </div>
-  <!--Content End-->
-
-  <!--Footer-->
   <footer class="bg-green-500 text-white mt-10 shadow-inner">
     <div class="w-11/12 mx-auto py-6">
       <div class="flex justify-between items-center">
-        <!-- Bagian Kiri: Copyright -->
         <div>
           <p class="text-sm font-medium">
             &copy; 2025 Sehat.In. All Rights Reserved.
           </p>
         </div>
   
-        <!-- Bagian Tengah: Slogan (disembunyikan di layar kecil) -->
         <div class="hidden md:block">
           <p class="text-base font-semibold">
             Pahami Tubuhmu, Mulai Transformasi Idealmu.
           </p>
         </div>
   
-        <!-- Bagian Kanan: Ikon Media Sosial -->
         <div class="flex items-center space-x-4">
-          <!-- Ganti href dengan link asli dan src dengan path gambar yang benar -->
           <a href="#" target="_blank" rel="noopener noreferrer"
             class="transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_5px_rgba(255,255,255,0.7)]">
             <img src="../img/footer-navbar/github.png" alt="GitHub" class="h-6 w-6">
@@ -276,9 +250,9 @@
       </div>
     </div>
   </footer>
-  <!--Footer Selesai-->
 
   <script>
+    // --- 1. NAVBAR LOGIC (ASLI) ---
     const menuToggleButton = document.getElementById('menu-toggle-button');
     const navbarDropdown = document.getElementById('navbar-dropdown');
     const dropdownToggleButton = document.getElementById('dropdown-toggle-button');
@@ -342,76 +316,135 @@
       }
     });
 
+    // --- 2. DATA ROADMAP (Sumber: WHO, Kemenkes RI, Harvard Public Health) ---
     const roadmaps = {
       anak: {
-        title: "Program Pola Makan Sehat untuk Anak-Anak (0-12 Tahun)",
+        title: "Program Gizi Anak (0-12 Tahun)",
+        source: "WHO Infant Feeding & Kemenkes RI (Isi Piringku)",
         steps: [
-          { title: "Konsumsi Susu Harian", description: "Minum susu atau produk susu rendah lemak setiap hari untuk mendukung pertumbuhan tulang dan gigi. Tips: Pilih susu rendah lemak atau yogurt tanpa gula tambahan. Jika anak alergi susu sapi, ganti dengan susu almond atau oat yang diperkaya kalsium. Target: 2-3 gelas per hari untuk anak usia 1-3 tahun, lebih banyak untuk usia 4-12 tahun." },
-          { title: "Buah dan Sayuran Segar", description: "Makan minimal 5 porsi buah dan sayuran segar per hari untuk vitamin dan serat. Tips: Variasikan warna (hijau, merah, kuning) untuk nutrisi lengkap. Contoh: Apel, wortel, brokoli, atau jus buah tanpa gula. Ajak anak makan bersama untuk membiasakan pola makan sehat sejak dini." },
-          { title: "Karbohidrat Kompleks", description: "Pilih nasi merah atau roti gandum, hindari junk food untuk energi stabil. Tips: Ganti nasi putih dengan nasi merah atau quinoa. Hindari camilan seperti keripik atau permen; pilih buah sebagai alternatif. Ini membantu mencegah lonjakan gula darah dan mendukung fokus belajar." },
-          { title: "Protein Berkualitas", description: "Sertakan telur, ikan, atau kacang-kacangan dalam menu harian. Tips: Masak telur rebus atau ikan panggang tanpa minyak berlebih. Kacang seperti almond atau kacang tanah bisa jadi camilan. Protein ini penting untuk pertumbuhan otot dan otak; pastikan tidak berlebihan untuk menghindari alergi." },
-          { title: "Hidrasi dan Gula Terbatas", description: "Minum air putih 6-8 gelas per hari dan batasi gula tambahan. Tips: Gunakan botol air berwarna-warni untuk menarik anak. Hindari minuman bersoda atau jus kemasan tinggi gula; pilih air infus buah alihan. Ini mencegah dehidrasi dan masalah gigi." }
+          { title: "Asupan Kalsium & Vitamin D", description: "Sangat krusial untuk pertumbuhan tulang. Target: 2-3 porsi susu/yogurt per hari. Jika alergi sapi, gunakan susu nabati yang difortifikasi." },
+          { title: "Piring Warna-Warni (Rainbow Plate)", description: "Pastikan minimal 3 warna sayur/buah dalam sehari (misal: Wortel, Bayam, Pisang) untuk variasi mikronutrien." },
+          { title: "Batasi Gula Tambahan", description: "Hindari minuman manis kemasan. Gula berlebih dapat menghambat hormon pertumbuhan dan menyebabkan karies gigi." },
+          { title: "Protein untuk Pertumbuhan", description: "Telur dan Ikan adalah sumber terbaik. Telur mengandung kolin untuk perkembangan otak anak." },
+          { title: "Sarapan Bergizi", description: "Jangan lewatkan sarapan. Karbohidrat kompleks (Oatmeal/Roti Gandum) memberi energi fokus belajar di sekolah." }
         ]
       },
       remaja: {
-        title: "Program Pola Makan Sehat untuk Remaja (13-19 Tahun)",
+        title: "Program Gizi Remaja (13-19 Tahun)",
+        source: "WHO Adolescent Nutrition & FAO",
         steps: [
-          { title: "Tingkatkan Asupan Kalori", description: "Konsumsi makanan bergizi untuk mendukung aktivitas fisik tinggi. Tips: Tambahkan kalori dari sumber sehat seperti alpukat atau kacang, bukan fast food. Remaja pria mungkin butuh 2.800-3.200 kalori/hari, wanita 2.200-2.400; sesuaikan dengan aktivitas olahraga." },
-          { title: "Buah, Sayuran, dan Biji-bijian", description: "Pilih untuk energi stabil dan pencegahan obesitas. Tips: Makan salad hijau setiap hari dengan biji chia atau flaxseed. Buah seperti pisang atau beri membantu mengatasi kelelahan saat belajar. Ini juga mendukung kesehatan kulit dan mencegah jerawat." },
-          { title: "Protein Tanpa Lemak", description: "Ayam, ikan, atau tahu, hindari fast food. Tips: Grill ayam tanpa kulit atau makan tempe goreng tanpa minyak. Sertakan protein dalam setiap makan siang untuk menjaga massa otot. Hindari daging merah berlemak untuk kesehatan jantung." },
-          { title: "Asupan Kalsium", description: "Dari susu atau yogurt untuk kesehatan tulang. Tips: Pilih yogurt Yunani rendah gula atau keju cottage. Jika intoleran laktosa, gunakan sayuran hijau seperti kale. Remaja butuh 1.300 mg kalsium/hari untuk mencegah osteoporosis di masa depan." },
-          { title: "Kurangi Minuman Manis", description: "Ganti dengan air atau jus alami. Tips: Bawa termos air ke sekolah. Jus buah segar tanpa tambahan gula lebih baik daripada soda. Ini membantu mengontrol berat badan dan mencegah diabetes tipe 2." }
+          { title: "Zat Besi & Protein", description: "Kebutuhan meningkat pesat saat pubertas, terutama remaja putri (menstruasi). Perbanyak daging merah tanpa lemak, bayam, dan hati ayam." },
+          { title: "Kalori Berkualitas", description: "Remaja aktif butuh 2200-3000 kkal. Hindari 'Kalori Kosong' (Junk Food). Pilih Alpukat, Kacang-kacangan, dan Nasi Merah." },
+          { title: "Hidrasi Optimal", description: "Ganti soda dengan air putih. Minuman manis adalah penyebab utama obesitas dini dan jerawat pada remaja." },
+          { title: "Kalsium Tulang Puncak", description: "Masa remaja adalah kesempatan terakhir menabung kepadatan tulang. Konsumsi Keju, Yogurt, atau Tahu." },
+          { title: "Camilan Sehat", description: "Ganti keripik dengan buah potong atau smoothies. Ini menjaga mood stabil saat belajar." }
         ]
       },
       dewasa: {
-        title: "Program Pola Makan Sehat untuk Dewasa (20-64 Tahun)",
+        title: "Program Gizi Dewasa (20-64 Tahun)",
+        source: "Harvard Healthy Eating Plate",
         steps: [
-          { title: "Seimbangkan Piring Makan", description: "50% sayuran, 25% protein, 25% karbohidrat. Tips: Gunakan piring besar untuk sayuran seperti brokoli atau bayam. Tambahkan protein seperti daging tanpa lemak atau lentil. Ini membantu menjaga berat badan dan energi sepanjang hari." },
-          { title: "Lemak Sehat", description: "Dari alpukat atau kacang, kurangi lemak jenuh. Tips: Ganti mentega dengan alpukat di roti. Makan kacang almond sebagai camilan. Lemak sehat ini mendukung kesehatan otak dan mengurangi risiko penyakit jantung." },
-          { title: "Ikan Berlemak", description: "Konsumsi salmon 2-3 kali seminggu untuk jantung. Tips: Panggang atau kukus salmon dengan lemon. Jika tidak suka ikan, gunakan suplemen omega-3. Ini penting untuk mengurangi peradangan dan meningkatkan kolesterol baik." },
-          { title: "Serat dari Biji-bijian", description: "Untuk pencernaan yang baik. Tips: Pilih oatmeal atau barley untuk sarapan. Tambahkan biji-bijian utuh ke salad. Serat membantu mencegah sembelit dan mendukung mikrobioma usus." },
-          { title: "Hidrasi dan Hindari Alkohol", description: "Jaga hidrasi, batasi alkohol. Tips: Minum 8 gelas air/hari, tambah herbal tea. Batasi alkohol maksimal 1 gelas/hari untuk wanita, 2 untuk pria. Ini mencegah dehidrasi dan masalah hati." }
+          { title: "Komposisi 'Piring T' ", description: "Isi 1/2 piring dengan Sayuran, 1/4 Protein, 1/4 Karbohidrat Kompleks. Ini rumus standar menjaga berat badan ideal." },
+          { title: "Lemak Tak Jenuh", description: "Ganti minyak goreng sawit dengan minyak zaitun, atau konsumsi Ikan Salmon & Alpukat untuk kesehatan jantung." },
+          { title: "Serat Tinggi (Fiber)", description: "Minimal 25-30g serat per hari dari biji-bijian dan sayur. Mencegah diabetes tipe 2 dan kolesterol tinggi." },
+          { title: "Batasi Garam (Sodium)", description: "Maksimal 1 sendok teh garam per hari. Kelebihan garam memicu hipertensi di usia produktif." },
+          { title: "Kontrol Porsi Malam", description: "Hindari makan berat 3 jam sebelum tidur. Metabolisme melambat di malam hari, memicu penumpukan lemak." }
         ]
       },
       tua: {
-        title: "Program Pola Makan Sehat untuk Lansia (65+ Tahun)",
+        title: "Program Gizi Lansia (65+ Tahun)",
+        source: "National Institute on Aging (USA) & Kemenkes Lansia",
         steps: [
-          { title: "Tingkatkan Kalsium", description: "Dari susu rendah lemak atau sayuran hijau untuk mencegah osteoporosis. Tips: Minum susu almond diperkaya atau makan brokoli. Tambahkan keju rendah lemak ke makanan. Target: 1.200 mg/hari untuk mencegah patah tulang." },
-          { title: "Kurangi Sodium", description: "Pilih makanan rendah garam untuk jantung. Tips: Gunakan rempah alami seperti bawang putih daripada garam. Baca label makanan olahan. Ini membantu mengontrol tekanan darah tinggi." },
-          { title: "Protein Mudah Dicerna", description: "Ikan atau telur untuk massa otot. Tips: Makan ikan putih seperti cod atau telur rebus. Sertakan protein nabati seperti quinoa. Ini penting untuk menjaga kekuatan otot di usia lanjut." },
-          { title: "Antioksidan dari Buah", description: "Beri dan sayuran untuk imunitas. Tips: Makan blueberry atau stroberi harian. Tambahkan sayuran seperti tomat untuk vitamin C. Antioksidan membantu melawan radikal bebas dan mendukung kesehatan mata." },
-          { title: "Porsi Kecil dan Sering", description: "Dengan hidrasi cukup. Tips: Makan 5-6 kali sehari dalam porsi kecil untuk menghindari gangguan pencernaan. Minum air secara teratur. Ini membantu menjaga energi dan mencegah penurunan berat badan." }
+          { title: "Padat Nutrisi, Rendah Kalori", description: "Metabolisme melambat, kurangi nasi tapi perbanyak lauk protein (Ikan/Tahu) dan sayur kukus lunak." },
+          { title: "Disiplin Hidrasi", description: "Lansia sering kehilangan rasa haus. Buat jadwal minum air 6-8 gelas sehari walau tidak haus." },
+          { title: "Vitamin B12 & Kalsium", description: "Penyerapan perut menurun. Pertimbangkan makanan fortifikasi atau suplemen B12 untuk kesehatan saraf." },
+          { title: "Tekstur Makanan", description: "Jika mengunyah sulit, buat jus buah/sayur atau bubur saring. Jangan korbankan nutrisi karena masalah gigi." },
+          { title: "Kurangi Lemak Jenuh", description: "Batasi santan dan gorengan untuk menjaga pembuluh darah tetap elastis dan mencegah stroke." }
         ]
       }
     };
 
-    document.getElementById('age-group').addEventListener('change', function () {
-      const selected = this.value;
-      const roadmapDiv = document.getElementById('roadmap');
-      const titleDiv = document.getElementById('roadmap-title');
-      const stepsDiv = document.getElementById('roadmap-steps');
+    // --- 3. UI LOGIC (GRID CARDS & ROADMAP) ---
+    const categories = [
+      { id: 'anak', name: 'Anak-anak', icon: 'fa-child' },
+      { id: 'remaja', name: 'Remaja', icon: 'fa-user-graduate' },
+      { id: 'dewasa', name: 'Dewasa', icon: 'fa-user-tie' },
+      { id: 'tua', name: 'Lansia', icon: 'fa-user-plus' }
+    ];
 
-      if (selected && roadmaps[selected]) {
-        titleDiv.textContent = roadmaps[selected].title;
-        stepsDiv.innerHTML = roadmaps[selected].steps.map((step, index) =>
-          `<div class="roadmap-step">
-            <div class="roadmap-card">
-                <h3>${step.title}</h3>
-                <p>${step.description}</p>
+    const cardContainer = document.getElementById('age-cards');
+    const emptyState = document.getElementById('empty-state');
+    const roadmapSection = document.getElementById('roadmap');
+    const roadmapTitle = document.getElementById('roadmap-title');
+    const roadmapSteps = document.getElementById('roadmap-steps');
+    const sourceCitation = document.getElementById('source-citation');
+
+    // Generate Cards
+    categories.forEach(cat => {
+      const btn = document.createElement('button');
+      btn.className = `
+        group flex flex-col items-center justify-center p-6 rounded-xl transition-all duration-300
+        bg-white border border-green-200 hover:border-lime-400 hover:shadow-lg hover:shadow-lime-100 hover:-translate-y-1
+        focus:outline-none
+      `;
+      btn.innerHTML = `
+        <div class="w-14 h-14 rounded-full bg-green-50 text-green-600 flex items-center justify-center text-2xl mb-3 group-hover:bg-lime-400 group-hover:text-white transition-colors">
+          <i class="fas ${cat.icon}"></i>
+        </div>
+        <span class="font-semibold text-gray-700 group-hover:text-green-700">${cat.name}</span>
+      `;
+      
+      btn.addEventListener('click', () => selectCategory(cat.id, btn));
+      cardContainer.appendChild(btn);
+    });
+
+    function selectCategory(id, clickedBtn) {
+      // Reset Style
+      const allBtns = cardContainer.querySelectorAll('button');
+      allBtns.forEach(b => {
+        b.className = `group flex flex-col items-center justify-center p-6 rounded-xl transition-all duration-300 bg-white border border-green-200 hover:border-lime-400 hover:shadow-lg hover:shadow-lime-100 hover:-translate-y-1 focus:outline-none`;
+        b.querySelector('div').className = "w-14 h-14 rounded-full bg-green-50 text-green-600 flex items-center justify-center text-2xl mb-3 group-hover:bg-lime-400 group-hover:text-white transition-colors";
+        b.querySelector('span').className = "font-semibold text-gray-700 group-hover:text-green-700";
+      });
+
+      // Active Style
+      clickedBtn.className = `flex flex-col items-center justify-center p-6 rounded-xl transition-all duration-300 bg-green-600 border-2 border-lime-400 shadow-xl transform scale-105 focus:outline-none`;
+      clickedBtn.querySelector('div').className = "w-14 h-14 rounded-full bg-white text-green-600 flex items-center justify-center text-2xl mb-3";
+      clickedBtn.querySelector('span').className = "font-bold text-white";
+
+      // Show Roadmap
+      emptyState.classList.add('hidden');
+      roadmapSection.classList.remove('hidden');
+
+      // Populate Data
+      const data = roadmaps[id];
+      roadmapTitle.innerText = data.title;
+      sourceCitation.innerText = data.source;
+
+      roadmapSteps.innerHTML = '';
+      data.steps.forEach((step, index) => {
+        const isLeft = index % 2 === 0;
+        const stepHtml = `
+          <div class="flex items-center w-full ${isLeft ? '' : 'flex-row-reverse'} group">
+            <div class="hidden md:block w-6/12"></div>
+            
+            <div class="absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0 z-20 flex items-center justify-center w-8 h-8 bg-green-600 border-4 border-lime-300 rounded-full shadow">
+              <span class="text-xs font-bold text-white md:hidden">${index+1}</span>
             </div>
-           </div>`
-        ).join('');
-        roadmapDiv.classList.remove('hidden');
-      } else {
-        roadmapDiv.classList.add('hidden');
-      }
-    });
+            
+            <div class="w-full md:w-6/12 pl-12 md:pl-0 ${isLeft ? 'md:pr-10 md:text-right' : 'md:pl-10 md:text-left'}">
+              <div class="bg-white p-5 rounded-lg border-l-4 ${isLeft ? 'border-green-500' : 'border-lime-500'} shadow-md hover:shadow-xl transition-shadow duration-300">
+                <h4 class="font-bold text-lg text-green-700 mb-2">${step.title}</h4>
+                <p class="text-gray-600 text-sm leading-relaxed">${step.description}</p>
+              </div>
+            </div>
+          </div>
+        `;
+        roadmapSteps.insertAdjacentHTML('beforeend', stepHtml);
+      });
 
-    window.addEventListener('load', function () {
-      const selectElement = document.getElementById('age-group');
-      selectElement.value = 'remaja';
-      selectElement.dispatchEvent(new Event('change'));
-    });
+      roadmapSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
   </script>
 </body>
 
