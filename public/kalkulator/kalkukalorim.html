@@ -1,308 +1,822 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kalkulator Kalori Makanan 🥗</title>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../style.css">
-  <title>Kalkulator Kalori Makanan 🥗</title>
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #f7fbfd;
-    }
+    <!-- Tailwind & Font -->
+    <link rel="stylesheet" href="../style.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
-    .dropdown-visible {
-      display: block !important;
-    }
+    <!-- Tailwind config (sama persis BB-ideal) -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "emerald-custom": "#047857",
+              "green-custom": "#16a34a",
+              "light-bg": "#f8fafc",
+              "accent-blue": "#3b82f6",
+              "accent-pink": "#ec4899",
+              "bubble-primary": "#10b981",
+              "bubble-background": "#f0fdf4",
+            },
+            animation: {
+              float: "float 8s ease-in-out infinite",
+              "pulse-slow": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+              "fade-in": "fadeIn 0.5s ease-out forwards",
+            },
+            keyframes: {
+              float: {
+                "0%, 100%": { transform: "translateY(0)" },
+                "50%": { transform: "translateY(-15px)" },
+              },
+              fadeIn: {
+                "0%": { opacity: 0, transform: "translateY(10px)" },
+                "100%": { opacity: 1, transform: "translateY(0)" },
+              },
+            },
+          },
+        },
+      };
+    </script>
 
-    .menu-visible {
-      display: block !important;
-    }
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: #ecfccb; /* lime-100 */
+        min-height: 100vh;
+        position: relative;
+        overflow-x: hidden;
+      }
+      /* Background elements (sama persis) */
+      .background-element {
+        position: absolute;
+        z-index: 0;
+        opacity: 0.12;
+      }
+      .dumbbell {
+        font-size: 60px;
+        top: 12%;
+        left: 6%;
+        animation: float 9s ease-in-out infinite;
+        color: #10b981;
+      }
+      .heart {
+        font-size: 55px;
+        bottom: 18%;
+        right: 8%;
+        animation: float 11s ease-in-out infinite;
+        animation-delay: 1.5s;
+        color: #ec4899;
+      }
+      .apple {
+        font-size: 58px;
+        top: 32%;
+        right: 10%;
+        animation: float 13s ease-in-out infinite;
+        animation-delay: 2.5s;
+        color: #3b82f6;
+      }
+      .running {
+        font-size: 62px;
+        bottom: 25%;
+        left: 8%;
+        animation: float 10s ease-in-out infinite;
+        animation-delay: 1s;
+        color: #10b981;
+      }
 
-    #food-list::-webkit-scrollbar {
-      width: 6px;
-    }
+      /* FAQ/Tips styling (disalin dari kalkukaloh.html) */
+      details {
+        margin-bottom: 16px;
+      }
+      details summary {
+        list-style: none;
+        position: relative;
+        padding-left: 36px;
+        font-weight: 600;
+        color: #1e293b;
+        cursor: pointer;
+        padding: 14px 0 14px 36px;
+        transition: color 0.2s;
+        display: flex;
+        align-items: center;
+      }
+      details summary::-webkit-details-marker {
+        display: none;
+      }
+      details summary::before {
+        content: "\f054";
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #10b981;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        font-size: 18px;
+      }
+      details[open] summary::before {
+        transform: translateY(-50%) rotate(90deg);
+      }
+      details summary:hover {
+        color: #047857;
+      }
+      details[open] summary {
+        color: #047857;
+      }
+      details > p {
+        margin-top: 12px;
+        padding-left: 36px;
+        line-height: 1.7;
+        color: #475569;
+        opacity: 0;
+        transform: translateY(-10px);
+        overflow: hidden;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        max-height: 0;
+      }
+      details[open] > p {
+        opacity: 1;
+        transform: translateY(0);
+        max-height: 200px;
+        font-weight: 600;
+      }
 
-    #food-list::-webkit-scrollbar-thumb {
-      background-color: #6ee7b7;
-      border-radius: 3px;
-    }
+      /* Card styling (sama persis) */
+      .card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+      }
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px -10px rgba(0, 0, 0, 0.15);
+      }
+      .calculation-card {
+        border-top: 4px solid #10b981;
+      }
+      .result-card {
+        border-left: 4px solid #0d9488;
+        min-height: 220px;
+      }
+      .tips-card {
+        border-left: 4px solid #0d9488;
+      }
 
-    #food-list::-webkit-scrollbar-track {
-      background-color: #f0fdf4;
-    }
+      /* Result placeholder & content */
+      .result-placeholder {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        height: 100%;
+        padding: 30px 20px;
+        color: #64748b;
+      }
+      .result-placeholder i {
+        font-size: 56px;
+        margin-bottom: 20px;
+        color: #94a3b8;
+        animation: pulse-slow 2s infinite;
+      }
+      .result-content {
+        display: none;
+        padding: 25px;
+      }
+      .result-content.show {
+        display: block;
+      }
+      .result-value {
+        font-size: 2.8rem;
+        font-weight: 800;
+        margin: 15px 0;
+        background: linear-gradient(90deg, #047857, #10b981);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
 
-    select {
-      background-image: linear-gradient(to right, #ffffff, #f0fdf4);
-      cursor: pointer;
-    }
+      .hero-section {
+        text-align: center;
+        padding: 40px 20px;
+        margin-bottom: 30px;
+        position: relative;
+        z-index: 2;
+      }
+      .hero-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        background: linear-gradient(90deg, #047857, #10b981);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        margin-bottom: 12px;
+        animation: fade-in 0.8s ease-out;
+      }
+      .hero-subtitle {
+        font-size: 1.1rem;
+        color: #475569;
+        max-width: 700px;
+        margin: 0 auto;
+        line-height: 1.6;
+        animation: fade-in 1s ease-out;
+        animation-delay: 0.2s;
+      }
 
-    select:hover {
-      background-color: #f0fdf4;
-    }
+      /* Bubble button (sama persis) */
+      .bubbles {
+        --c1: #f0fdf4;
+        --c2: #10b981;
+        --size-letter: 20px;
+        padding: 0.8em 1.5em;
+        font-size: var(--size-letter);
+        background-color: transparent;
+        border: calc(var(--size-letter) / 6) solid var(--c2);
+        border-radius: 0.3em;
+        cursor: pointer;
+        overflow: hidden;
+        position: relative;
+        transition: 300ms cubic-bezier(0.83, 0, 0.17, 1);
+        font-weight: 700;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .bubbles > .text {
+        font-weight: 700;
+        color: var(--c2);
+        position: relative;
+        z-index: 1;
+        transition: color 700ms cubic-bezier(0.83, 0, 0.17, 1);
+        display: flex;
+        align-items: center;
+      }
+      .bubbles > .text i {
+        margin-right: 8px;
+      }
+      .bubbles::before,
+      .bubbles::after {
+        content: "";
+        width: 150%;
+        aspect-ratio: 1/1;
+        scale: 0;
+        transition: 1000ms cubic-bezier(0.76, 0, 0.24, 1);
+        background-color: var(--c2);
+        border-radius: 50%;
+        position: absolute;
+        translate: -50% -50%;
+      }
+      .bubbles::before {
+        top: 0;
+        left: 0;
+      }
+      .bubbles::after {
+        top: 100%;
+        left: 100%;
+      }
+      .bubbles:hover > .text {
+        color: var(--c1);
+      }
+      .bubbles:hover::before,
+      .bubbles:hover::after {
+        scale: 1;
+      }
+      .bubbles:active {
+        scale: 0.98;
+        filter: brightness(0.9);
+      }
 
-    select:focus {
-      outline: none;
-      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.3);
-    }
-  </style>
-</head>
+      /* Animations */
+      .result-card.animated {
+        animation: fadeInUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+          forwards;
+      }
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px) scale(0.98);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
 
-<body class="bg-linear-to-br from-green-50 to-green-100 min-h-screen font-sans">
-  <!--Navbar-->
-  <div class="flex justify-center p-4 sticky top-0 z-50 bg-transparent dark:bg-transparent ">
-    <nav class="bg-green-500 dark:bg-green-500 border-gray-200 rounded-2xl w-full md:w-4/5 shadow-xl shadow-emerald-600/50">
-      <div class="flex flex-wrap items-center justify-between mx-4 p-4">
-        <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
-          <img src="../img/footer-navbar/Logo-SehatIn.png" class="h-10" alt="Logo Sehat.In" />
-          <span class="self-center text-2xl font-bold whitespace-nowrap text-white">Sehat.In</span>
-        </a>
-        <button id="menu-toggle-button" type="button"
-          class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-white rounded-lg md:hidden hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-300 transition"
-          aria-controls="navbar-dropdown" aria-expanded="false">
-          <span class="sr-only">Open main menu</span>
-          <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M1 1h15M1 7h15M1 13h15" />
-          </svg>
-        </button>
-        <div class="hidden w-full md:block md:w-auto" id="navbar-dropdown">
-          <ul
-            class="font-medium flex flex-col p-3 md:p-0 mt-4 border border-green-400 rounded-xl bg-green-500 md:flex-row md:space-x-4 md:mt-0 md:border-0 md:bg-green-500">
-            <li>
-              <a href="../index.html"
-                class="text-white rounded-lg px-4 py-2 block md:inline-block hover:bg-lime-400 transition duration-300 font-semibold"
-                aria-current="page">Home</a>
-            </li>
-            <li class="relative">
-              <button id="dropdown-toggle-button" type="button"
-                class="flex items-center justify-between w-full rounded-lg px-4 py-2 font-semibold text-white hover:bg-lime-400 transition duration-300 md:w-auto">
-                Kalkulator
-                <svg id="dropdown-icon" class="w-4 h-4 ms-1.5 transition-transform duration-300" aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="m19 9-7 7-7-7" />
-                </svg>
-              </button>
-              <div id="dropdown-menu"
-                class="absolute hidden md:mt-2 w-48 bg-emerald-500 border-gray-200 rounded-xl shadow-xl z-20 md:left-1/2 md:-translate-x-1/2">
-                <ul class="p-2.5 text-sm text-white font-medium">
-                  <li>
-                    <a href="kalkukalorim.html"
-                      class="block p-1.5 hover:bg-green-500 rounded transition duration-200">Kalkulator
-                      Kalori Makanan</a>
-                  </li>
-                  <li>
-                    <a href="kalkukaloh.html"
-                      class="block p-1.5 hover:bg-green-500 rounded transition duration-200">Kalkulator Kalori
-                      Harian</a>
-                  </li>
-                  <li>
-                    <a href="kalkubbideal.html"
-                      class="block p-1.5 hover:bg-green-500 rounded transition duration-200">Kalkulator
-                      BB Ideal</a>
-                  </li>
-                </ul>
-              </div>
-            </li>
-            <li class="relative">
-              <button id="program-dropdown-toggle" type="button"
-                class="flex items-center justify-between w-full rounded-lg px-4 py-2 font-semibold text-white hover:bg-lime-400 transition duration-300 md:w-auto">
-                Program
-                <svg id="program-dropdown-icon" class="w-4 h-4 ms-1.5 transition-transform duration-300"
-                  aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                  viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="m19 9-7 7-7-7" />
-                </svg>
-              </button>
-              <div id="program-dropdown-menu"
-                class="absolute hidden md:mt-2 w-48 bg-emerald-500 border-gray-200 rounded-xl shadow-xl z-20 md:left-1/2 md:-translate-x-1/2">
-                <ul class="p-2.5 text-sm text-white font-medium">
-                  <li>
-                    <a href="../program/ppolamakan.html"
-                      class="block p-1.5 hover:bg-green-500 rounded transition duration-200">Program
-                      Pola Makan Sehat</a>
-                  </li>
-                  <li>
-                    <a href="../program/plativitas.html"
-                      class="block p-1.5 hover:bg-green-500 rounded transition duration-200">Program Latihan berbasis
-                      Aktivitas Harian</a>
-                  </li>
-                </ul>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-  </div>
-  <!--Navbar end-->
+      /* Custom scrollbar food-list */
+      #food-list::-webkit-scrollbar {
+        width: 6px;
+      }
+      #food-list::-webkit-scrollbar-thumb {
+        background-color: #6ee7b7;
+        border-radius: 3px;
+      }
+      #food-list::-webkit-scrollbar-track {
+        background-color: #f0fdf4;
+      }
 
-  <!--Content-->
-  <div class="max-w-4xl mx-auto p-6">
-    <h1 class="text-4xl font-extrabold text-center mb-8 text-green-900 drop-shadow-md">
-      Kalkulator Kalori Makanan
-    </h1>
+       @media (min-width: 768px) {
+        .hero-title {
+          font-size: 3rem;
+        }
+        .gender-btn {
+          height: 130px;
+        }
+        .result-value {
+          font-size: 3.2rem;
+        }
+        .bubbles {
+          --size-letter: 22px;
+        }
+        .dumbbell {
+          font-size: 70px;
+        }
+        .heart {
+          font-size: 65px;
+        }
+        .apple {
+          font-size: 68px;
+        }
+        .running {
+          font-size: 72px;
+        }
+      }
+      .dropdown-visible {
+        display: block !important;
+      }
+      .menu-visible {
+        display: block !important;
+      }
+    </style>
+  </head>
 
-    <div class="bg-linear-to-br from-white to-green-50 shadow-2xl rounded-2xl p-8 mb-8 border-t-4 border-green-400 transform hover:scale-[1.005] transition duration-300">
-      <h2 class="text-2xl font-bold mb-5 text-green-700 border-b pb-2 border-green-100">Tambah Makanan Baru</h2>
+  <body class="font-sans bg-lime-100 min-h-screen relative overflow-x-hidden">
+    <!-- Background decorative elements -->
+    <div class="dumbbell background-element">
+      <i class="fas fa-dumbbell"></i>
+    </div>
+    <div class="heart background-element"><i class="fas fa-heart"></i></div>
+    <div class="apple background-element"><i class="fas fa-apple-alt"></i></div>
+    <div class="running background-element"><i class="fas fa-running"></i></div>
 
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6 items-end">
-        <div class="md:col-span-2">
-          <label for="food-select" class="block text-sm font-medium text-gray-700">Pilih Makanan</label>
-          <select id="food-select"
-            class="mt-1 block w-full border-green-300 rounded-lg shadow-sm p-2 focus:ring-green-500 focus:border-green-500 bg-white hover:border-green-400 transition duration-150">
-          </select>
-        </div>
-        <div>
-          <label for="quantity" class="block text-sm font-medium text-gray-700">Jumlah (gram)</label>
-          <input type="number" id="quantity" min="1"
-            class="mt-1 block w-full border-green-300 rounded-lg shadow-sm p-2 focus:ring-green-500 focus:border-green-500 bg-white"
-            placeholder="Cth: 150">
-        </div>
-        <div>
-          <button id="add-btn"
-            class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-lg shadow-lg transition duration-200 transform hover:scale-105 active:scale-95">
-            <span class="mr-1">+</span> Tambah
+    <!--Navbar (copy-paste dari BB-ideal)-->
+    <div class="flex justify-center p-4 sticky top-0 z-50 bg-transparent">
+      <nav
+        class="bg-green-500 dark:bg-green-500 border-gray-200 rounded-2xl w-full md:w-4/5 shadow-xl shadow-emerald-600/50"
+      >
+        <div class="flex flex-wrap items-center justify-between mx-4 p-4">
+          <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+            <img
+              src="../img/footer-navbar/Logo-SehatIn.png"
+              class="h-10"
+              alt="Logo Sehat.In"
+            />
+            <span
+              class="self-center text-2xl font-bold whitespace-nowrap text-white"
+              >Sehat.In</span
+            >
+          </a>
+          <button
+            id="menu-toggle-button"
+            type="button"
+            class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-white rounded-lg md:hidden hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-300 transition"
+            aria-controls="navbar-dropdown"
+            aria-expanded="false"
+          >
+            <span class="sr-only">Open main menu</span>
+            <svg
+              class="w-5 h-5"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 17 14"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M1 1h15M1 7h15M1 13h15"
+              />
+            </svg>
           </button>
+          <div class="hidden w-full md:block md:w-auto" id="navbar-dropdown">
+            <ul
+              class="font-medium flex flex-col p-3 md:p-0 mt-4 border border-green-400 rounded-xl bg-green-500 md:flex-row md:space-x-4 md:mt-0 md:border-0 md:bg-green-500"
+            >
+              <li>
+                <a
+                  href="../index.html"
+                  class="text-white rounded-lg px-4 py-2 block md:inline-block hover:bg-lime-400 transition duration-300 font-semibold"
+                  >Home</a
+                >
+              </li>
+              <li class="relative">
+                <button
+                  id="dropdown-toggle-button"
+                  type="button"
+                  class="flex items-center justify-between w-full rounded-lg px-4 py-2 font-semibold text-white hover:bg-lime-400 transition duration-300 md:w-auto"
+                >
+                  Kalkulator
+                  <svg
+                    id="dropdown-icon"
+                    class="w-4 h-4 ms-1.5 transition-transform duration-300"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="m19 9-7 7-7-7"
+                    />
+                  </svg>
+                </button>
+                <div
+                  id="dropdown-menu"
+                  class="absolute hidden md:mt-2 w-48 bg-emerald-500 border-gray-200 rounded-xl shadow-xl z-20 md:left-1/2 md:-translate-x-1/2"
+                >
+                  <ul class="p-2.5 text-sm text-white font-medium">
+                    <li>
+                      <a href="kalkukalorim.html" class="block p-1.5 hover:bg-green-500 rounded transition duration-200">Kalkulator Kalori Makanan</a>
+                    </li>
+                    <li>
+                      <a href="kalkukaloh.html" class="block p-1.5 hover:bg-green-500 rounded transition duration-200">Kalkulator Kalori Harian</a>
+                    </li>
+                    <li>
+                      <a href="kalkubbideal.html" class="block p-1.5 hover:bg-green-500 rounded transition duration-200">Kalkulator BB Ideal</a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="relative">
+                <button
+                  id="program-dropdown-toggle"
+                  type="button"
+                  class="flex items-center justify-between w-full rounded-lg px-4 py-2 font-semibold text-white hover:bg-lime-400 transition duration-300 md:w-auto"
+                >
+                  Program
+                  <svg
+                    id="program-dropdown-icon"
+                    class="w-4 h-4 ms-1.5 transition-transform duration-300"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="m19 9-7 7-7-7"
+                    />
+                  </svg>
+                </button>
+                <div
+                  id="program-dropdown-menu"
+                  class="absolute hidden md:mt-2 w-48 bg-emerald-500 border-gray-200 rounded-xl shadow-xl z-20 md:left-1/2 md:-translate-x-1/2"
+                >
+                  <ul class="p-2.5 text-sm text-white font-medium">
+                    <li>
+                      <a href="../program/ppolamakan.html" class="block p-1.5 hover:bg-green-500 rounded transition duration-200">Program Pola Makan Sehat</a>
+                    </li>
+                    <li>
+                      <a href="../program/plativitas.html" class="block p-1.5 hover:bg-green-500 rounded transition duration-200">Program Latihan berbasis Aktivitas Harian</a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <!--Navbar end-->
+
+    <!--Content-->
+    <div class="main-container max-w-4xl mx-auto p-6">
+      <!-- Hero Section -->
+       <div class="text-center mb-12 animate-fade-in-up">
+        <h1 class="text-3xl md:text-4xl font-bold text-green-600 mb-4">
+          Kalkulator<span class="text-lime-600"> Kalori Makanan</span>
+        </h1>
+        <p class="text-gray-600 max-w-2xl mx-auto">
+          Tambahkan makanan yang Anda konsumsi, lalu hitung total kalorinya
+          secara instan.
+        </p>
+      </div>
+
+      <!-- Card Form -->
+      <div class="card calculation-card mb-6">
+        <div class="p-6 md:p-8">
+          <h2 
+            class="text-2xl font-bold mb-5 text-emerald-custom border-b pb-2 border-emerald-50"
+          >
+            Tambah Makanan Baru
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6 items-end">
+            <div class="md:col-span-2">
+              <label
+                for="food-select"
+                class="block text-gray-700 font-medium mb-2"
+                >Pilih Makanan</label
+              >
+              <select
+                id="food-select"
+                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-custom focus:border-transparent bg-white"
+              ></select>
+            </div>
+            <div>
+              <label for="quantity" class="block text-gray-700 font-medium mb-2"
+                >Jumlah (gram)</label
+              >
+              <input
+                type="number"
+                id="quantity"
+                min="1"
+                class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-custom focus:border-transparent bg-white"
+                placeholder="Cth: 150"
+              />
+            </div>
+            <div>
+              <button id="add-btn" class="bubbles px-4 py-1.5">
+                <span class="text"><i class="fas fa-plus mr-2"></i>Tambah</span>
+              </button>
+            </div>
+          </div>
+
+          <h3 class="text-xl font-bold mb-3 text-emerald-custom">
+            Daftar Makanan Anda
+          </h3>
+          <div
+            id="food-list"
+            class="border border-gray-300 rounded-xl p-4 bg-emerald-50 max-h-64 overflow-y-auto shadow-inner"
+          >
+            <p class="text-gray-500 text-center py-4">
+              Belum ada makanan yang ditambahkan.
+            </p>
+          </div>
+
+          <div class="mt-6 text-center">
+            <button id="calculate-btn" class="bubbles">
+              <span class="text"
+                ><i class="fas fa-calculator mr-2"></i>Hitung Total Kalori</span
+              >
+            </button>
+          </div>
         </div>
       </div>
 
-      <h3 class="text-xl font-bold mb-3 text-green-700">Daftar Makanan Anda</h3>
-      <div id="food-list"
-        class="border border-green-300 rounded-lg p-4 bg-green-50 max-h-64 overflow-y-auto shadow-inner">
-        <p class="text-gray-500 text-center py-4">Belum ada makanan yang ditambahkan.</p>
-      </div>
-
-      <div class="mt-6 text-center">
-        <button id="calculate-btn"
-          class="bg-green-500 hover:bg-green-600 text-white font-bold text-lg py-3 px-8 rounded-full shadow-lg transition duration-200 transform hover:scale-105 active:scale-95">
-          Hitung Total Kalori
-        </button>
-      </div>
-    </div>
-
-    <div id="result-card"
-      class="bg-linear-to-r from-green-200 to-green-100 shadow-2xl rounded-2xl p-8 border-l-8 border-green-600 hidden text-center transform hover:bg-green-100 transition duration-300">
-      <h2 class="text-2xl font-bold mb-4 text-green-800">Total Kalori Makanan</h2>
-      <p id="total-calories" class="text-5xl font-extrabold text-green-900 animate-pulse">0.00 kalori</p>
-      <p class="text-gray-600 mt-2">Pastikan semua data makanan yang anda masukkan sudah benar!</p>
-    </div>
-  </div>
-  <!--Content End-->
-
-  <!--Footer-->
-  <footer class="bg-green-500 text-white mt-10 shadow-inner">
-    <div class="w-11/12 mx-auto py-6">
-      <div class="flex justify-between items-center">
-        <!-- Bagian Kiri: Copyright -->
-        <div>
-          <p class="text-sm font-medium">
-            &copy; 2025 Sehat.In. All Rights Reserved.
+      <!-- Card Hasil -->
+      <div id="resultCard" class="card result-card mb-6">
+        <div id="resultPlaceholder" class="result-placeholder">
+          <i class="fas fa-calculator"></i>
+          <h3 class="text-xl font-semibold mb-3">Hitung Total Kalori Anda</h3>
+          <p class="text-gray-600 max-w-md">
+            Tambahkan makanan di atas lalu klik tombol hitung untuk melihat
+            hasilnya.
           </p>
         </div>
-  
-        <!-- Bagian Tengah: Slogan (disembunyikan di layar kecil) -->
-        <div class="hidden md:block">
-          <p class="text-base font-semibold">
-            Pahami Tubuhmu, Mulai Transformasi Idealmu.
-          </p>
+        <div id="resultContent" class="result-content">
+          <h2 class="text-xl font-bold text-emerald-custom mb-4">
+            Total Kalori Makanan
+          </h2>
+          <div
+            class="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-xl p-6"
+          >
+            <p id="total-calories" class="result-value">0.00 kalori</p>
+            <p class="text-gray-600 mt-2">
+              Pastikan semua data makanan yang Anda masukkan sudah benar!
+            </p>
+          </div>
         </div>
-  
-        <!-- Bagian Kanan: Ikon Media Sosial -->
-        <div class="flex items-center space-x-4">
-          <!-- Ganti href dengan link asli dan src dengan path gambar yang benar -->
-          <a href="#" target="_blank" rel="noopener noreferrer"
-            class="transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_5px_rgba(255,255,255,0.7)]">
-            <img src="../img/footer-navbar/github.png" alt="GitHub" class="h-6 w-6">
-          </a>
-          <a href="#" target="_blank" rel="noopener noreferrer"
-            class="transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_5px_rgba(255,255,255,0.7)]">
-            <img src="../img/footer-navbar/gitlab.png" alt="GitLab" class="h-6 w-6">
-          </a>
-          <a href="#" target="_blank" rel="noopener noreferrer"
-            class="transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_5px_rgba(255,255,255,0.7)]">
-            <img src="../img/footer-navbar/in.png" alt="LinkedIn" class="h-6 w-6">
-          </a>
-          <a href="#" target="_blank" rel="noopener noreferrer"
-            class="transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_5px_rgba(255,255,255,0.7)]">
-            <img src="../img/footer-navbar/ig.png" alt="Instagram" class="h-6 w-6">
-          </a>
+      </div>
+
+      <!-- Card FAQ/Tips -->
+      <div id="faqSection" class="card tips-card">
+        <div class="p-6 md:p-8">
+          <div class="flex items-center mb-6">
+            <div class="bg-emerald-custom text-white rounded-xl p-3 mr-4">
+              <i class="fas fa-lightbulb text-xl"></i>
+            </div>
+            <h3 class="text-xl font-bold text-emerald-custom">
+              Tips Kesehatan
+            </h3>
+          </div>
+          <div class="space-y-4">
+            <details>
+              <summary>Bagaimana cara mengurangi kalori harian?</summary>
+              <p>
+                Kurangi porsi karbohidrat sederhana, ganti dengan serat &
+                protein, hindari minuman manis, dan tingkatkan aktivitas fisik.
+              </p>
+            </details>
+            <details>
+              <summary>Apakah semua kalori dari makanan sama?</summary>
+              <p>
+                Tidak. Kalori dari protein & serat memberikan kenyang lebih lama
+                dibanding kalori dari gula olahan yang cepat diserap.
+              </p>
+            </details>
+            <details>
+              <summary>
+                Berapa kalori yang dibutuhkan rata-rata orang dewasa?
+              </summary>
+              <p>
+                Pria ~2500 kcal/hari, Wanita ~2000 kcal/hari, namun tergantung
+                usia, berat, tinggi, dan tingkat aktivitas.
+              </p>
+            </details>
+          </div>
         </div>
       </div>
     </div>
-  </footer>
-  <!--Footer Selesai-->
+    <!--Content End-->
 
-  <script>
-    const menuToggleButton = document.getElementById('menu-toggle-button');
-    const navbarDropdown = document.getElementById('navbar-dropdown');
-    const dropdownToggleButton = document.getElementById('dropdown-toggle-button');
-    const dropdownMenu = document.getElementById('dropdown-menu');
-    const dropdownIcon = document.getElementById('dropdown-icon');
-    const programDropdownToggleButton = document.getElementById('program-dropdown-toggle');
-    const programDropdownMenu = document.getElementById('program-dropdown-menu');
-    const programDropdownIcon = document.getElementById('program-dropdown-icon');
+    <!--Footer (copy-paste dari BB-ideal)-->
+    <footer class="bg-green-500 text-white mt-10 shadow-inner">
+      <div class="w-11/12 mx-auto py-6">
+        <div class="flex justify-between items-center">
+          <div>
+            <p class="text-sm font-medium">
+              &copy; 2025 Sehat.In. All Rights Reserved.
+            </p>
+          </div>
+          <div class="hidden md:block">
+            <p class="text-base font-semibold">
+              Pahami Tubuhmu, Mulai Transformasi Idealmu.
+            </p>
+          </div>
+          <div class="flex items-center space-x-4">
+            <a
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_5px_rgba(255,255,255,0.7)]"
+              ><img
+                src="../img/footer-navbar/github.png"
+                alt="GitHub"
+                class="h-6 w-6"
+            /></a>
+            <a
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_5px_rgba(255,255,255,0.7)]"
+              ><img
+                src="../img/footer-navbar/gitlab.png"
+                alt="GitLab"
+                class="h-6 w-6"
+            /></a>
+            <a
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_5px_rgba(255,255,255,0.7)]"
+              ><img
+                src="../img/footer-navbar/in.png"
+                alt="LinkedIn"
+                class="h-6 w-6"
+            /></a>
+            <a
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_5px_rgba(255,255,255,0.7)]"
+              ><img
+                src="../img/footer-navbar/ig.png"
+                alt="Instagram"
+                class="h-6 w-6"
+            /></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!--Footer Selesai-->
 
-    function toggleMenu() {
-      navbarDropdown.classList.toggle('hidden');
-      navbarDropdown.classList.toggle('menu-visible');
-    }
+    <!-- Script navbar (sama persis) -->
+    <script>
+      const menuToggleButton = document.getElementById("menu-toggle-button");
+      const navbarDropdown = document.getElementById("navbar-dropdown");
+      const dropdownToggleButton = document.getElementById(
+        "dropdown-toggle-button"
+      );
+      const dropdownMenu = document.getElementById("dropdown-menu");
+      const dropdownIcon = document.getElementById("dropdown-icon");
+      const programDropdownToggleButton = document.getElementById(
+        "program-dropdown-toggle"
+      );
+      const programDropdownMenu = document.getElementById(
+        "program-dropdown-menu"
+      );
+      const programDropdownIcon = document.getElementById(
+        "program-dropdown-icon"
+      );
 
-    function toggleDropdown(button, menu, icon) {
-      menu.classList.toggle('hidden');
-      menu.classList.toggle('dropdown-visible');
-
-      if (menu.classList.contains('dropdown-visible')) {
-        icon.classList.add('rotate-180');
-      } else {
-        icon.classList.remove('rotate-180');
+      function toggleMenu() {
+        navbarDropdown.classList.toggle("hidden");
+        navbarDropdown.classList.toggle("menu-visible");
       }
-    }
 
-    menuToggleButton.addEventListener('click', toggleMenu);
+      function toggleDropdown(button, menu, icon) {
+        menu.classList.toggle("hidden");
+        menu.classList.toggle("dropdown-visible");
 
-    dropdownToggleButton.addEventListener('click', function (event) {
-      event.stopPropagation();
-      toggleDropdown(dropdownToggleButton, dropdownMenu, dropdownIcon);
-    });
-
-    programDropdownToggleButton.addEventListener('click', function (event) {
-      event.stopPropagation();
-      toggleDropdown(programDropdownToggleButton, programDropdownMenu, programDropdownIcon);
-    });
-
-    document.addEventListener('click', function (event) {
-      const isClickInsideDropdown = dropdownMenu.contains(event.target);
-      const isClickOnButton = dropdownToggleButton.contains(event.target);
-      const isClickInsideProgram = programDropdownMenu.contains(event.target);
-      const isClickOnProgramButton = programDropdownToggleButton.contains(event.target);
-
-      if (dropdownMenu.classList.contains('dropdown-visible') && !isClickInsideDropdown && !isClickOnButton) {
-        toggleDropdown();
+        if (menu.classList.contains("dropdown-visible")) {
+          icon.classList.add("rotate-180");
+        } else {
+          icon.classList.remove("rotate-180");
+        }
       }
 
-      if (programDropdownMenu.classList.contains('dropdown-visible') && !isClickInsideProgram && !isClickOnProgramButton) {
-        toggleDropdown(programDropdownToggleButton, programDropdownMenu, programDropdownIcon);
-      }
-    });
+      menuToggleButton.addEventListener("click", toggleMenu);
 
-    // Data makanan (kalori per 100g)
-    const foods = [
-        // Makanan Berat/Pokok
-        { name: "Nasi Putih", calories: 130 }, // Nasi Putih (matang)
-        { name: "Nasi Merah", calories: 110 }, // Nasi Merah (matang)
-        { name: "Mie Instan (Kering)", calories: 480 }, // Mie Instan (belum dimasak/kering)
+      dropdownToggleButton.addEventListener("click", function (event) {
+        event.stopPropagation();
+        toggleDropdown(dropdownToggleButton, dropdownMenu, dropdownIcon);
+      });
+
+      programDropdownToggleButton.addEventListener("click", function (event) {
+        event.stopPropagation();
+        toggleDropdown(
+          programDropdownToggleButton,
+          programDropdownMenu,
+          programDropdownIcon
+        );
+      });
+
+      document.addEventListener("click", function (event) {
+        const isClickInsideDropdown = dropdownMenu.contains(event.target);
+        const isClickOnButton = dropdownToggleButton.contains(event.target);
+        const isClickInsideProgram = programDropdownMenu.contains(event.target);
+        const isClickOnProgramButton = programDropdownToggleButton.contains(event.target);
+
+        if (dropdownMenu.classList.contains("dropdown-visible") && !isClickInsideDropdown && !isClickOnButton) {
+          toggleDropdown(dropdownToggleButton, dropdownMenu, dropdownIcon);
+        }
+
+        if (programDropdownMenu.classList.contains("dropdown-visible") && !isClickInsideProgram && !isClickOnProgramButton) {
+          toggleDropdown(
+            programDropdownToggleButton,
+            programDropdownMenu,
+            programDropdownIcon
+          );
+        }
+      });
+
+      window.addEventListener("resize", function () {
+        if (window.innerWidth >= 768) {
+          navbarDropdown.classList.remove("hidden");
+          navbarDropdown.classList.remove("menu-visible");
+          dropdownMenu.classList.add("hidden");
+          dropdownIcon.classList.remove("rotate-180");
+          programDropdownMenu.classList.add("hidden");
+          programDropdownIcon.classList.remove("rotate-180");
+        } else if (!navbarDropdown.classList.contains("menu-visible")) {
+          navbarDropdown.classList.add("hidden");
+        }
+      });
+    </script>
+
+    <!-- Script inti kalori (tetap Anda punya) -->
+    <script>
+      const foods = [
+        // Daftar Makanan Berat/Pokok
+        { name: "Nasi Putih", calories: 130 },
+        { name: "Nasi Merah", calories: 110 },
+        { name: "Mie Instan (Kering)", calories: 480 },
         { name: "Roti Tawar Putih", calories: 265 },
         { name: "Ubi Jalar Rebus", calories: 76 },
         { name: "Kentang Rebus", calories: 87 },
         { name: "Jagung Rebus", calories: 96 },
         { name: "Lontong", calories: 100 },
         { name: "Ketupat", calories: 100 },
-
         // Lauk Pauk (Protein)
+
         { name: "Ayam Goreng (Dada, dengan kulit)", calories: 250 },
         { name: "Ayam Goreng (Paha, dengan kulit)", calories: 280 },
         { name: "Telur Rebus", calories: 155 },
@@ -313,127 +827,150 @@
         { name: "Ikan Lele Goreng", calories: 220 },
         { name: "Ikan Bandeng Goreng", calories: 230 },
         { name: "Udang Rebus", calories: 99 },
-        { name: "Gulai Ayam", calories: 190 }, // Estimasi dengan kuah santan sedang
-
+        { name: "Gulai Ayam", calories: 190 },
         // Sayuran (Rebus/Tumis sederhana)
+
         { name: "Sayur Bayam (Rebus)", calories: 23 },
         { name: "Kangkung (Tumis, sedikit minyak)", calories: 40 },
         { name: "Buncis (Rebus)", calories: 31 },
         { name: "Wortel (Rebus)", calories: 41 },
         { name: "Tumis Tauge", calories: 50 },
-
         // Buah-buahan
         { name: "Pisang Kepok", calories: 128 },
+
         { name: "Mangga Arumanis", calories: 60 },
         { name: "Apel", calories: 52 },
         { name: "Jeruk Manis", calories: 47 },
         { name: "Pepaya", calories: 43 },
         { name: "Semangka", calories: 30 },
         { name: "Alpukat", calories: 160 },
-
         // Jajanan Pasar/Makanan Siap Saji Populer
-        { name: "Nasi Goreng", calories: 250 }, // Estimasi porsi kecil-sedang
-        { name: "Gado-Gado", calories: 150 }, // Estimasi tanpa kerupuk, porsi kecil
-        { name: "Sate Ayam (dengan bumbu kacang)", calories: 200 }, // Estimasi 3-4 tusuk
-        { name: "Bakso Sapi (Kuah, tanpa mie)", calories: 110 }, // Estimasi 3-4 butir bakso
-        { name: "Soto Ayam", calories: 60 }, // Estimasi kuah bening, tanpa nasi
+        { name: "Nasi Goreng", calories: 250 },
+
+        { name: "Gado-Gado", calories: 150 },
+        { name: "Sate Ayam (dengan bumbu kacang)", calories: 200 },
+        { name: "Bakso Sapi (Kuah, tanpa mie)", calories: 110 },
+        { name: "Soto Ayam", calories: 60 },
         { name: "Kerupuk Udang", calories: 480 },
         { name: "Kue Cubit", calories: 350 },
-        { name: "Martabak Manis (Terang Bulan)", calories: 300 }, // Estimasi per 100g potongan
-        { name: "Gorengan (Bakwan/Tahu Isi)", calories: 250 }, // Estimasi 100g atau 2-3 buah
+        { name: "Martabak Manis (Terang Bulan)", calories: 300 },
+        { name: "Gorengan (Bakwan/Tahu Isi)", calories: 250 },
 
         // Minuman
-        { name: "Teh Manis (Gula Normal, Sekitar 200ml)", calories: 40 }, // Estimasi 200ml
-        { name: "Kopi Hitam (Tanpa gula, Sekitar 200ml)", calories: 2 } // Estimasi 200ml
+        { name: "Teh Manis (Gula Normal, Sekitar 200ml)", calories: 40 },
+        { name: "Kopi Hitam (Tanpa gula, Sekitar 200ml)", calories: 2 },
       ];
 
-    let selectedFoods = [];
+      let selectedFoods = [];
+      const foodSelect = document.getElementById("food-select");
+      const quantityInput = document.getElementById("quantity");
+      const addBtn = document.getElementById("add-btn");
+      const foodList = document.getElementById("food-list");
+      const calculateBtn = document.getElementById("calculate-btn");
+      const resultCard = document.getElementById("resultCard");
+      const resultPlaceholder = document.getElementById("resultPlaceholder");
+      const resultContent = document.getElementById("resultContent");
+      const totalCaloriesEl = document.getElementById("total-calories");
 
-    const foodSelect = document.getElementById('food-select');
-    const quantityInput = document.getElementById('quantity');
-    const addBtn = document.getElementById('add-btn');
-    const foodList = document.getElementById('food-list');
-    const calculateBtn = document.getElementById('calculate-btn');
-    const resultCard = document.getElementById('result-card');
-    const totalCalories = document.getElementById('total-calories');
+      foods.forEach((food) => {
+        const option = document.createElement("option");
+        option.value = food.name;
+        option.textContent = `${food.name} (${food.calories} kal/100g)`;
+        foodSelect.appendChild(option);
+      });
 
-    foods.forEach(food => {
-      const option = document.createElement('option');
-      option.value = food.name;
-      option.textContent = `${food.name} (${food.calories} kal/100g)`;
-      foodSelect.appendChild(option);
-    });
+      addBtn.addEventListener("click", () => {
+        const selectedFoodName = foodSelect.value;
+        const quantity = parseInt(quantityInput.value);
+        if (!selectedFoodName || !quantity || quantity <= 0) {
+          alert(
+            "Pilih makanan dan masukkan jumlah yang valid (lebih dari 0 gram)!"
+          );
+          return;
+        }
+        const food = foods.find((f) => f.name === selectedFoodName);
+        const calories = (food.calories / 100) * quantity;
+        selectedFoods.push({
+          name: selectedFoodName,
+          quantity: quantity,
+          calories: calories,
+        });
+        updateFoodList();
+        quantityInput.value = "";
+        resultCard.classList.remove("animated");
+        resultPlaceholder.style.display = "flex";
+        resultContent.classList.remove("show");
+      });
 
-    addBtn.addEventListener('click', () => {
-      const selectedFoodName = foodSelect.value;
-      const quantity = parseInt(quantityInput.value);
-
-      if (!selectedFoodName || !quantity || quantity <= 0) {
-        alert('Pilih makanan dan masukkan jumlah yang valid (lebih dari 0 gram)!');
-        return;
+      function updateFoodList() {
+        foodList.innerHTML = "";
+        if (selectedFoods.length === 0) {
+          foodList.innerHTML =
+            '<p class="text-gray-500 text-center py-4">Belum ada makanan yang ditambahkan.</p>';
+          return;
+        }
+        const ul = document.createElement("ul");
+        ul.className = "space-y-3";
+        selectedFoods.forEach((item, index) => {
+          const li = document.createElement("li");
+          li.className =
+            "flex justify-between items-center bg-white p-4 rounded-lg shadow-md border border-emerald-100 hover:shadow-lg hover:border-emerald-300 transition";
+          li.innerHTML = `
+          <div class="flex-grow"><span class="font-semibold text-emerald-800">${
+            item.name
+          }</span> <span class="text-sm text-gray-500 ml-2">(${
+            item.quantity
+          }g)</span></div>
+          <span class="font-bold text-emerald-600 mr-4">${item.calories.toFixed(
+            2
+          )} kal</span>
+          <button class="text-red-500 hover:text-red-700 p-1 rounded-full hover:bg-red-50 transition" onclick="removeFood(${index})">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 6h6v10H7V6z" clip-rule="evenodd" /></svg>
+          </button>
+        `;
+          ul.appendChild(li);
+        });
+        foodList.appendChild(ul);
       }
 
-      const food = foods.find(f => f.name === selectedFoodName);
-      const calories = (food.calories / 100) * quantity;
+      window.removeFood = function (index) {
+        selectedFoods.splice(index, 1);
+        updateFoodList();
+        resultPlaceholder.style.display = "flex";
+        resultContent.classList.remove("show");
+      };
 
-      selectedFoods.push({
-        name: selectedFoodName,
-        quantity: quantity,
-        calories: calories
+      calculateBtn.addEventListener("click", () => {
+        if (selectedFoods.length === 0) {
+          alert("Silakan tambahkan makanan terlebih dahulu!");
+          return;
+        }
+        const total = selectedFoods.reduce(
+          (sum, item) => sum + item.calories,
+          0
+        );
+        totalCaloriesEl.textContent = `${total.toFixed(2)} kalori`;
+        resultPlaceholder.style.display = "none";
+        resultContent.classList.add("show");
+        resultCard.classList.add("animated");
+        resultCard.scrollIntoView({ behavior: "smooth", block: "start" });
+        setTimeout(() => resultCard.classList.remove("animated"), 600);
       });
 
       updateFoodList();
-      quantityInput.value = '';
-      resultCard.classList.add('hidden');
-    });
 
-    function updateFoodList() {
-      foodList.innerHTML = '';
-      if (selectedFoods.length === 0) {
-        foodList.innerHTML = '<p class="text-gray-500 text-center py-4">Belum ada makanan yang ditambahkan.</p>';
-        return;
-      }
-
-      const ul = document.createElement('ul');
-      ul.className = 'space-y-3';
-      selectedFoods.forEach((item, index) => {
-        const li = document.createElement('li');
-        li.className = 'flex justify-between items-center bg-white p-4 rounded-lg shadow-md border border-green-100 transform hover:shadow-lg hover:border-green-300 transition duration-150';
-        li.innerHTML = `
-                    <div class="flex-grow">
-                        <span class="font-semibold text-green-800">${item.name}</span> 
-                        <span class="text-sm text-gray-500 ml-2">(${item.quantity}g)</span>
-                    </div>
-                    <span class="font-bold text-green-600 mr-4">${item.calories.toFixed(2)} kal</span>
-                    <button class="text-red-500 hover:text-red-700 font-medium p-1 rounded-full hover:bg-red-50 transition duration-150" onclick="removeFood(${index})">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 6h6v10H7V6z" clip-rule="evenodd" />
-                        </svg>
-                    </button>
-                `;
-        ul.appendChild(li);
+      /* ---------- FAQ close otomatis (disalin dari kalkukaloh.html) ---------- */
+      document.querySelectorAll("#faqSection details").forEach((detail) => {
+        detail.addEventListener("toggle", () => {
+          if (detail.hasAttribute("open")) {
+            document
+              .querySelectorAll("#faqSection details[open]")
+              .forEach((d) => {
+                if (d !== detail) d.removeAttribute("open");
+              });
+          }
+        });
       });
-      foodList.appendChild(ul);
-    }
-
-    window.removeFood = function (index) {
-      selectedFoods.splice(index, 1);
-      updateFoodList();
-      resultCard.classList.add('hidden');
-    }
-
-    calculateBtn.addEventListener('click', () => {
-      if (selectedFoods.length === 0) {
-        alert('Silakan tambahkan makanan terlebih dahulu!');
-        return;
-      }
-      const total = selectedFoods.reduce((sum, item) => sum + item.calories, 0);
-      totalCalories.textContent = `${total.toFixed(2)} kalori`;
-      resultCard.classList.remove('hidden');
-    });
-
-    updateFoodList();
-  </script>
-</body>
-
+    </script>
+  </body>
 </html>

@@ -1,447 +1,1150 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kalkulator Kebutuhan Kalori Harian 🎯</title>
+    <link rel="stylesheet" href="../style.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "emerald-custom": "#047857",
+              "green-custom": "#16a34a",
+              "light-bg": "#f8fafc",
+              "accent-blue": "#3b82f6",
+              "accent-pink": "#ec4899",
+              "bubble-primary": "#10b981",
+              "bubble-background": "#f0fdf4",
+            },
+            animation: {
+              float: "float 8s ease-in-out infinite",
+              "pulse-slow": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+              "fade-in": "fadeIn 0.5s ease-out forwards",
+            },
+            keyframes: {
+              float: {
+                "0%, 100%": { transform: "translateY(0)" },
+                "50%": { transform: "translateY(-15px)" },
+              },
+              fadeIn: {
+                "0%": { opacity: 0, transform: "translateY(10px)" },
+                "100%": { opacity: 1, transform: "translateY(0)" },
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+      body {
+        font-family: "Poppins", sans-serif;
+        /* Background dengan pola halus dan warna dasar hijau sangat muda */
+        background-color: #ecfccb; /* green-50 */
+        background-image: radial-gradient(#86efac 1px, transparent 1px); /* Pola titik lime-300 */
+        background-size: 20px 20px;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        overflow-x: hidden;
+      }
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #ecfccb;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #10b981;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #047857;
+      }
+      .background-element {
+        position: absolute;
+        z-index: 0;
+        opacity: 0.12;
+      }
+      .dumbbell {
+        font-size: 60px;
+        top: 12%;
+        left: 6%;
+        animation: float 9s ease-in-out infinite;
+        color: #10b981;
+      }
+      .heart {
+        font-size: 55px;
+        bottom: 18%;
+        right: 8%;
+        animation: float 11s ease-in-out infinite;
+        animation-delay: 1.5s;
+        color: #ec4899;
+      }
+      .apple {
+        font-size: 58px;
+        top: 32%;
+        right: 10%;
+        animation: float 13s ease-in-out infinite;
+        animation-delay: 2.5s;
+        color: #3b82f6;
+      }
+      .running {
+        font-size: 62px;
+        bottom: 25%;
+        left: 8%;
+        animation: float 10s ease-in-out infinite;
+        animation-delay: 1s;
+        color: #10b981;
+      }
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../style.css">
-  <title>Kalkulator Kebutuhan Kalori Harian 🎯</title>
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #f7fbfd;
-    }
+      .hero-section {
+        text-align: center;
+        padding: 40px 20px;
+        margin-bottom: 30px;
+        position: relative;
+        z-index: 2;
+      }
+      .hero-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        background: linear-gradient(90deg, #047857, #10b981);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        margin-bottom: 12px;
+        animation: fade-in 0.8s ease-out;
+      }
+      .hero-subtitle {
+        font-size: 1.1rem;
+        color: #475569;
+        max-width: 700px;
+        margin: 0 auto;
+        line-height: 1.6;
+        animation: fade-in 1s ease-out;
+        animation-delay: 0.2s;
+      }
 
-    .dropdown-visible {
-      display: block !important;
-    }
+      .main-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 20px;
+        position: relative;
+        z-index: 2;
+      }
+      .card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px -10px rgba(0, 0, 0, 0.15);
+      }
+      .calculation-card {
+        border-top: 4px solid #10b981;
+      }
+      .result-card {
+        border-left: 4px solid #0d9488;
+        min-height: 220px;
+      }
+      .tips-card {
+        border-left: 4px solid #0d9488;
+      }
 
-    .menu-visible {
-      display: block !important;
-    }
+      .result-placeholder {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        height: 100%;
+        padding: 30px 20px;
+        color: #64748b;
+      }
+      .result-placeholder i {
+        font-size: 56px;
+        margin-bottom: 20px;
+        color: #94a3b8;
+        animation: pulse-slow 2s infinite;
+      }
+      .result-content {
+        display: none;
+        padding: 25px;
+      }
+      .result-content.show {
+        display: block;
+      }
+      .result-value {
+        font-size: 2.8rem;
+        font-weight: 800;
+        margin: 15px 0;
+        background: linear-gradient(90deg, #047857, #10b981);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
 
-    .activity-card {
-      transition: all 0.2s;
-      @apply border-2 border-gray-200;
-    }
+      .gender-btn {
+        background: #f8fafc;
+        border: 2px solid #e2e8f0;
+        border-radius: 16px;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px 0.1rem;
+        height: 110px;
+      }
+      .gender-btn:hover {
+        border-color: #cbd5e1;
+        background: #f1f5f9;
+        transform: translateY(-3px);
+      }
+      .gender-btn.active {
+        border-color: #10b981;
+        background: #ecfdf5;
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(16, 185, 129, 0.15);
+      }
+      .gender-icon {
+        font-size: 28px;
+        margin-bottom: 10px;
+      }
+      .male-icon {
+        color: #3b82f6;
+      }
+      .female-icon {
+        color: #ec4899;
+      }
+      .active .male-icon {
+        color: #1d4ed8;
+        transform: scale(1.1);
+      }
+      .active .female-icon {
+        color: #be185d;
+        transform: scale(1.1);
+      }
 
-    .activity-card:hover {
-      @apply border-green-300 shadow-md;
-    }
+      input {
+        transition: all 0.3s ease;
+      }
+      input:focus {
+        outline: none;
+        border-color: #10b981;
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+        transform: translateY(-2px);
+      }
 
-    .activity-card.selected {
-      border-color: #16a34a;
-      background-color: #bbf7d0;
-      box-shadow: 0 4px 12px rgba(0, 128, 0, 0.3);
-      transform: scale(1.03);
-      transition: 0.2s;
-    }
+      details {
+        margin-bottom: 16px;
+      }
+      details summary {
+        list-style: none;
+        position: relative;
+        padding-left: 36px;
+        font-weight: 600;
+        color: #1e293b;
+        cursor: pointer;
+        padding: 14px 0 14px 36px;
+        transition: color 0.2s;
+        display: flex;
+        align-items: center;
+      }
+      details summary::-webkit-details-marker {
+        display: none;
+      }
+      details summary::before {
+        content: "\f054";
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #10b981;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        font-size: 18px;
+      }
+      details[open] summary::before {
+        transform: translateY(-50%) rotate(90deg);
+      }
+      details summary:hover {
+        color: #047857;
+      }
+      details[open] summary {
+        color: #047857;
+      }
+      details > p {
+        margin-top: 12px;
+        padding-left: 36px;
+        line-height: 1.7;
+        color: #475569;
+        opacity: 0;
+        transform: translateY(-10px);
+        overflow: hidden;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        max-height: 0;
+      }
+      details[open] > p {
+        opacity: 1;
+        transform: translateY(0);
+        max-height: 200px;
+        font-weight: 600;
+      }
 
-    .gender-btn.selected {
-      @apply ring-4 ring-offset-2 ring-green-500;
-    }
-  </style>
-</head>
+      .status-indicator {
+        display: inline-block;
+        padding: 6px 16px;
+        border-radius: 30px;
+        font-size: 0.9rem;
+      }
+      .status-ideal {
+        background: linear-gradient(90deg, #dcfce7, #bbf7d0);
+        color: #166534;
+        box-shadow: 0 4px 6px -1px rgba(22, 101, 52, 0.1);
+      }
+      .status-over {
+        background: linear-gradient(90deg, #fee2e2, #fecaca);
+        color: #b91c1c;
+        box-shadow: 0 4px 6px -1px rgba(185, 28, 28, 0.1);
+      }
+      .status-under {
+        background: linear-gradient(90deg, #fff7ed, #ffedd5);
+        color: #92400e;
+        box-shadow: 0 4px 6px -1px rgba(146, 64, 14, 0.1);
+      }
 
-<body class="bg-linear-to-br from-green-50 to-green-100 min-h-screen font-sans">
-  <!--Navbar-->
-  <div class="flex justify-center p-4 sticky top-0 z-50 bg-transparent dark:bg-transparent ">
-    <nav
-      class="bg-green-500 dark:bg-green-500 border-gray-200 rounded-2xl w-full md:w-4/5 shadow-xl shadow-emerald-600/50">
-      <div class="flex flex-wrap items-center justify-between mx-4 p-4">
-        <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
-          <img src="../img/footer-navbar/Logo-SehatIn.png" class="h-10" alt="Logo Sehat.In" />
-          <span class="self-center text-2xl font-bold whitespace-nowrap text-white">Sehat.In</span>
-        </a>
-        <button id="menu-toggle-button" type="button"
-          class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-white rounded-lg md:hidden hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-300 transition"
-          aria-controls="navbar-dropdown" aria-expanded="false">
-          <span class="sr-only">Open main menu</span>
-          <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M1 1h15M1 7h15M1 13h15" />
-          </svg>
-        </button>
-        <div class="hidden w-full md:block md:w-auto" id="navbar-dropdown">
-          <ul
-            class="font-medium flex flex-col p-3 md:p-0 mt-4 border border-green-400 rounded-xl bg-green-500 md:flex-row md:space-x-4 md:mt-0 md:border-0 md:bg-green-500">
-            <li>
-              <a href="../index.html"
-                class="text-white rounded-lg px-4 py-2 block md:inline-block hover:bg-lime-400 transition duration-300 font-semibold"
-                aria-current="page">Home</a>
-            </li>
-            <li class="relative">
-              <button id="dropdown-toggle-button" type="button"
-                class="flex items-center justify-between w-full rounded-lg px-4 py-2 font-semibold text-white hover:bg-lime-400 transition duration-300 md:w-auto">
-                Kalkulator
-                <svg id="dropdown-icon" class="w-4 h-4 ms-1.5 transition-transform duration-300" aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="m19 9-7 7-7-7" />
-                </svg>
-              </button>
-              <div id="dropdown-menu"
-                class="absolute hidden md:mt-2 w-48 bg-emerald-500 border-gray-200 rounded-xl shadow-xl z-20 md:left-1/2 md:-translate-x-1/2">
-                <ul class="p-2.5 text-sm text-white font-medium">
-                  <li>
-                    <a href="kalkukalorim.html"
-                      class="block p-1.5 hover:bg-green-500 rounded transition duration-200">Kalkulator
-                      Kalori Makanan</a>
-                  </li>
-                  <li>
-                    <a href="kalkukaloh.html"
-                      class="block p-1.5 hover:bg-green-500 rounded transition duration-200">Kalkulator Kalori
-                      Harian</a>
-                  </li>
-                  <li>
-                    <a href="kalkubbideal.html"
-                      class="block p-1.5 hover:bg-green-500 rounded transition duration-200">Kalkulator
-                      BB Ideal</a>
-                  </li>
-                </ul>
+      .bubbles {
+        --c1: #f0fdf4;
+        --c2: #10b981;
+        --size-letter: 20px;
+        padding: 0.8em 1.5em;
+        font-size: var(--size-letter);
+        background-color: transparent;
+        border: calc(var(--size-letter) / 6) solid var(--c2);
+        border-radius: 0.3em;
+        cursor: pointer;
+        overflow: hidden;
+        position: relative;
+        transition: 300ms cubic-bezier(0.83, 0, 0.17, 1);
+        font-weight: 700;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .bubbles > .text {
+        font-weight: 700;
+        color: var(--c2);
+        position: relative;
+        z-index: 1;
+        transition: color 700ms cubic-bezier(0.83, 0, 0.17, 1);
+        display: flex;
+        align-items: center;
+      }
+      .bubbles > .text i {
+        margin-right: 8px;
+      }
+      .bubbles::before {
+        top: 0;
+        left: 0;
+      }
+      .bubbles::after {
+        top: 100%;
+        left: 100%;
+      }
+      .bubbles::before,
+      .bubbles::after {
+        content: "";
+        width: 150%;
+        aspect-ratio: 1/1;
+        scale: 0;
+        transition: 1000ms cubic-bezier(0.76, 0, 0.24, 1);
+        background-color: var(--c2);
+        border-radius: 50%;
+        position: absolute;
+        translate: -50% -50%;
+      }
+      .bubbles:hover > .text {
+        color: var(--c1);
+      }
+      .bubbles:hover::before,
+      .bubbles:hover::after {
+        scale: 1;
+      }
+      .bubbles:active {
+        scale: 0.98;
+        filter: brightness(0.9);
+      }
+
+      .result-card.animated {
+        animation: fadeInUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)
+          forwards;
+      }
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px) scale(0.98);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      @media (min-width: 768px) {
+        .hero-title {
+          font-size: 3rem;
+        }
+        .gender-btn {
+          height: 130px;
+        }
+        .result-value {
+          font-size: 3.2rem;
+        }
+        .bubbles {
+          --size-letter: 22px;
+        }
+        .dumbbell {
+          font-size: 70px;
+        }
+        .heart {
+          font-size: 65px;
+        }
+        .apple {
+          font-size: 68px;
+        }
+        .running {
+          font-size: 72px;
+        }
+      }
+      .dropdown-visible {
+        display: block !important;
+      }
+      .menu-visible {
+        display: block !important;
+      }
+    </style>
+  </head>
+
+  <body class="font-sans bg-lime-100 min-h-screen relative overflow-x-hidden">
+    <!--Navbar-->
+    <div class="flex justify-center p-4 sticky top-0 z-50 bg-transparent">
+      <nav
+        class="bg-green-500 dark:bg-green-500 border-gray-200 rounded-2xl w-full md:w-4/5 shadow-xl shadow-emerald-600/50"
+      >
+        <div class="flex flex-wrap items-center justify-between mx-4 p-4">
+          <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+            <img
+              src="../img/footer-navbar/Logo-SehatIn.png"
+              class="h-10"
+              alt="Logo Sehat.In"
+            />
+            <span
+              class="self-center text-2xl font-bold whitespace-nowrap text-white"
+              >Sehat.In</span
+            >
+          </a>
+          <button
+            id="menu-toggle-button"
+            type="button"
+            class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-white rounded-lg md:hidden hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-300 transition"
+            aria-controls="navbar-dropdown"
+            aria-expanded="false"
+          >
+            <span class="sr-only">Open main menu</span>
+            <svg
+              class="w-5 h-5"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 17 14"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M1 1h15M1 7h15M1 13h15"
+              />
+            </svg>
+          </button>
+          <div class="hidden w-full md:block md:w-auto" id="navbar-dropdown">
+            <ul
+              class="font-medium flex flex-col p-3 md:p-0 mt-4 border border-green-400 rounded-xl bg-green-500 md:flex-row md:space-x-4 md:mt-0 md:border-0 md:bg-green-500"
+            >
+              <li>
+                <a
+                  href="../index.html"
+                  class="text-white rounded-lg px-4 py-2 block md:inline-block hover:bg-lime-400 transition duration-300 font-semibold"
+                  aria-current="page"
+                  >Home</a
+                >
+              </li>
+              <li class="relative">
+                <button
+                  id="dropdown-toggle-button"
+                  type="button"
+                  class="flex items-center justify-between w-full rounded-lg px-4 py-2 font-semibold text-white hover:bg-lime-400 transition duration-300 md:w-auto"
+                >
+                  Kalkulator
+                  <svg
+                    id="dropdown-icon"
+                    class="w-4 h-4 ms-1.5 transition-transform duration-300"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24" 
+                    fill="none" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="m19 9-7 7-7-7"
+                    />
+                  </svg>
+                </button>
+                <div
+                  id="dropdown-menu"
+                  class="absolute hidden md:mt-2 w-48 bg-emerald-500 border-gray-200 rounded-xl shadow-xl z-20 md:left-1/2 md:-translate-x-1/2"
+                >
+                  <ul class="p-2.5 text-sm text-white font-medium">
+                    <li>
+                      <a
+                        href="../kalkulator/kalkukalorim.html"
+                        class="block p-1.5 hover:bg-green-500 rounded transition duration-200"
+                        >Kalkulator Kalori Makanan</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="../kalkulator/kalkukaloh.html"
+                        class="block p-1.5 hover:bg-green-500 rounded transition duration-200"
+                        >Kalkulator Kalori Harian</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="../kalkulator/kalkubbideal.html"
+                        class="block p-1.5 hover:bg-green-500 rounded transition duration-200"
+                        >Kalkulator BB Ideal</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="relative">
+                <button
+                  id="program-dropdown-toggle"
+                  type="button"
+                  class="flex items-center justify-between w-full rounded-lg px-4 py-2 font-semibold text-white hover:bg-lime-400 transition duration-300 md:w-auto"
+                >
+                  Program
+                  <svg
+                    id="program-dropdown-icon"
+                    class="w-4 h-4 ms-1.5 transition-transform duration-300"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="m19 9-7 7-7-7"
+                    />
+                  </svg>
+                </button>
+                <div
+                  id="program-dropdown-menu"
+                  class="absolute hidden md:mt-2 w-48 bg-emerald-500 border-gray-200 rounded-xl shadow-xl z-20 md:left-1/2 md:-translate-x-1/2"
+                >
+                  <ul class="p-2.5 text-sm text-white font-medium">
+                    <li>
+                      <a
+                        href="../program/ppolamakan.html"
+                        class="block p-1.5 hover:bg-green-500 rounded transition duration-200"
+                        >Program Pola Makan Sehat</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="../program/plativitas.html"
+                        class="block p-1.5 hover:bg-green-500 rounded transition duration-200"
+                        >Program Latihan berbasis Aktivitas Harian</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <!--Navbar end-->
+
+    <!--Content-->
+    <!-- Background decorative elements -->
+    <div class="dumbbell background-element">
+      <i class="fas fa-dumbbell"></i>
+    </div>
+    <div class="heart background-element"><i class="fas fa-heart"></i></div>
+    <div class="apple background-element"><i class="fas fa-apple-alt"></i></div>
+    <div class="running background-element"><i class="fas fa-running"></i></div>
+
+    <div class="main-container">
+      <!-- Hero Section -->
+       <br>
+       <div class="text-center mb-12 animate-fade-in-up">
+        <h1 class="text-3xl md:text-4xl font-bold text-green-600 mb-4">
+          Kalkulator <span class="text-lime-600">Kebutuhan Kalori Harian</span>
+        </h1>
+        <p class="text-gray-600 max-w-2xl mx-auto">
+        Hitung kalori harian Anda berdasarkan gender, usia, tinggi, berat dan
+        tingkat aktivitas. Dapatkan rekomendasi defisit atau surplus kalori
+        untuk mencapai tujuan tubuh ideal!
+        </p>
+      </div>
+
+      <!-- Card Perhitungan -->
+      <div class="card calculation-card mb-6">
+        <div class="p-6 md:p-8">
+          <form id="calculatorForm" class="space-y-6">
+            <!-- Gender -->
+            <div>
+              <label class="block text-gray-700 font-medium mb-3"
+                >Jenis Kelamin</label
+              >
+              <div class="grid grid-cols-2 gap-4">
+                <button type="button" id="maleBtn" class="gender-btn">
+                  <i class="fas fa-male gender-icon male-icon"></i>
+                  <span class="font-medium text-lg">Pria</span>
+                </button>
+                <button type="button" id="femaleBtn" class="gender-btn">
+                  <i class="fas fa-female gender-icon female-icon"></i>
+                  <span class="font-medium text-lg">Wanita</span>
+                </button>
               </div>
-            </li>
-            <li class="relative">
-              <button id="program-dropdown-toggle" type="button"
-                class="flex items-center justify-between w-full rounded-lg px-4 py-2 font-semibold text-white hover:bg-lime-400 transition duration-300 md:w-auto">
-                Program
-                <svg id="program-dropdown-icon" class="w-4 h-4 ms-1.5 transition-transform duration-300"
-                  aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                  viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="m19 9-7 7-7-7" />
-                </svg>
-              </button>
-              <div id="program-dropdown-menu"
-                class="absolute hidden md:mt-2 w-48 bg-emerald-500 border-gray-200 rounded-xl shadow-xl z-20 md:left-1/2 md:-translate-x-1/2">
-                <ul class="p-2.5 text-sm text-white font-medium">
-                  <li>
-                    <a href="../program/ppolamakan.html"
-                      class="block p-1.5 hover:bg-green-500 rounded transition duration-200">Program
-                      Pola Makan Sehat</a>
-                  </li>
-                  <li>
-                    <a href="../program/plativitas.html"
-                      class="block p-1.5 hover:bg-green-500 rounded transition duration-200">Program Latihan berbasis
-                      Aktivitas Harian</a>
-                  </li>
-                </ul>
+              <input type="hidden" id="gender" name="gender" required />
+            </div>
+
+            <!-- Usia -->
+            <div>
+              <label for="age" class="block text-gray-700 font-medium mb-2"
+                >Usia (tahun)</label
+              >
+              <input
+                type="number"
+                id="age"
+                name="age"
+                min="1"
+                max="120"
+                placeholder="Masukkan usia Anda"
+                required
+                class="w-full px-5 py-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-custom focus:border-transparent"
+              />
+            </div>
+
+            <!-- Tinggi -->
+            <div>
+              <label for="height" class="block text-gray-700 font-medium mb-2"
+                >Tinggi Badan (cm)</label
+              >
+              <input
+                type="number"
+                id="height"
+                name="height"
+                min="50"
+                max="250"
+                placeholder="Masukkan tinggi badan"
+                required
+                class="w-full px-5 py-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-custom focus:border-transparent"
+              />
+            </div>
+
+            <!-- Berat -->
+            <div>
+              <label for="weight" class="block text-gray-700 font-medium mb-2"
+                >Berat Badan (kg)</label
+              >
+              <input
+                type="number"
+                id="weight"
+                name="weight"
+                min="10"
+                max="300"
+                placeholder="Masukkan berat badan"
+                required
+                class="w-full px-5 py-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-custom focus:border-transparent"
+              />
+            </div>
+
+            <!-- Aktivitas -->
+            <div>
+              <label class="block text-gray-700 font-medium mb-3"
+                >Tingkat Aktivitas (Pilih Salah Satu)</label
+              >
+              <div class="grid grid-cols-5 gap-3">
+                <!-- Sedentari -->
+                <div
+                  onclick="selectActivity(this, 'sedentary')"
+                  class="activity-card gender-btn"
+                >
+                  <i class="fas fa-couch gender-icon mb-2"></i>
+                  <span class="font-semibold text-sm">Sedentari</span>
+                  <p class="text-xs text-gray-600 text-center">
+                    Tidak olahraga atau sangat ringan
+                  </p>
+                </div>
+                <!-- Ringan -->
+                <div
+                  onclick="selectActivity(this, 'light')"
+                  class="activity-card gender-btn"
+                >
+                  <i class="fas fa-walking gender-icon mb-2"></i>
+                  <span class="font-semibold text-sm">Ringan</span>
+                  <p class="text-xs text-gray-600 text-center">
+                    Olahraga ringan (1-3x/minggu)
+                  </p>
+                </div>
+                <!-- Sedang -->
+                <div
+                  onclick="selectActivity(this, 'moderate')"
+                  class="activity-card gender-btn text-center"
+                >
+                  <i class="fas fa-heart-pulse gender-icon mb-2"></i>
+                  <span class="font-semibold text-sm">Sedang</span>
+                  <p class="text-xs text-gray-600">
+                    Olahraga sedang (3-5x/minggu)
+                  </p>
+                </div>
+                <!-- Aktif -->
+                <div
+                  onclick="selectActivity(this, 'active')"
+                  class="activity-card gender-btn text-center"
+                >
+                  <i class="fas fa-person-running gender-icon mb-2"></i>
+                  <span class="font-semibold text-sm">Aktif</span>
+                  <p class="text-xs text-gray-600">
+                    Olahraga aktif (6-7x/minggu)
+                  </p>
+                </div>
+                <!-- Sangat Aktif -->
+                <div
+                  onclick="selectActivity(this, 'very-active')"
+                  class="activity-card gender-btn text-center"
+                >
+                  <i class="fas fa-dumbbell gender-icon mb-2"></i>
+                  <span class="font-semibold text-sm">Sangat Aktif</span>
+                  <p class="text-xs text-gray-600">
+                    Intensif atau pekerjaan fisik berat
+                  </p>
+                </div>
               </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-  </div>
-  <!--Navbar end-->
+              <input type="hidden" id="activity" name="activity" required />
+            </div>
 
-  <!--Content-->
-  <div class="max-w-4xl w-full mx-auto p-6">
-    <h1 class="text-4xl font-extrabold text-center mb-8 text-green-900 drop-shadow-md">Kalkulator Kebutuhan Kalori Harian
-    </h1>
-    <div class="bg-linear-to-br from-white to-green-50 shadow-2xl rounded-2xl p-8 mb-8 border-t-4 border-green-400">
-
-      <div class="mb-6">
-        <label class="block text-md font-semibold mb-3 text-gray-700">Jenis Kelamin</label>
-        <div class="flex space-x-4">
-          <button type="button" id="male"
-            class="text-white bg-linear-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-linear-to-br rounded font-medium rounded-base text-sm px-4 py-2.5 text-center leading-5 flex-1">Pria</button>
-          <button type="button" id="female"
-            class="text-white bg-linear-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-linear-to-br rounded font-medium rounded-base text-sm px-4 py-2.5 text-center leading-5 flex-1">Wanita</button>
+            <!-- Tombol Hitung -->
+            <button type="submit" class="bubbles">
+              <span class="text"
+                ><i class="fas fa-calculator"></i>Hitung Kebutuhan Kalori</span
+              >
+            </button>
+          </form>
         </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <div>
-          <label for="age" class="block text-sm font-medium mb-2 text-gray-700">Usia (tahun)</label>
-          <input type="number" id="age"
-            class="w-full px-3 py-2 border border-green-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500"
-            placeholder="Cth: 30">
-        </div>
-        <div>
-          <label for="height" class="block text-sm font-medium mb-2 text-gray-700">Tinggi Badan (cm)</label>
-          <input type="number" id="height"
-            class="w-full px-3 py-2 border border-green-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500"
-            placeholder="Cth: 175">
-        </div>
-        <div>
-          <label for="weight" class="block text-sm font-medium mb-2 text-gray-700">Berat Badan (kg)</label>
-          <input type="number" id="weight"
-            class="w-full px-3 py-2 border border-green-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500"
-            placeholder="Cth: 70">
-        </div>
-      </div>
-
-      <div class="mb-6">
-        <label class="block text-md font-semibold mb-3 text-gray-700">Tingkat Aktivitas (Pilih Salah Satu)</label>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4">
-          <div class="activity-card p-4 rounded-lg cursor-pointer hover:bg-green-25"
-            onclick="selectActivity(this, 'sedentary')">
-            <h3 class="font-bold text-green-700">Sedentari</h3>
-            <p class="text-xs text-gray-600">Tidak olahraga atau sangat ringan</p>
-          </div>
-
-          <div class="activity-card p-4 rounded-lg cursor-pointer hover:bg-green-25"
-            onclick="selectActivity(this, 'light')">
-            <h3 class="font-bold text-green-700">Ringan</h3>
-            <p class="text-xs text-gray-600">Olahraga ringan (1-3x/minggu)</p>
-          </div>
-
-          <div class="activity-card p-4 rounded-lg cursor-pointer hover:bg-green-25"
-            onclick="selectActivity(this, 'moderate')">
-            <h3 class="font-bold text-green-700">Sedang</h3>
-            <p class="text-xs text-gray-600">Olahraga sedang (3-5x/minggu)</p>
-          </div>
-
-          <div class="activity-card p-4 rounded-lg cursor-pointer hover:bg-green-25"
-            onclick="selectActivity(this, 'active')">
-            <h3 class="font-bold text-green-700">Aktif</h3>
-            <p class="text-xs text-gray-600">Olahraga aktif (6-7x/minggu)</p>
-          </div>
-
-          <div class="activity-card p-4 rounded-lg cursor-pointer hover:bg-green-25"
-            onclick="selectActivity(this, 'very-active')">
-            <h3 class="font-bold text-green-700">Sangat Aktif</h3>
-            <p class="text-xs text-gray-600">Olahraga intensif atau pekerjaan fisik berat</p>
-          </div>
-
-        </div>
-      </div>
-
-      <button id="calculate"
-        class="w-full bg-green-600 text-white font-bold py-3 rounded-xl shadow-lg hover:bg-green-700 transition duration-200 transform hover:scale-[1.01] active:scale-[0.99]">Hitung
-        Kebutuhan Kalori</button>
-    </div>
-
-    <div id="result-card"
-      class="bg-linear-to-r from-green-200 to-green-100 shadow-xl rounded-2xl p-6 mb-8 border-l-8 border-green-600 hidden text-center">
-      <h2 class="text-2xl font-bold mb-3 text-green-800">Kebutuhan Kalori Harian Anda (TDEE)</h2>
-      <p id="daily-calories" class="text-4xl font-extrabold text-green-900 animate-pulse">0 kalori per hari</p>
-      <p class="text-gray-600 mt-2">Ini adalah kalori yang dibutuhkan untuk menjaga berat badan saat ini.</p>
-    </div>
-
-    <div id="goal-section" class="hidden">
-      <h2 class="text-2xl font-bold mb-4 text-center text-green-700">Pilih Tujuan Anda</h2>
-      <div class="flex flex-wrap justify-center gap-4 mb-6">
-        <button id="deficit-btn"
-          class="flex-1 min-w-[200px] px-4 py-3 bg-red-500 text-white font-semibold rounded-xl shadow-lg hover:bg-red-600 transition duration-200 transform hover:scale-105 active:scale-95">
-          ⬇️ Defisit Kalori (Turun Berat)
-        </button>
-        <button id="surplus-btn"
-          class="flex-1 min-w-[200px] px-4 py-3 bg-green-500 text-white font-semibold rounded-xl shadow-lg hover:bg-green-600 transition duration-200 transform hover:scale-105 active:scale-95">
-          ⬆️ Surplus Kalori (Naik Berat)
-        </button>
-      </div>
-
-      <div id="deficit-card"
-        class="bg-linear-to-r from-red-100 to-white shadow-xl rounded-2xl p-6 mb-6 border-l-8 border-red-500 hidden">
-        <h3 class="text-xl font-bold mb-3 text-red-700">Defisit Kalori (Cutting)</h3>
-        <p id="deficit-calories" class="text-3xl font-extrabold text-red-600 mb-4">0 kalori per hari</p>
-        <h4 class="font-bold mb-2 text-gray-700">Tips untuk Cutting:</h4>
-        <ul class="list-disc list-inside text-sm space-y-1 text-gray-600">
-          <li>Fokus pada makanan <b>tinggi protein</b> untuk menjaga massa otot.</li>
-          <li>Utamakan asupan serat dari sayuran dan buah-buahan.</li>
-          <li>Lakukan kombinasi latihan beban dan <b>kardio</b> ringan.</li>
-          <li>Minum air putih minimal <b>2 liter</b> per hari.</li>
-        </ul>
-      </div>
-
-      <div id="surplus-card"
-        class="bg-linear-to-r from-green-100 to-white shadow-xl rounded-2xl p-6 mb-6 border-l-8 border-green-500 hidden">
-        <h3 class="text-xl font-bold mb-3 text-green-700">Surplus Kalori (Bulking)</h3>
-        <p id="surplus-calories" class="text-3xl font-extrabold text-green-600 mb-4">0 kalori per hari</p>
-        <h4 class="font-bold mb-2 text-gray-700">Tips untuk Bulking:</h4>
-        <ul class="list-disc list-inside text-sm space-y-1 text-gray-600">
-          <li>Tingkatkan asupan <b>protein</b> dan <b>karbohidrat kompleks</b>.</li>
-          <li>Konsumsi lemak sehat (alpukat, kacang-kacangan) untuk menambah kalori tanpa membuat perut terlalu cepat
-            kenyang.</li>
-          <li>Fokus pada <b>latihan beban</b> intensif 4-5x seminggu.</li>
-          <li>Pastikan tidur cukup (<b>7-9 jam</b>) untuk pemulihan otot maksimal.</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <!--Content End-->
-
-  <!--Footer-->
-  <footer class="bg-green-500 text-white mt-10 shadow-inner">
-    <div class="w-11/12 mx-auto py-6">
-      <div class="flex justify-between items-center">
-        <!-- Bagian Kiri: Copyright -->
-        <div>
-          <p class="text-sm font-medium">
-            &copy; 2025 Sehat.In. All Rights Reserved.
+      <!-- Card Hasil -->
+      <div id="resultCard" class="card result-card mb-6">
+        <div id="resultPlaceholder" class="result-placeholder">
+          <i class="fas fa-calculator"></i>
+          <h3 class="text-xl font-semibold mb-3">Coba Hitung Kalori Anda</h3>
+          <p class="text-gray-600 max-w-md">
+            Isi formulir di atas untuk melihat hasil perhitungan kalori harian
+            Anda
           </p>
         </div>
-  
-        <!-- Bagian Tengah: Slogan (disembunyikan di layar kecil) -->
-        <div class="hidden md:block">
-          <p class="text-base font-semibold">
-            Pahami Tubuhmu, Mulai Transformasi Idealmu.
-          </p>
+        <div id="resultContent" class="result-content">
+          <h2 class="text-xl font-bold text-emerald-custom mb-4">
+            Hasil Perhitungan
+          </h2>
+          <div
+            class="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-xl p-6"
+          >
+            <p class="text-gray-600 mb-2">
+              Kebutuhan Kalori Harian Anda (TDEE)
+            </p>
+            <p id="tdeeValue" class="result-value"></p>
+            <p class="text-gray-700 mt-3 text-lg">
+              Kalori ini dibutuhkan untuk menjaga berat badan saat ini.
+            </p>
+          </div>
         </div>
-  
-        <!-- Bagian Kanan: Ikon Media Sosial -->
-        <div class="flex items-center space-x-4">
-          <!-- Ganti href dengan link asli dan src dengan path gambar yang benar -->
-          <a href="#" target="_blank" rel="noopener noreferrer"
-            class="transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_5px_rgba(255,255,255,0.7)]">
-            <img src="../img/footer-navbar/github.png" alt="GitHub" class="h-6 w-6">
-          </a>
-          <a href="#" target="_blank" rel="noopener noreferrer"
-            class="transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_5px_rgba(255,255,255,0.7)]">
-            <img src="../img/footer-navbar/gitlab.png" alt="GitLab" class="h-6 w-6">
-          </a>
-          <a href="#" target="_blank" rel="noopener noreferrer"
-            class="transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_5px_rgba(255,255,255,0.7)]">
-            <img src="../img/footer-navbar/in.png" alt="LinkedIn" class="h-6 w-6">
-          </a>
-          <a href="#" target="_blank" rel="noopener noreferrer"
-            class="transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_5px_rgba(255,255,255,0.7)]">
-            <img src="../img/footer-navbar/ig.png" alt="Instagram" class="h-6 w-6">
-          </a>
+      </div>
+
+      <!-- Pilih Tujuan -->
+      <div id="goalSection" class="hidden mb-6">
+        <h2 class="text-2xl font-bold mb-4 text-center text-emerald-custom">
+          Pilih Tujuan Anda
+        </h2>
+        <div class="flex flex-wrap justify-center gap-4 mb-6">
+          <button
+            id="deficitBtn"
+            class="flex-1 min-w-[200px] px-4 py-3 bg-red-500 text-white font-semibold rounded-xl shadow-lg hover:bg-red-600 transition duration-200 transform hover:scale-105 active:scale-95"
+          >
+            ⬇️ Defisit Kalori (Turun Berat)
+          </button>
+          <button
+            id="surplusBtn"
+            class="flex-1 min-w-[200px] px-4 py-3 bg-green-500 text-white font-semibold rounded-xl shadow-lg hover:bg-green-600 transition duration-200 transform hover:scale-105 active:scale-95"
+          >
+            ⬆️ Surplus Kalori (Naik Berat)
+          </button>
+        </div>
+
+        <!-- Defisit Card -->
+        <div id="deficitCard" class="card result-card mb-6 hidden">
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-3 text-red-700">
+              Defisit Kalori (Cutting)
+            </h3>
+            <p
+              id="deficitCalories"
+              class="text-3xl font-extrabold text-red-600 mb-4"
+            >
+              0 kalori per hari
+            </p>
+            <h4 class="font-bold mb-2 text-gray-700">Tips untuk Cutting:</h4>
+            <ul class="list-disc list-inside text-sm space-y-1 text-gray-600">
+              <li>
+                Fokus pada makanan <b>tinggi protein</b> untuk menjaga massa
+                otot.
+              </li>
+              <li>Utamakan asupan serat dari sayuran dan buah-buahan.</li>
+              <li>Lakukan kombinasi latihan beban dan <b>kardio</b> ringan.</li>
+              <li>Minum air putih minimal <b>2 liter</b> per hari.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Surplus Card -->
+        <div id="surplusCard" class="card result-card mb-6 hidden">
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-3 text-green-700">
+              Surplus Kalori (Bulking)
+            </h3>
+            <p
+              id="surplusCalories"
+              class="text-3xl font-extrabold text-green-600 mb-4"
+            >
+              0 kalori per hari
+            </p>
+            <h4 class="font-bold mb-2 text-gray-700">Tips untuk Bulking:</h4>
+            <ul class="list-disc list-inside text-sm space-y-1 text-gray-600">
+              <li>
+                Tingkatkan asupan <b>protein</b> dan
+                <b>karbohidrat kompleks</b>.
+              </li>
+              <li>
+                Konsumsi lemak sehat (alpukat, kacang-kacangan) untuk menambah
+                kalori tanpa membuat perut terlalu cepat kenyang.
+              </li>
+              <li>Fokus pada <b>latihan beban</b> intensif 4-5x seminggu.</li>
+              <li>
+                Pastikan tidur cukup (<b>7-9 jam</b>) untuk pemulihan otot
+                maksimal.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ / Tips -->
+      <!-- Card FAQ/Tips – style 100% sama dengan BB-ideal -->
+      <div id="faqSection" class="card tips-card">
+        <div class="p-6 md:p-8">
+          <div class="flex items-center mb-6">
+            <div class="bg-emerald-custom text-white rounded-xl p-3 mr-4">
+              <i class="fas fa-lightbulb text-xl"></i>
+            </div>
+            <h3 class="text-xl font-bold text-emerald-custom">Tips Kesehatan</h3>
+          </div>
+
+          <div class="space-y-4">
+            <details>
+              <summary>Bagaimana cara mengurangi kalori harian?</summary>
+              <p>Kurangi porsi karbohidrat sederhana, ganti dengan serat & protein, hindari minuman manis, dan tingkatkan aktivitas fisik.</p>
+            </details>
+            <details>
+              <summary>Apakah semua kalori dari makanan sama?</summary>
+              <p>Tidak. Kalori dari protein & serat memberikan kenyang lebih lama dibanding kalori dari gula olahan yang cepat diserap.</p>
+            </details>
+            <details>
+              <summary>Berapa kalori yang dibutuhkan rata-rata orang dewasa?</summary>
+              <p>Pria ~2500 kcal/hari, Wanita ~2000 kcal/hari, namun tergantung usia, berat, tinggi, dan tingkat aktivitas.</p>
+            </details>
+          </div>
         </div>
       </div>
     </div>
-  </footer>
-  <!--Footer Selesai-->
+    <!--Content End-->
 
-  <script>
-    const menuToggleButton = document.getElementById('menu-toggle-button');
-    const navbarDropdown = document.getElementById('navbar-dropdown');
-    const dropdownToggleButton = document.getElementById('dropdown-toggle-button');
-    const dropdownMenu = document.getElementById('dropdown-menu');
-    const dropdownIcon = document.getElementById('dropdown-icon');
-    const programDropdownToggleButton = document.getElementById('program-dropdown-toggle');
-    const programDropdownMenu = document.getElementById('program-dropdown-menu');
-    const programDropdownIcon = document.getElementById('program-dropdown-icon');
+    <!--Footer--> 
+    <footer class="bg-green-500 text-white mt-10 shadow-inner">
+      <div class="w-11/12 mx-auto py-6">
+        <div class="flex justify-between items-center">
+          <div>
+            <p class="text-sm font-medium">
+              &copy; 2025 Sehat.In. All Rights Reserved.
+            </p>
+          </div>
+          <div class="hidden md:block">
+            <p class="text-base font-semibold">
+              Pahami Tubuhmu, Mulai Transformasi Idealmu.
+            </p>
+          </div>
+          <div class="flex items-center space-x-4">
+            <a
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_5px_rgba(255,255,255,0.7)]"
+              ><img
+                src="../img/footer-navbar/github.png"
+                alt="GitHub"
+                class="h-6 w-6"
+            /></a>
+            <a
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_5px_rgba(255,255,255,0.7)]"
+              ><img
+                src="../img/footer-navbar/gitlab.png"
+                alt="GitLab"
+                class="h-6 w-6"
+            /></a>
+            <a
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_5px_rgba(255,255,255,0.7)]"
+              ><img
+                src="../img/footer-navbar/in.png"
+                alt="LinkedIn"
+                class="h-6 w-6"
+            /></a>
+            <a
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_5px_rgba(255,255,255,0.7)]"
+              ><img
+                src="../img/footer-navbar/ig.png"
+                alt="Instagram"
+                class="h-6 w-6"
+            /></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!--Footer Selesai-->
 
-    function toggleMenu() {
-      navbarDropdown.classList.toggle('hidden');
-      navbarDropdown.classList.toggle('menu-visible');
-    }
+    <script>
+      /* ---------- Navbar & Dropdown (sama persis) ---------- */
+      const menuToggleButton = document.getElementById("menu-toggle-button");
+      const navbarDropdown = document.getElementById("navbar-dropdown");
+      const dropdownToggleButton = document.getElementById(
+        "dropdown-toggle-button"
+      );
+      const dropdownMenu = document.getElementById("dropdown-menu");
+      const dropdownIcon = document.getElementById("dropdown-icon");
+      const programDropdownToggleButton = document.getElementById(
+        "program-dropdown-toggle"
+      );
+      const programDropdownMenu = document.getElementById(
+        "program-dropdown-menu"
+      );
+      const programDropdownIcon = document.getElementById(
+        "program-dropdown-icon"
+      );
 
-    function toggleDropdown(button, menu, icon) {
-      menu.classList.toggle('hidden');
-      menu.classList.toggle('dropdown-visible');
-
-      if (menu.classList.contains('dropdown-visible')) {
-        icon.classList.add('rotate-180');
-      } else {
-        icon.classList.remove('rotate-180');
+      function toggleMenu() {
+        navbarDropdown.classList.toggle("hidden");
+        navbarDropdown.classList.toggle("menu-visible");
       }
-    }
-
-    menuToggleButton.addEventListener('click', toggleMenu);
-
-    dropdownToggleButton.addEventListener('click', function (event) {
-      event.stopPropagation();
-      toggleDropdown(dropdownToggleButton, dropdownMenu, dropdownIcon);
-    });
-
-    programDropdownToggleButton.addEventListener('click', function (event) {
-      event.stopPropagation();
-      toggleDropdown(programDropdownToggleButton, programDropdownMenu, programDropdownIcon);
-    });
-
-    document.addEventListener('click', function (event) {
-      const isClickInsideDropdown = dropdownMenu.contains(event.target);
-      const isClickOnButton = dropdownToggleButton.contains(event.target);
-      const isClickInsideProgram = programDropdownMenu.contains(event.target);
-      const isClickOnProgramButton = programDropdownToggleButton.contains(event.target);
-
-      if (dropdownMenu.classList.contains('dropdown-visible') && !isClickInsideDropdown && !isClickOnButton) {
-        toggleDropdown();
+      function toggleDropdown(button, menu, icon) {
+        menu.classList.toggle("hidden");
+        menu.classList.toggle("dropdown-visible");
+        icon.classList.toggle("rotate-180");
       }
-
-      if (programDropdownMenu.classList.contains('dropdown-visible') && !isClickInsideProgram && !isClickOnProgramButton) {
-        toggleDropdown(programDropdownToggleButton, programDropdownMenu, programDropdownIcon);
-      }
-    });
-
-    window.addEventListener('resize', function () {
-      if (window.innerWidth >= 768) {
-        navbarDropdown.classList.remove('hidden');
-        navbarDropdown.classList.remove('menu-visible');
-        dropdownMenu.classList.add('hidden');
-        dropdownIcon.classList.remove('rotate-180');
-      } else if (!navbarDropdown.classList.contains('menu-visible')) {
-        navbarDropdown.classList.add('hidden');
-      }
-    });
-
-    let gender = '';
-    let activity = '';
-
-    document.getElementById('male').addEventListener('click', () => {
-      gender = 'male';
-      document.getElementById('male').classList.add('ring-2', 'ring-blue-400', 'scale-105');
-      document.getElementById('female').classList.remove('ring-2', 'ring-pink-400', 'scale-105');
-    });
-    document.getElementById('female').addEventListener('click', () => {
-      gender = 'female';
-      document.getElementById('female').classList.add('ring-2', 'ring-pink-400', 'scale-105');
-      document.getElementById('male').classList.remove('ring-2', 'ring-blue-400', 'scale-105');
-    });
-
-    function selectActivity(card, act) {
-      activity = act;
-
-      document.querySelectorAll('.activity-card').forEach(c => {
-        c.classList.remove('selected');
+      menuToggleButton.addEventListener("click", toggleMenu);
+      dropdownToggleButton.addEventListener("click", (e) => {
+        e.stopPropagation();
+        toggleDropdown(dropdownToggleButton, dropdownMenu, dropdownIcon);
+      });
+      programDropdownToggleButton.addEventListener("click", (e) => {
+        e.stopPropagation();
+        toggleDropdown(
+          programDropdownToggleButton,
+          programDropdownMenu,
+          programDropdownIcon
+        );
+      });
+      document.addEventListener("click", (e) => {
+        if (
+          dropdownMenu.classList.contains("dropdown-visible") &&
+          !dropdownMenu.contains(e.target) &&
+          !dropdownToggleButton.contains(e.target)
+        ) {
+          toggleDropdown(dropdownToggleButton, dropdownMenu, dropdownIcon);
+        }
+        if (
+          programDropdownMenu.classList.contains("dropdown-visible") &&
+          !programDropdownMenu.contains(e.target) &&
+          !programDropdownToggleButton.contains(e.target)
+        ) {
+          toggleDropdown(
+            programDropdownToggleButton,
+            programDropdownMenu,
+            programDropdownIcon
+          );
+        }
+      });
+      window.addEventListener("resize", () => {
+        if (window.innerWidth >= 768) {
+          navbarDropdown.classList.remove("hidden", "menu-visible");
+          dropdownMenu.classList.add("hidden");
+          dropdownIcon.classList.remove("rotate-180");
+        } else if (!navbarDropdown.classList.contains("menu-visible")) {
+          navbarDropdown.classList.add("hidden");
+        }
       });
 
-      card.classList.add('selected');
-    }
+      /* ---------- Gender & Activity ---------- */
+      const maleBtn = document.getElementById("maleBtn");
+      const femaleBtn = document.getElementById("femaleBtn");
+      const genderInput = document.getElementById("gender");
+      maleBtn.addEventListener("click", () => {
+        genderInput.value = "male";
+        maleBtn.classList.add("active");
+        femaleBtn.classList.remove("active");
+      });
+      femaleBtn.addEventListener("click", () => {
+        genderInput.value = "female";
+        femaleBtn.classList.add("active");
+        maleBtn.classList.remove("active");
+      });
 
-
-    // Hitung kalori
-    document.getElementById('calculate').addEventListener('click', () => {
-      const age = parseFloat(document.getElementById('age').value);
-      const height = parseFloat(document.getElementById('height').value);
-      const weight = parseFloat(document.getElementById('weight').value);
-      if (!gender || !activity || isNaN(age) || isNaN(height) || isNaN(weight)) {
-        alert('Harap isi semua field!');
-        return;
+      let activity = "";
+      function selectActivity(card, act) {
+        activity = act;
+        document
+          .querySelectorAll(".activity-card")
+          .forEach((c) => c.classList.remove("active"));
+        card.classList.add("active");
+        document.getElementById("activity").value = act;
       }
-      // Hitung BMR
-      let bmr;
-      if (gender === 'male') {
-        bmr = 10 * weight + 6.25 * height - 5 * age + 5;
-      } else {
-        bmr = 10 * weight + 6.25 * height - 5 * age - 161;
-      }
 
-      const activityFactors = {
-        'sedentary': 1.2,
-        'light': 1.375,
-        'moderate': 1.55,
-        'active': 1.725,
-        'very-active': 1.9
-      };
-      const tdee = bmr * activityFactors[activity];
+      /* ---------- Form Submit ---------- */
+      const form = document.getElementById("calculatorForm");
+      const resultCard = document.getElementById("resultCard");
+      const resultPlaceholder = document.getElementById("resultPlaceholder");
+      const resultContent = document.getElementById("resultContent");
+      const tdeeValueEl = document.getElementById("tdeeValue");
+      const goalSection = document.getElementById("goalSection");
 
-      document.getElementById('daily-calories').textContent = Math.round(tdee) + ' kalori per hari';
-      document.getElementById('result-card').classList.remove('hidden');
-      document.getElementById('goal-section').classList.remove('hidden');
-    });
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const gender = genderInput.value;
+        const age = parseFloat(document.getElementById("age").value);
+        const height = parseFloat(document.getElementById("height").value);
+        const weight = parseFloat(document.getElementById("weight").value);
 
-    document.getElementById('deficit-btn').addEventListener('click', () => {
-      const daily = parseInt(document.getElementById('daily-calories').textContent.split(' ')[0]);
-      const deficit = daily - 500;
-      document.getElementById('deficit-calories').textContent = deficit + ' kalori per hari';
-      document.getElementById('deficit-card').classList.remove('hidden');
-      document.getElementById('surplus-card').classList.add('hidden');
-    });
+        if (!gender || !activity || !age || !height || !weight) {
+          alert("Harap isi semua field!");
+          return;
+        }
 
-    document.getElementById('surplus-btn').addEventListener('click', () => {
-      const daily = parseInt(document.getElementById('daily-calories').textContent.split(' ')[0]);
-      const surplus = daily + 500;
-      document.getElementById('surplus-calories').textContent = surplus + ' kalori per hari';
-      document.getElementById('surplus-card').classList.remove('hidden');
-      document.getElementById('deficit-card').classList.add('hidden');
-    });
-  </script>
-</body>
+        // BMR (Mifflin-St Jeor)
+        let bmr;
+        if (gender === "male") {
+          bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+        } else {
+          bmr = 10 * weight + 6.25 * height - 5 * age - 161;
+        }
+        const activityFactors = {
+          sedentary: 1.2,
+          light: 1.375,
+          moderate: 1.55,
+          active: 1.725,
+          "very-active": 1.9,
+        };
+        const tdee = Math.round(bmr * activityFactors[activity]);
 
+        // Tampilkan hasil
+        tdeeValueEl.textContent = tdee + " kalori per hari";
+        resultPlaceholder.style.display = "none";
+        resultContent.classList.add("show");
+        resultCard.classList.add("animated");
+        goalSection.classList.remove("hidden");
+        resultCard.scrollIntoView({ behavior: "smooth", block: "start" });
+        setTimeout(() => resultCard.classList.remove("animated"), 600);
+      });
+
+      /* ---------- Goal Buttons ---------- */
+      const deficitBtn = document.getElementById("deficitBtn");
+      const surplusBtn = document.getElementById("surplusBtn");
+      const deficitCard = document.getElementById("deficitCard");
+      const surplusCard = document.getElementById("surplusCard");
+      const deficitCaloriesEl = document.getElementById("deficitCalories");
+      const surplusCaloriesEl = document.getElementById("surplusCalories");
+
+      deficitBtn.addEventListener("click", () => {
+        const daily = parseInt(tdeeValueEl.textContent.split(" ")[0]);
+        deficitCaloriesEl.textContent = daily - 500 + " kalori per hari";
+        deficitCard.classList.remove("hidden");
+        surplusCard.classList.add("hidden");
+      });
+      surplusBtn.addEventListener("click", () => {
+        const daily = parseInt(tdeeValueEl.textContent.split(" ")[0]);
+        surplusCaloriesEl.textContent = daily + 500 + " kalori per hari";
+        surplusCard.classList.remove("hidden");
+        deficitCard.classList.add("hidden");
+      });
+
+      /* ---------- FAQ close otomatis ---------- */
+      document.querySelectorAll("#faqSection details").forEach((detail) => {
+        detail.addEventListener("toggle", () => {
+          if (detail.hasAttribute("open")) {
+            document
+              .querySelectorAll("#faqSection details[open]")
+              .forEach((d) => {
+                if (d !== detail) d.removeAttribute("open");
+              });
+          }
+        });
+      });
+    </script>
+  </body>
 </html>
