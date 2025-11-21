@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,12 +8,8 @@
   <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <title>Sehat.In</title>
+  <title>Sehat.In - Hidup Sehat, Mulai Hari Ini</title>
   <style>
-    body{
-      font-family: "Poppins", sans-serif;
-    }
     .dropdown-visible {
       display: block !important;
     }
@@ -64,7 +59,8 @@
       opacity: 0;
       transform: translateY(12px);
       transition: opacity 0.4s ease, transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
-      height: 90px;
+      height: auto;
+      min-height: 90px;
       display: flex;
       align-items: flex-start;
       padding-left: 1.5rem;
@@ -83,21 +79,34 @@
     .tip-card:hover {
       transform: translateY(-5px);
       box-shadow: 0 12px 20px -6px rgba(163, 230, 53, 0.2);
-      background: linear-gradient(135deg, #f7fee7, #d9f99d); } /* lime-50 to lime-200 */
-    .tip-card:hover .text-content *, .tip-card:hover .icon-container i { color: #14532d !important; } /* green-900 */
+      background: linear-gradient(135deg, #f7fee7, #d9f99d);
+    }
+    .tip-card:hover .text-content *, .tip-card:hover .icon-container i { color: #14532d !important; }
 
-    /* Menambahkan transisi warna yang mulus untuk teks dan ikon di dalam tip-card */
     .tip-card .text-content *,
     .tip-card .icon-container i {
       transition: color 0.3s ease;
     }
 
+    /* Atur agar konten footer tetap rapi di mobile */
+    .footer-content {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .footer-slogan {
+      margin: 0.5rem 0;
+    }
+    .footer-social {
+      justify-content: center;
+      margin-top: 0.5rem;
+    }
   </style>
 </head>
 
-<body class="bg-green-800 relative"  style="font-family: 'Inter', sans-serif; background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg id='hexagons' fill='%2316a34a' fill-opacity='0.1' fill-rule='nonzero'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.99-7.5L26 15v19l-13 7.5L0 34V15z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E&quot;);">
+<body class="bg-green-800 relative" style="font-family: 'Inter', sans-serif; background-image: url('data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'28\' height=\'49\' viewBox=\'0 0 28 49\'%3E%3Cg fill-rule=\'evenodd\'%3E%3Cg id=\'hexagons\' fill=\'%2316a34a\' fill-opacity=\'0.1\' fill-rule=\'nonzero\'%3E%3Cpath d=\'M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.99-7.5L26 15v19l-13 7.5L0 34V15z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');">
   <div class="absolute inset-0 bg-green-900/70 z-0"></div>
-    <div class="relative z-10">
+  <div class="relative z-10">
     <!--Bagian Navbar-->
     <div class="flex justify-center p-4 sticky top-0 z-50 bg-transparent">
       <nav class="bg-green-500 dark:bg-green-500 border-gray-200 rounded-2xl w-full md:w-4/5 shadow-xl shadow-emerald-600/50" data-svelte-h="svelte-1x7j2rs">
@@ -120,12 +129,12 @@
               class="font-medium flex flex-col p-3 md:p-0 mt-4 border border-green-400 rounded-xl bg-green-500 md:flex-row md:space-x-4 md:mt-0 md:border-0 md:bg-green-500">
               <li>
                 <a href="index.html"
-                  class="text-white rounded-lg px-5 py-2 block md:inline-block hover:bg-lime-400 transition duration-300 font-semibold"
+                  class="text-white rounded-lg px-4 py-2 block md:inline-block hover:bg-lime-400 transition duration-300 font-semibold"
                   aria-current="page">Home</a>
               </li>
               <li class="relative">
                 <button id="dropdown-toggle-button" type="button"
-                  class="flex items-center justify-between w-full rounded-lg px-5 py-2 font-semibold text-white hover:bg-lime-400 transition duration-300 md:w-auto">
+                  class="flex items-center justify-between w-full rounded-lg px-4 py-2 font-semibold text-white hover:bg-lime-400 transition duration-300 md:w-auto">
                   Kalkulator
                   <svg id="dropdown-icon" class="w-4 h-4 ms-1.5 transition-transform duration-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -149,7 +158,7 @@
               </li>
               <li class="relative">
                 <button id="program-dropdown-toggle" type="button"
-                  class="flex items-center justify-between w-full rounded-lg px-5 py-2 font-semibold text-white hover:bg-lime-400 transition duration-300 md:w-auto">
+                  class="flex items-center justify-between w-full rounded-lg px-4 py-2 font-semibold text-white hover:bg-lime-400 transition duration-300 md:w-auto">
                   Program
                   <svg id="program-dropdown-icon" class="w-4 h-4 ms-1.5 transition-transform duration-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7" />
@@ -173,13 +182,11 @@
       </nav>
     </div>
     <!--Navbar Selesai-->
-    
+
     <!--Bagian Hero-->
     <section class="relative text-white overflow-hidden" id="beranda">
-      <!-- Ikon bergerak (dekoratif) -->
       <div class="absolute inset-0 overflow-hidden pointer-events-none">
         <img src="img/beranda/ic1.png" class="absolute w-12 h-12 animate-smooth-abstract" style="top: 12%; left: 8%; animation-delay: 0s; animation-duration: 7s;" />
-        <!-- Ikon disebar kembali dan ukurannya disesuaikan -->
         <img src="img/beranda/ic2.png" class="absolute w-14 h-14 animate-smooth-abstract" style="top: 15%; left: 55%; animation-delay: -1s; animation-duration: 8s;" />
         <img src="img/beranda/ic3.png" class="absolute w-14 h-14 animate-smooth-abstract" style="top: 65%; left: 70%; animation-delay: -2s; animation-duration: 6s;" />
         <img src="img/beranda/ic4.png" class="absolute w-14 h-14 animate-smooth-abstract" style="top: 35%; left: 80%; animation-delay: -3s; animation-duration: 9s;" />
@@ -187,22 +194,19 @@
         <img src="img/beranda/ic6.png" class="absolute w-12 h-12 animate-smooth-abstract" style="top: 80%; left: 10%; animation-delay: -5s; animation-duration: 8s;" />
         <img src="img/beranda/ic7.png" class="absolute w-12 h-12 animate-smooth-abstract" style="top: 70%; left: 20%; animation-delay: -6s; animation-duration: 6s;" />
       </div>
-    
-      <!-- Konten Utama -->
+
       <div class="container mx-auto px-6 py-12 md:py-20 relative z-10">
         <div class="flex flex-col md:flex-row items-center justify-between">
-          
-          <!-- Kolom Teks (Kiri) -->
           <div class="w-full md:w-7/12 mb-12 md:mb-0 pl-4 md:pl-10">
             <h1 class="font-spartan text-8xl font-extrabold leading-none mb-0 tracking-tight">
               <span class="block text-white">Sehat<span class="text-lime-300">.</span>In</span>
             </h1>
-  
+
             <h2 id="changingText" class="font-spartan text-6xl font-extrabold leading-none mb-6 tracking-tight text-lime-300">
             </h2>
-  
+
             <p class="text-lg md:text-xl text-gray-200 mb-8">
-              <span class="text-lime-300 font-semibold"></span>Sehat.In</span> hadir buat membantu kamu membangun kebiasaan yang lebih sehat tanpa harus ribet. Mulai dari belajar mengatur porsi makan lebih bijak, mengkalkulasi kalori sampai merekomendasikan berbagai program dan cara memulai rutinitas yang bikin badan lebih sehat. Nggak harus langsung sempurna yang penting kamu mulai dulu, nikmati prosesnya, dan rasakan pelan-pelan tubuhmu jadi lebih bertenaga, lebih tenang, dan lebih hidup.
+              <span class="text-lime-300 font-semibold">Sehat.In</span> hadir buat membantu kamu membangun kebiasaan yang lebih sehat tanpa harus ribet. Mulai dari belajar mengatur porsi makan lebih bijak, mengkalkulasi kalori sampai merekomendasikan berbagai program dan cara memulai rutinitas yang bikin badan lebih sehat. Nggak harus langsung sempurna yang penting kamu mulai dulu, nikmati prosesnya, dan rasakan pelan-pelan tubuhmu jadi lebih bertenaga, lebih tenang, dan lebih hidup.
             </p>
           <a href="#layanan" class="group relative inline-flex items-center px-8 py-3 text-lg font-medium rounded-lg overflow-hidden bg-green-500/80 scroll-link">
               <span class="absolute inset-0 bg-linear-to-r from-lime-400 to-green-500 opacity-0 group-hover:opacity-100 transition-opacity duration-800"></span>
@@ -212,18 +216,15 @@
               </svg>
             </a>
           </div>
-    
-          <!-- Kolom Gambar (Kanan) -->
+
           <div class="w-full md:w-5/12 flex justify-center md:justify-end -mt-6">
             <div class="relative group">
-              <!-- Ganti src dengan path gambar utama Anda dan menambahkan glow lime-300 -->
               <img src="img/beranda/ilustrasi1.png" alt="Orang berolahraga" class="w-[340px] h-auto object-contain transform transition duration-500 group-hover:scale-110 group-hover:drop-shadow-[0_0_25px_#a3e635]">
             </div>
           </div>
         </div>
       </div>
-    
-      <!-- Wave Bawah -->
+
       <div class=" bottom-0 left-0 right-0">
         <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="#ffffff" />
@@ -235,21 +236,17 @@
     <!-- Bagian Tentang Kami -->
     <section id="tentang" class="bg-white py-5 sm:py-7">
       <div class="container mx-auto sm:flex items-center max-w-screen-xl px-6">
-        <!-- Gambar -->
         <div class="sm:w-1/2 p-5 sm:p-10">
           <div class="image object-center text-center">
-            <!-- Anda bisa mengganti gambar ini dengan yang lebih sesuai -->
             <img src="img/beranda/ilustrasi2.png" alt="Tentang Sehat.In" class="mx-auto w-full max-w-sm">
           </div>
         </div>
-        <!-- Teks -->
         <div class="sm:w-1/2 p-5">
           <div class="text">
             <span class="text-green-800 border-b-4 border-lime-300 uppercase font-semibold">Tentang Kami</span>
             <h2 class="my-4 font-bold text-3xl sm:text-4xl text-green-800">Apa itu <span class="text-lime-400">Sehat.In</span>?</h2>
             <p class="text-gray-700 leading-relaxed">
               Sehat.In adalah platform edukasi dan program gaya hidup sehat yang bantu kamu lebih aktif, makan lebih bener, dan hidup lebih seimbang. <span class="font-semibold text-green-800">Misi kami simpel bikin hidup sehat jadi lebih mudah, lebih masuk akal, dan lebih sesuai sama aktifitas harianmu</span>. Kami hadir buat nemenin kamu pelan-pelan bangun kebiasaan sehat yang lebih gampang dijalanin sesuai aktifitasmu. Yuk mulai perjalanan sehat kamu bareng Sehat.In, satu langkah kecil bermanfaat setiap hari.
-              
             </p>
           </div>
         </div>
@@ -271,124 +268,117 @@
           </p>
         </div>
 
-    <!-- Cards -->
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+          <!-- Card 1: Kalori Harian -->
+          <article class="group relative bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center text-center
+                          hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+            <div class="flex-shrink-0 w-20 h-20 rounded-full bg-green-100 grid place-items-center mb-5
+                        group-hover:bg-green-200 transition-colors">
+              <i class="fa-solid fa-fire text-green-600 text-4xl group-hover:scale-110 transition-transform"></i>
+            </div>
+            <h3 class="font-bold text-lg text-green-800 mb-2">Kalkulator Kalori Harian</h3>
+            <p class="text-gray-600 text-sm mb-5 flex-grow">
+              Hitung kebutuhan kalori harian apakah sesuai keinginanmu?
+            </p>
+            <a href="kalkulator/kalkukaloh.html"
+               class="mt-auto w-full py-2.5 bg-green-600 text-white rounded-lg font-semibold
+                      hover:bg-green-700 active:scale-95 transition">
+              Hitung Sekarang
+            </a>
+          </article>
 
-      <!-- Card 1: Kalori Harian -->
-      <article class="group relative bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center text-center
-                      hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
-        <div class="flex-shrink-0 w-20 h-20 rounded-full bg-green-100 grid place-items-center mb-5
-                    group-hover:bg-green-200 transition-colors">
-          <i class="fa-solid fa-fire text-green-600 text-4xl group-hover:scale-110 transition-transform"></i>
+          <!-- Card 2: Kebutuhan Makanan -->
+          <article class="group relative bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center text-center
+                          hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+            <div class="flex-shrink-0 w-20 h-20 rounded-full bg-lime-100 grid place-items-center mb-5
+                        group-hover:bg-lime-200 transition-colors">
+              <i class="fa-solid fa-apple-alt text-lime-600 text-4xl group-hover:scale-110 transition-transform"></i>
+            </div>
+            <h3 class="font-bold text-lg text-green-800 mb-2">Program Pola Makan Sehat</h3>
+            <p class="text-gray-600 text-sm mb-5 flex-grow">
+              Rekomendasi menu seimbang menggunakan kategori umurmu.
+            </p>
+            <a href="program/ppolamakan.html"
+               class="mt-auto w-full py-2.5 bg-lime-600 text-white rounded-lg font-semibold
+                      hover:bg-lime-700 active:scale-95 transition">
+              Lihat Program
+            </a>
+          </article>
+
+          <!-- Card 3: Berat Badan Ideal -->
+          <article class="group relative bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center text-center
+                          hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+            <div class="flex-shrink-0 w-20 h-20 rounded-full bg-green-100 grid place-items-center mb-5
+                        group-hover:bg-green-200 transition-colors">
+              <i class="fa-solid fa-weight-scale text-green-600 text-4xl group-hover:scale-110 transition-transform"></i>
+            </div>
+            <h3 class="font-bold text-lg text-green-800 mb-2">Kalkulator Berat Badan Ideal</h3>
+            <p class="text-gray-600 text-sm mb-5 flex-grow">
+              Cek berat idealmu berdasarkan apakah sudah sesuai?
+            </p>
+            <a href="kalkulator/kalkubbideal.html"
+               class="mt-auto w-full py-2.5 bg-green-600 text-white rounded-lg font-semibold
+                      hover:bg-green-700 active:scale-95 transition">
+              Hitung Sekarang
+            </a>
+          </article>
+
+          <!-- Card 4: Latihan Aktivitas -->
+          <article class="group relative bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center text-center
+                          hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+            <div class="flex-shrink-0 w-20 h-20 rounded-full bg-lime-100 grid place-items-center mb-5
+                        group-hover:bg-lime-200 transition-colors">
+              <i class="fa-solid fa-dumbbell text-lime-600 text-4xl group-hover:scale-110 transition-transform"></i>
+            </div>
+            <h3 class="font-bold text-lg text-green-800 mb-2">Program Latihan Aktivitas</h3>
+            <p class="text-gray-600 text-sm mb-5 flex-grow">
+              Program latihan olahraga sesuai aktifitas harianmu.
+            </p>
+            <a href="program/plativitas.html"
+               class="mt-auto w-full py-2.5 bg-lime-600 text-white rounded-lg font-semibold
+                      hover:bg-lime-700 active:scale-95 transition">
+              Lihat Program
+            </a>
+          </article>
+
+          <!-- Card 5: Kalori Makanan -->
+          <article class="group relative bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center text-center
+                          hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+            <div class="flex-shrink-0 w-20 h-20 rounded-full bg-green-100 grid place-items-center mb-5
+                        group-hover:bg-green-200 transition-colors">
+              <i class="fa-solid fa-heart text-green-600 text-4xl group-hover:scale-110 transition-transform"></i>
+            </div>
+            <h3 class="font-bold text-lg text-green-800 mb-2">Kalkulator Kalori Makanan</h3>
+            <p class="text-gray-600 text-sm mb-5 flex-grow">
+              Hitung makananmu agar mengetahui kalori apa saja yang masuk ditubuhmu.
+            </p>
+            <a href="kalkulator/kalkukalorim.html"
+               class="mt-auto w-full py-2.5 bg-green-600 text-white rounded-lg font-semibold
+                      hover:bg-green-700 active:scale-95 transition">
+              Hitung Sekarang
+            </a>
+          </article>
         </div>
-        <h3 class="font-bold text-lg text-green-800 mb-2">Kalkulator Kalori Harian</h3>
-        <p class="text-gray-600 text-sm mb-5 flex-grow">
-          Hitung kebutuhan kalori harian apakah sesuai keinginanmu?
-        </p>
-        <a href="kalkulator/kalkukaloh.html"
-           class="mt-auto w-full py-2.5 bg-green-600 text-white rounded-lg font-semibold
-                  hover:bg-green-700 active:scale-95 transition">
-          Hitung Sekarang
-        </a>
-      </article>
-
-      <!-- Card 2: Kebutuhan Makanan -->
-      <article class="group relative bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center text-center
-                      hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
-        <div class="flex-shrink-0 w-20 h-20 rounded-full bg-lime-100 grid place-items-center mb-5
-                    group-hover:bg-lime-200 transition-colors">
-          <i class="fa-solid fa-apple-alt text-lime-600 text-4xl group-hover:scale-110 transition-transform"></i>
-        </div>
-        <h3 class="font-bold text-lg text-green-800 mb-2">Program Pola Makan Sehat</h3>
-        <p class="text-gray-600 text-sm mb-5 flex-grow">
-          Rekomendasi menu seimbang menggunakan kategori umurmu.
-        </p>
-        <a href="program/ppolamakan.html"
-           class="mt-auto w-full py-2.5 bg-lime-600 text-white rounded-lg font-semibold
-                  hover:bg-lime-700 active:scale-95 transition">
-          Lihat Program
-        </a>
-      </article>
-
-      <!-- Card 3: Berat Badan Ideal -->
-      <article class="group relative bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center text-center
-                      hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
-        <div class="flex-shrink-0 w-20 h-20 rounded-full bg-green-100 grid place-items-center mb-5
-                    group-hover:bg-green-200 transition-colors">
-          <i class="fa-solid fa-weight-scale text-green-600 text-4xl group-hover:scale-110 transition-transform"></i>
-        </div>
-        <h3 class="font-bold text-lg text-green-800 mb-2">Kalkulator Berat Badan Ideal</h3>
-        <p class="text-gray-600 text-sm mb-5 flex-grow">
-          Cek berat idealmu berdasarkan apakah sudah sesuai?
-        </p>
-        <a href="kalkulator/kalkubbideal.html"
-           class="mt-auto w-full py-2.5 bg-green-600 text-white rounded-lg font-semibold
-                  hover:bg-green-700 active:scale-95 transition">
-          Hitung Sekarang
-        </a>
-      </article>
-
-      <!-- Card 4: Latihan Aktivitas -->
-      <article class="group relative bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center text-center
-                      hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
-        <div class="flex-shrink-0 w-20 h-20 rounded-full bg-lime-100 grid place-items-center mb-5
-                    group-hover:bg-lime-200 transition-colors">
-          <i class="fa-solid fa-dumbbell text-lime-600 text-4xl group-hover:scale-110 transition-transform"></i>
-        </div>
-        <h3 class="font-bold text-lg text-green-800 mb-2">Program Latihan Aktivitas</h3>
-        <p class="text-gray-600 text-sm mb-5 flex-grow">
-          Program latihan olahraga sesuai aktifitas harianmu.
-        </p>
-        <a href="program/plativitas.html"
-           class="mt-auto w-full py-2.5 bg-lime-600 text-white rounded-lg font-semibold
-                  hover:bg-lime-700 active:scale-95 transition">
-          Lihat Program
-        </a>
-      </article>
-
-      <!-- Card 5: Program Diet -->
-      <article class="group relative bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center text-center
-                      hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
-        <div class="flex-shrink-0 w-20 h-20 rounded-full bg-green-100 grid place-items-center mb-5
-                    group-hover:bg-green-200 transition-colors">
-          <i class="fa-solid fa-heart text-green-600 text-4xl group-hover:scale-110 transition-transform"></i>
-        </div>
-        <h3 class="font-bold text-lg text-green-800 mb-2">Kalkulator Kalori Makanan</h3>
-        <p class="text-gray-600 text-sm mb-5 flex-grow">
-          Hitung makananmu agar mengetahui kalori apa saja yang masuk ditubuhmu.
-        </p>
-        <a href="program/ppolamakan.html"
-           class="mt-auto w-full py-2.5 bg-green-600 text-white rounded-lg font-semibold
-                  hover:bg-green-700 active:scale-95 transition">
-          Lihat Program
-        </a>
-      </article>
-
-    </div><!-- /grid -->
-  </div><!-- /container -->
-</section>
+      </div>
+    </section>
 
     <!-- Bagian Tujuan & Manfaat -->
     <section class="bg-lime-100 py-12 sm:py-16">
-       <!-- Judul Section -->
-        <div class="text-center mb-8">
-          <h2 class="text-2xl md:text-3xl font-semibold text-gray-800 relative inline-block pb-2">
-            Mengapa Kami Ada?
-            <span class="absolute bottom-0 left-0 w-full h-0.5 bg-lime-300"></span>
-          </h2>
-          <p class="text-gray-600 mt-3 text-sm max-w-md mx-auto">
-            Kami hadir untuk mempermudah perjalanan menuju hidup ideal.
-          </p>
-        </div>
+      <div class="text-center mb-8">
+        <h2 class="text-2xl md:text-3xl font-semibold text-gray-800 relative inline-block pb-2">
+          Mengapa Kami Ada?
+          <span class="absolute bottom-0 left-0 w-full h-0.5 bg-lime-300"></span>
+        </h2>
+        <p class="text-gray-600 mt-3 text-sm max-w-md mx-auto">
+          Kami hadir untuk mempermudah perjalanan menuju hidup ideal.
+        </p>
+      </div>
       <div class="max-w-6xl w-full mx-auto bg-white rounded-3xl shadow-xl overflow-hidden relative">
-        <!-- Elemen dekoratif -->
         <div class="absolute top-10 left-10 w-32 h-32 rounded-full bg-lime-300 opacity-10"></div>
         <div class="absolute bottom-16 right-12 w-24 h-24 rounded-full bg-green-300 opacity-10"></div>
         <div class="absolute top-1/3 right-20 w-16 h-16 rounded-full bg-emerald-300 opacity-10"></div>
 
         <div class="flex flex-col md:flex-row relative z-10">
-          
-          <!-- Sisi Kiri: Tujuan Kami -->
           <div class="md:w-1/2 p-8 md:p-12 bg-gradient-to-br from-lime-100 via-white to-green-100 border-r border-gray-100 flex flex-col">
             <div class="flex justify-center mb-5">
               <div class="inline-block text-center">
@@ -417,22 +407,20 @@
                 (Klik di mana saja untuk kembali)
               </div>
             </div>
-            
-            <!-- Ilustrasi ditambahkan untuk mengisi ruang -->
+
             <div class="mt-8 text-center">
               <img src="img/beranda/huas-tujuan.png" alt="Ilustrasi Gaya Hidup Sehat" class="mx-auto w-48 h-auto opacity-80">
             </div>
           </div>
 
-          <!-- Sisi Kanan: Manfaat -->
           <div class="md:w-1/2 p-6 md:p-8">
             <div class="flex justify-center mb-6">
               <div class="inline-block text-center">
                 <h2 class="text-2xl font-bold text-gray-800">Manfaat untuk Kamu</h2>
                 <div class="h-1 w-1/2 bg-lime-300 rounded-full mt-1 mx-auto"></div>
               </div>
-            </div>            <div class="space-y-4">
-              <!-- Manfaat 1 -->
+            </div>
+            <div class="space-y-4">
               <div class="benefit-card p-5 rounded-2xl" data-index="0">
                 <div class="flex items-start">
                   <div class="text-green-600 mr-4 mt-1">
@@ -445,7 +433,6 @@
                 </div>
               </div>
 
-              <!-- Manfaat 2 -->
               <div class="benefit-card p-5 rounded-2xl" data-index="1">
                 <div class="flex items-start">
                   <div class="text-lime-600 mr-4 mt-1">
@@ -458,7 +445,6 @@
                 </div>
               </div>
 
-              <!-- Manfaat 3 -->
               <div class="benefit-card p-5 rounded-2xl" data-index="2">
                 <div class="flex items-start">
                   <div class="text-emerald-600 mr-4 mt-1">
@@ -472,16 +458,13 @@
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </section>
-    <!-- Bagian Tujuan & Manfaat Selesai -->
 
     <!-- Bagian Tips Gizi Harian -->
     <section class=" py-8 sm:py-12">
-      <div class="max-w-full mx-auto px-15">
-        <!-- Judul Section -->
+      <div class="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-8">
           <h2 class="text-2xl md:text-3xl font-semibold text-white relative inline-block pb-2">
             Tips Gizi Harian
@@ -492,36 +475,30 @@
           </p>
         </div>
 
-        <!-- Grid 2 Kolom -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-9">
           <div id="left-column" class="space-y-5"></div>
           <div id="right-column" class="space-y-5"></div>
         </div>
       </div>
     </section>
-    <!-- Bagian Tips Gizi Harian Selesai -->
 
     <!--Footer-->
     <footer class="bg-green-500 text-white mt-10 shadow-inner">
       <div class="w-11/12 mx-auto py-6">
-        <div class="flex justify-between items-center">
-          <!-- Bagian Kiri: Copyright -->
+        <div class="flex flex-col md:flex-row justify-between items-center footer-content">
           <div>
             <p class="text-sm font-medium">
               &copy; 2025 Sehat.In. All Rights Reserved.
             </p>
           </div>
-  
-          <!-- Bagian Tengah: Slogan (disembunyikan di layar kecil) -->
-          <div class="hidden md:block">
+
+          <div class="footer-slogan md:block hidden">
             <p class="text-base font-semibold">
               Pahami Tubuhmu, Mulai Transformasi Idealmu.
             </p>
           </div>
-  
-          <!-- Bagian Kanan: Ikon Media Sosial -->
-          <div class="flex items-center space-x-4">
-            <!-- Ganti href dengan link asli dan src dengan path gambar yang benar -->
+
+          <div class="footer-social flex items-center space-x-4">
             <a href="#" target="_blank" rel="noopener noreferrer" class="transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_5px_rgba(255,255,255,0.7)]">
               <img src="img/footer-navbar/github.png" alt="GitHub" class="h-6 w-6">
             </a>
@@ -538,7 +515,7 @@
         </div>
       </div>
     </footer>
-    <!--Footer Selesai-->
+  </div>
 </body>
 
 <script>
@@ -558,19 +535,16 @@
     let index = 0;
 
     function changeText() {
-      // Efek fade out
       changingTextElement.style.opacity = 0;
-
       setTimeout(() => {
         index = (index + 1) % texts.length;
         changingTextElement.textContent = texts[index];
-        // Efek fade in
         changingTextElement.style.opacity = 1;
-      }, 500); // Waktu ini harus cocok dengan durasi transisi
+      }, 500);
     }
 
-    changingTextElement.textContent = texts[0]; // Tampilkan teks pertama saat load
-    setInterval(changeText, 3000); // Ganti teks setiap 3 detik
+    changingTextElement.textContent = texts[0];
+    setInterval(changeText, 3000);
   });
 
     function toggleMenu() {
@@ -629,9 +603,7 @@
       }
     });
 
-    // Gabungkan DOMContentLoaded untuk semua skrip
     document.addEventListener('DOMContentLoaded', function () {
-      // Animasi perubahan teks hero
       const texts = ["Tubuh Kita", "Bersama-sama", "Batin Kita", "Harmoni Kita"];
       const changingTextElement = document.getElementById("changingText");
       let index = 0;
@@ -650,7 +622,6 @@
         setInterval(changeText, 3000);
       }
 
-      // Skrip bagian interaktif "Tujuan & Manfaat"
       const tujuanSection = document.querySelector('.bg-lime-100');
       const tujuanText = document.getElementById('tujuan-text');
       const resetHint = document.getElementById('reset-hint');
@@ -702,7 +673,6 @@
         });
       }
 
-      // Skrip Tips Gizi Harian
       const tips = [
         { label: "Kalori Harian", desc: "Pria butuh ±2.500 kkal/hari, wanita ±2.000 kkal — sesuaikan aktivitas.", icon: "fa-fire" },
         { label: "Gula Tambahan", desc: "Maksimal 6 sendok teh (25 gram) gula per hari.", icon: "fa-candy-cane" },
